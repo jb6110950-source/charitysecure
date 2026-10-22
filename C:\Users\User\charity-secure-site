@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en" dir="ltr">
 <head>
@@ -9,7 +8,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <script src="./supabase-config.js"></script>
   <style>
     :root {
       color-scheme: light;
@@ -1808,88 +1806,12 @@
     @media (max-width: 760px) {
       .sidebar { border-bottom-color: #e4eaf2; }
     }
-    body:not(.auth-ready) .app-shell,
-    body:not(.auth-ready) .standalone-portal-nav { display: none !important; }
-    body:not(.auth-ready) #auth-screen { display: grid; }
-    body.auth-ready #auth-screen { display: none; }
-    #auth-screen {
-      display: none;
-      min-height: 100vh;
-      place-items: center;
-      padding: 24px;
-      background: #f2f5f9;
-    }
-    .auth-card {
-      width: min(440px, 100%);
-      padding: 28px;
-      border: 1px solid #dce2ea;
-      border-radius: 12px;
-      background: #fff;
-      box-shadow: 0 16px 48px #19334c14;
-    }
-    .auth-card h1 { margin: 0 0 8px; color: #19334c; font-size: 24px; }
-    .auth-card p { color: #60758c; font-size: 14px; line-height: 1.55; }
-    .auth-field { display: grid; gap: 6px; margin: 16px 0; color: #344b64; font-size: 13px; font-weight: 700; }
-    .auth-field input { min-height: 42px; padding: 9px 11px; border: 1px solid #d1dce8; border-radius: 6px; font: inherit; }
-    .auth-status { min-height: 22px; margin: 12px 0 0; color: #a44636; font-size: 13px; }
-    .auth-bar { display: flex; align-items: center; gap: 10px; }
-    .auth-bar button, .auth-admin-dialog button { min-height: 34px; padding: 6px 10px; border: 1px solid #d1dce8; border-radius: 6px; color: #29445f; background: #fff; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
-    .auth-bar #cloud-sync-status { max-width: 300px; color: #60758c; font-size: 11px; }
-    body.staff-account .sidebar-nav > [data-view="donors"],
-    body.staff-account .sidebar-nav > [data-view="data-tools"],
-    body.staff-account .sidebar-nav .payroll-nav-group { display: none !important; }
-    body.staff-account #dashboard-view,
-    body.staff-account #donors-view,
-    body.staff-account #payroll-view,
-    body.staff-account #bookkeeping-view,
-    body.staff-account #data-tools-view { display: none !important; }
-    body.staff-account #open-add-dayanim,
-    body.staff-account #dayanim-delete-selected,
-    body.staff-account #dayanim-select-visible,
-    body.staff-account #export-dayanim-button,
-    body.staff-account #import-dayanim-list-button,
-    body.staff-account #add-recommendation-image,
-    body.staff-account #dayanim-image-search-upload,
-    body.staff-account #dayanim-image-search-file,
-    body.staff-account .recommendation-image-search-paste-target,
-    body.staff-account .dayanim-edit-button,
-    body.staff-account .dayanim-delete-button,
-    body.staff-account .dayanim-not-good-toggle,
-    body.staff-account .dayanim-verification-toggle,
-    body.staff-account .add-contact-button,
-    body.staff-account .document-remove-button { display: none !important; }
-    .auth-admin-dialog { width: min(540px, calc(100% - 32px)); max-height: 85vh; padding: 22px; border: 1px solid #dce2ea; border-radius: 12px; }
-    .auth-admin-dialog::backdrop { background: #17233788; }
-    .auth-admin-dialog h2 { margin-top: 0; color: #19334c; }
-    .auth-admin-dialog form { display: flex; flex-wrap: wrap; align-items: end; gap: 10px; }
-    .auth-admin-dialog label { display: grid; flex: 1 1 230px; gap: 5px; color: #344b64; font-size: 12px; font-weight: 700; }
-    .auth-admin-dialog input { min-height: 38px; padding: 8px; border: 1px solid #d1dce8; border-radius: 6px; font: inherit; }
-    .auth-user-list { display: grid; gap: 8px; margin-top: 18px; padding: 0; list-style: none; }
-    .auth-user-list li { display: flex; justify-content: space-between; gap: 12px; padding: 9px; border: 1px solid #e4e9f0; border-radius: 6px; color: #344b64; font-size: 13px; }
-    body.staff-account #recommendation-search-form { display: block; }
   </style>
 </head>
 <body>
   <script>
     if (new URLSearchParams(window.location.search).has("standalone-payroll")) document.body.classList.add("standalone-payroll");
   </script>
-  <section id="auth-screen" aria-labelledby="auth-title">
-    <div class="auth-card">
-      <h1 id="auth-title">Charity Secure sign in</h1>
-      <p id="auth-intro">Sign in with the email invitation from your administrator.</p>
-      <form id="auth-login-form">
-        <label class="auth-field">Email address<input id="auth-email" type="email" autocomplete="username" required></label>
-        <label class="auth-field">Password<input id="auth-password" type="password" autocomplete="current-password" required></label>
-        <button class="primary-button" type="submit">Sign in</button>
-      </form>
-      <form id="auth-set-password-form" hidden>
-        <label class="auth-field">Choose a password<input id="auth-new-password" type="password" autocomplete="new-password" minlength="10" required></label>
-        <label class="auth-field">Confirm password<input id="auth-confirm-password" type="password" autocomplete="new-password" minlength="10" required></label>
-        <button class="primary-button" type="submit">Set password</button>
-      </form>
-      <p class="auth-status" id="auth-status" aria-live="polite">Checking secure sign-in…</p>
-    </div>
-  </section>
   <nav class="standalone-portal-nav" aria-label="Payroll portal navigation">
     <span class="standalone-portal-brand">Charity Secure Payroll Portal</span>
     <button type="button" data-view="payroll" data-payroll-section="overview">Overview</button>
@@ -1905,7 +1827,7 @@
     <aside class="sidebar">
     <a class="brand" href="#dashboard" aria-label="Charity Secure dashboard">
       <div class="brand-mark">
-        <img src="chasdei-chaim-logo.png" alt="Charity Secure logo">
+        <img src="charity-secure-logo.png" alt="Charity Secure logo">
       </div>
       <div>
         <div class="brand-name">Charity Secure
@@ -1940,13 +1862,7 @@
     <div class="app-content">
     <header class="topbar">
       <span class="topbar-note" id="page-context">Dashboard</span>
-      <div class="auth-bar">
-        <span id="auth-user-label"></span>
-        <span id="cloud-sync-status" aria-live="polite">Secure database connected</span>
-        <button type="button" id="cloud-sync-retry" hidden>Retry sync</button>
-        <button type="button" id="manage-users-button" hidden>Manage users</button>
-        <button type="button" id="sign-out-button">Sign out</button>
-      </div>
+      <span aria-hidden="true"></span>
     </header>
     <main class="app-main">
       <section class="dashboard-view page-view" id="dashboard-view">
@@ -2569,471 +2485,7 @@
     </div>
     <img class="document-preview-image" id="document-preview-image" alt="Attached document preview">
   </dialog>
-  <dialog class="auth-admin-dialog" id="admin-users-dialog" aria-labelledby="admin-users-title">
-    <h2 id="admin-users-title">Manage user invitations</h2>
-    <p>Invited users receive an email link to set their own password. New accounts have read-only Dayanim and recommendation access.</p>
-    <form id="admin-invite-form">
-      <label>Email address<input id="admin-invite-email" type="email" autocomplete="off" required></label>
-      <button type="submit">Send invitation</button>
-    </form>
-    <p class="auth-status" id="admin-users-status" aria-live="polite"></p>
-    <ul class="auth-user-list" id="admin-user-list"></ul>
-    <button type="button" id="close-admin-users">Close</button>
-  </dialog>
-  <script type="module">
-    const authScreen = document.querySelector("#auth-screen");
-    const authStatus = document.querySelector("#auth-status");
-    const loginForm = document.querySelector("#auth-login-form");
-    const passwordSetupForm = document.querySelector("#auth-set-password-form");
-    const authStorageKeys = [
-      "my-contact-book-v1",
-      "my-donor-book-v1",
-      "my-dayanim-registry-v1",
-      "charity-secure-payroll-v1",
-      "charity-secure-bookkeeping-v1",
-      "charity-secure-change-history-v1"
-    ];
-    const staffStorageKeys = new Set(["my-contact-book-v1", "my-dayanim-registry-v1"]);
-
-    async function initializeSecureSession() {
-      const config = window.CHARITY_SUPABASE_CONFIG;
-      if (!config?.url || !config?.anonKey) {
-        authStatus.textContent = "Secure sign-in is not configured yet. Add your Supabase URL and public anon key to supabase-config.js, then deploy.";
-        loginForm.hidden = true;
-        return null;
-      }
-
-      try {
-        const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2");
-        const client = createClient(config.url, config.anonKey, {
-          auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
-        });
-        let { data: sessionData, error: sessionError } = await client.auth.getSession();
-        if (sessionError) throw sessionError;
-        let session = sessionData.session;
-
-        const urlParams = new URLSearchParams(location.hash.replace(/^#/, ""));
-        if (session && ["invite", "recovery"].includes(urlParams.get("type"))) {
-          loginForm.hidden = true;
-          passwordSetupForm.hidden = false;
-          authStatus.textContent = "Choose a password to finish setting up your account.";
-          await new Promise(resolve => {
-            const handlePasswordSetup = async event => {
-              event.preventDefault();
-              const password = document.querySelector("#auth-new-password").value;
-              const confirmation = document.querySelector("#auth-confirm-password").value;
-              if (password !== confirmation) {
-                authStatus.textContent = "The passwords do not match.";
-                return;
-              }
-              const { error } = await client.auth.updateUser({ password });
-              if (error) {
-                authStatus.textContent = error.message;
-                return;
-              }
-              passwordSetupForm.removeEventListener("submit", handlePasswordSetup);
-              history.replaceState(null, "", `${location.pathname}${location.search}`);
-              resolve();
-            };
-            passwordSetupForm.addEventListener("submit", handlePasswordSetup);
-          });
-        }
-
-        if (!session) {
-          authStatus.textContent = "Sign in with the email invitation from your administrator.";
-          session = await new Promise(resolve => {
-            loginForm.addEventListener("submit", async event => {
-              event.preventDefault();
-              const button = loginForm.querySelector('button[type="submit"]');
-              button.disabled = true;
-              authStatus.textContent = "Signing in…";
-              const { data, error } = await client.auth.signInWithPassword({
-                email: document.querySelector("#auth-email").value.trim(),
-                password: document.querySelector("#auth-password").value
-              });
-              button.disabled = false;
-              if (error) {
-                authStatus.textContent = "Sign-in failed. Check the email and password, then try again.";
-                return;
-              }
-              resolve(data.session);
-            });
-          });
-        } else {
-          loginForm.hidden = true;
-        }
-
-        const { data: profile, error: profileError } = await client
-          .from("profiles")
-          .select("id,email,role")
-          .eq("id", session.user.id)
-          .maybeSingle();
-        if (profileError) throw profileError;
-        if (!profile || !["admin", "staff"].includes(profile.role)) {
-          await client.auth.signOut();
-          authStatus.textContent = "This account has no active app role. Ask the administrator to check the account.";
-          return null;
-        }
-
-        const { data: rows, error: dataError } = await client.from("app_data").select("key,value");
-        if (dataError) throw dataError;
-        const cloudRows = new Map(rows.map(row => [row.key, row.value]));
-        if (profile.role === "staff") {
-          authStorageKeys.filter(key => !staffStorageKeys.has(key)).forEach(key => localStorage.removeItem(key));
-        }
-        for (const key of authStorageKeys) {
-          if (profile.role === "staff" && !staffStorageKeys.has(key)) continue;
-          if (cloudRows.has(key)) {
-            localStorage.setItem(key, JSON.stringify(cloudRows.get(key)));
-          } else if (profile.role === "admin") {
-            const localValue = localStorage.getItem(key);
-            if (localValue !== null) {
-              let value;
-              try {
-                value = JSON.parse(localValue);
-              } catch {
-                throw new Error(`Saved data for ${key} is invalid JSON; it was not uploaded.`);
-              }
-              const { error } = await client.from("app_data").upsert({ key, value, updated_by: session.user.id });
-              if (error) throw error;
-            }
-          } else {
-            localStorage.removeItem(key);
-          }
-        }
-
-        document.body.classList.add(profile.role === "staff" ? "staff-account" : "admin-account");
-        document.querySelector("#auth-user-label").textContent = `${profile.email} · ${profile.role === "admin" ? "Administrator" : "Staff (read-only)"}`;
-        document.querySelector("#manage-users-button").hidden = profile.role !== "admin";
-        document.querySelector("#cloud-sync-status").textContent = "Secure database connected";
-        return { client, session, profile };
-      } catch (error) {
-        console.error("Secure sign-in could not be initialized.", error);
-        loginForm.hidden = true;
-        passwordSetupForm.hidden = true;
-        authStatus.textContent = error.message || "Secure sign-in could not be initialized. Check the Supabase setup.";
-        return null;
-      }
-    }
-
-    const authContext = await initializeSecureSession();
-    if (authContext) {
-    const supabaseClient = authContext.client;
-    const authProfile = authContext.profile;
-    document.querySelector("#sign-out-button").addEventListener("click", async () => {
-      await supabaseClient.auth.signOut();
-      location.reload();
-    });
-    document.querySelector("#manage-users-button").addEventListener("click", () => {
-      document.querySelector("#admin-users-dialog").showModal();
-      loadAdminUsers();
-    });
-    document.querySelector("#close-admin-users").addEventListener("click", () => document.querySelector("#admin-users-dialog").close());
-    document.querySelector("#admin-invite-form").addEventListener("submit", async event => {
-      event.preventDefault();
-      const status = document.querySelector("#admin-users-status");
-      const button = event.currentTarget.querySelector('button[type="submit"]');
-      button.disabled = true;
-      status.textContent = "Sending invitation…";
-      try {
-        const { data: sessionData } = await supabaseClient.auth.getSession();
-        const result = await fetch("/.netlify/functions/admin-users", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Authorization: `Bearer ${sessionData.session.access_token}` },
-          body: JSON.stringify({ email: document.querySelector("#admin-invite-email").value })
-        });
-        const payload = await result.json();
-        if (!result.ok) throw new Error(payload.error || "The invitation could not be sent.");
-        status.textContent = payload.message;
-        document.querySelector("#admin-invite-email").value = "";
-        await loadAdminUsers();
-      } catch (error) {
-        status.textContent = error.message || "The invitation could not be sent.";
-      } finally {
-        button.disabled = false;
-      }
-    });
-
-    async function loadAdminUsers() {
-      const status = document.querySelector("#admin-users-status");
-      const list = document.querySelector("#admin-user-list");
-      list.replaceChildren();
-      try {
-        const { data: sessionData } = await supabaseClient.auth.getSession();
-        const result = await fetch("/.netlify/functions/admin-users", {
-          headers: { Authorization: `Bearer ${sessionData.session.access_token}` }
-        });
-        const payload = await result.json();
-        if (!result.ok) throw new Error(payload.error || "The user list could not be loaded.");
-        payload.users.forEach(user => {
-          const item = document.createElement("li");
-          const email = document.createElement("span");
-          email.textContent = user.email;
-          const role = document.createElement("strong");
-          role.textContent = user.role === "admin" ? "Administrator" : "Staff · read-only";
-          item.append(email, role);
-          list.append(item);
-        });
-        status.textContent = "";
-      } catch (error) {
-        status.textContent = error.message || "The user list could not be loaded.";
-      }
-    }
-
-    const originalStorageSetItem = Storage.prototype.setItem;
-    const originalStorageRemoveItem = Storage.prototype.removeItem;
-    const storageSyncQueues = new Map();
-    const storageSyncErrors = new Map();
-    let cloudDocumentSyncQueue = Promise.resolve();
-    let cloudDocumentSyncPendingCount = 0;
-    let cloudDocumentSyncError = null;
-    function queueCloudStorageSave(key, rawValue) {
-      if (authProfile.role !== "admin" || !authStorageKeys.includes(key)) return;
-      const previous = storageSyncQueues.get(key) || Promise.resolve();
-      const next = previous.catch(() => {}).then(async () => {
-        let result;
-        if (rawValue === null) {
-          result = await supabaseClient.from("app_data").delete().eq("key", key);
-        } else {
-          let value;
-          try {
-            value = JSON.parse(rawValue);
-          } catch {
-            throw new Error(`Data for ${key} is not valid JSON.`);
-          }
-          result = await supabaseClient.from("app_data").upsert({
-            key,
-            value,
-            updated_by: authContext.session.user.id,
-            updated_at: new Date().toISOString()
-          });
-        }
-        const { error } = result;
-        if (error) throw error;
-        storageSyncErrors.delete(key);
-        updateCloudSyncStatus();
-      }).catch(error => {
-        console.error(`Cloud save failed for ${key}.`, error);
-        storageSyncErrors.set(key, error);
-        updateCloudSyncStatus();
-      });
-      storageSyncQueues.set(key, next);
-      next.finally(() => {
-        if (storageSyncQueues.get(key) === next) storageSyncQueues.delete(key);
-        updateCloudSyncStatus();
-      });
-    }
-    function updateCloudSyncStatus() {
-      const status = document.querySelector("#cloud-sync-status");
-      if (!status) return;
-      const failed = storageSyncErrors.size || cloudDocumentSyncError;
-      document.querySelector("#cloud-sync-retry").hidden = !failed;
-      if (failed) {
-        status.textContent = "Cloud save failed — retry before closing this page.";
-      } else if (storageSyncQueues.size || cloudDocumentSyncPendingCount) {
-        status.textContent = "Saving changes…";
-      } else {
-        status.textContent = "All changes saved";
-      }
-    }
-    async function flushCloudStorageSaves() {
-      await Promise.all(storageSyncQueues.values());
-      if (storageSyncErrors.size) {
-        throw new Error("Some changes have not reached the shared database. Restore was stopped to prevent data loss.");
-      }
-    }
-    document.querySelector("#cloud-sync-retry").addEventListener("click", async event => {
-      const button = event.currentTarget;
-      button.disabled = true;
-      authStatus.textContent = "";
-      try {
-        for (const key of authStorageKeys) {
-          queueCloudStorageSave(key, localStorage.getItem(key));
-        }
-        await queueCloudDocumentSync();
-        await flushCloudStorageSaves();
-      } catch (error) {
-        console.error("The shared data retry failed.", error);
-        authStatus.textContent = error.message || "The shared data could not be synchronized.";
-      } finally {
-        button.disabled = false;
-        updateCloudSyncStatus();
-      }
-    });
-    function queueCloudDocumentSync() {
-      if (authProfile.role !== "admin") return Promise.resolve();
-      cloudDocumentSyncPendingCount++;
-      const next = cloudDocumentSyncQueue.catch(() => {}).then(syncCloudDocuments);
-      cloudDocumentSyncQueue = next.then(() => {
-        cloudDocumentSyncError = null;
-        cloudDocumentSyncPendingCount--;
-        updateCloudSyncStatus();
-      }).catch(error => {
-        console.error("Shared documents could not be synchronized.", error);
-        cloudDocumentSyncError = error;
-        cloudDocumentSyncPendingCount--;
-        updateCloudSyncStatus();
-        throw error;
-      });
-      return cloudDocumentSyncQueue;
-    }
-    Storage.prototype.setItem = function (key, value) {
-      if (this === localStorage && authProfile.role === "staff" && authStorageKeys.includes(String(key))) {
-        throw new DOMException("Staff accounts have read-only access to this data.", "SecurityError");
-      }
-      originalStorageSetItem.call(this, key, value);
-      if (this === localStorage) queueCloudStorageSave(String(key), String(value));
-    };
-    Storage.prototype.removeItem = function (key) {
-      if (this === localStorage && authProfile.role === "staff" && authStorageKeys.includes(String(key))) {
-        throw new DOMException("Staff accounts have read-only access to this data.", "SecurityError");
-      }
-      originalStorageRemoveItem.call(this, key);
-      if (this === localStorage) queueCloudStorageSave(String(key), null);
-    };
-    window.addEventListener("beforeunload", event => {
-      if (storageSyncErrors.size || cloudDocumentSyncError || storageSyncQueues.size || cloudDocumentSyncPendingCount) {
-        event.preventDefault();
-        event.returnValue = "";
-      }
-    });
-
-    function applyStaffReadOnlyMode() {
-      if (authProfile.role !== "staff") return;
-      const readonlyViews = new Set(["dayanim", "letters", "recommendation-search"]);
-      const blockedForms = [
-        "#add-form", "#edit-form", "#donor-form", "#payroll-employee-form",
-        "#payroll-payment-form", "#bookkeeping-form", "#dayanim-edit-form"
-      ];
-      blockedForms.forEach(selector => {
-        const form = document.querySelector(selector);
-        if (form) form.addEventListener("submit", event => event.preventDefault(), true);
-      });
-      document.querySelectorAll(".app-shell form").forEach(form => {
-        if (form.id === "recommendation-search-form") return;
-        form.addEventListener("submit", event => event.preventDefault(), true);
-      });
-      document.querySelectorAll(".staff-account input, .staff-account select, .staff-account textarea").forEach(input => {
-        if (input.id !== "recommendation-search-input" && input.id !== "dayanim-list-search") input.disabled = true;
-      });
-      document.querySelectorAll(".staff-account button").forEach(button => {
-        if (button.matches("[data-view],#recommendations-menu-toggle,#close-contact-detail,#close-document-preview,[data-purpose-filter],.document-preview-button")) return;
-        if (button.id === "sign-out-button") return;
-        button.disabled = true;
-      });
-      document.addEventListener("click", event => {
-        const button = event.target.closest("button");
-        if (!button || button.matches("[data-view],#recommendations-menu-toggle,#close-contact-detail,#close-document-preview,[data-purpose-filter],.document-preview-button,#sign-out-button")) return;
-        event.preventDefault();
-        event.stopImmediatePropagation();
-      }, true);
-      const requestedView = location.hash.replace(/^#/, "");
-      if (!readonlyViews.has(requestedView) && requestedView !== "recommendations") history.replaceState(null, "", "#dayanim");
-    }
-
-    async function syncCloudDocuments() {
-      if (authProfile.role !== "admin") return;
-      const localDocuments = await getAllDocuments();
-      const { data: savedDocuments, error: listError } = await supabaseClient
-        .from("app_documents")
-        .select("id,storage_path");
-      if (listError) throw listError;
-      const localIds = new Set(localDocuments.map(record => record.id));
-      for (const record of localDocuments) {
-        if (!(record.blob instanceof Blob)) continue;
-        const folder = record.ownerType === "dayanim" ? "dayanim" : "recommendations";
-        const storagePath = `${folder}/${record.id}`;
-        const { error: uploadError } = await supabaseClient.storage.from("app-documents")
-          .upload(storagePath, record.blob, { contentType: record.type || "application/octet-stream", upsert: true });
-        if (uploadError) throw uploadError;
-        const { error: metadataError } = await supabaseClient.from("app_documents").upsert({
-          id: record.id,
-          contact_id: record.contactId,
-          owner_type: record.ownerType || "contact",
-          name: record.name,
-          content_type: record.type || "application/octet-stream",
-          purposes: record.purposes || [],
-          language: record.language || "",
-          added_at: record.addedAt || new Date().toISOString(),
-          storage_path: storagePath
-        });
-        if (metadataError) throw metadataError;
-      }
-      const removedDocuments = savedDocuments.filter(record => !localIds.has(record.id));
-      for (const record of removedDocuments) {
-        const { error: deleteFileError } = await supabaseClient.storage.from("app-documents").remove([record.storage_path]);
-        if (deleteFileError) throw deleteFileError;
-        const { error: deleteMetadataError } = await supabaseClient.from("app_documents").delete().eq("id", record.id);
-        if (deleteMetadataError) throw deleteMetadataError;
-      }
-      document.querySelector("#cloud-sync-status").textContent = "All changes saved";
-    }
-
-    async function loadCloudDocumentsForStaff() {
-      if (authProfile.role !== "staff") return;
-      const { data: documents, error } = await supabaseClient
-        .from("app_documents")
-        .select("id,contact_id,owner_type,name,content_type,purposes,language,added_at,storage_path");
-      if (error) throw error;
-      await replaceAllDocuments([]);
-      for (const record of documents) {
-        const { data: blob, error: downloadError } = await supabaseClient.storage.from("app-documents").download(record.storage_path);
-        if (downloadError) throw downloadError;
-        await storeCloudDocumentLocally({
-          id: record.id,
-          contactId: record.contact_id,
-          ownerType: record.owner_type,
-          name: record.name,
-          type: record.content_type,
-          purposes: record.purposes,
-          language: record.language,
-          addedAt: record.added_at,
-          blob
-        });
-      }
-    }
-
-    async function storeCloudDocumentLocally(record) {
-      const database = await openAttachmentDatabase();
-      return new Promise((resolve, reject) => {
-        const transaction = database.transaction(attachmentStoreName, "readwrite");
-        transaction.objectStore(attachmentStoreName).put(record);
-        transaction.oncomplete = () => { database.close(); resolve(); };
-        transaction.onerror = () => { database.close(); reject(transaction.error || new Error("A shared document could not be cached.")); };
-        transaction.onabort = () => { database.close(); reject(transaction.error || new Error("A shared document could not be cached.")); };
-      });
-    }
-
-    async function initializeCloudDocuments() {
-      if (authProfile.role === "staff") {
-        await loadCloudDocumentsForStaff();
-        return;
-      }
-      const { data: cloudDocuments, error } = await supabaseClient.from("app_documents").select("id,contact_id,owner_type,name,content_type,purposes,language,added_at,storage_path");
-      if (error) throw error;
-      const localDocuments = await getAllDocuments();
-      const localIds = new Set(localDocuments.map(record => record.id));
-      for (const record of cloudDocuments) {
-        if (localIds.has(record.id)) continue;
-        const { data: blob, error: downloadError } = await supabaseClient.storage.from("app-documents").download(record.storage_path);
-        if (downloadError) throw downloadError;
-        await storeCloudDocumentLocally({
-          id: record.id,
-          contactId: record.contact_id,
-          ownerType: record.owner_type,
-          name: record.name,
-          type: record.content_type,
-          purposes: record.purposes,
-          language: record.language,
-          addedAt: record.added_at,
-          blob
-        });
-      }
-      await syncCloudDocuments();
-    }
-
-    if (authProfile.role === "staff") document.body.classList.add("staff-account");
-
+  <script>
     const storageKey = "my-contact-book-v1";
     const donorsStorageKey = "my-donor-book-v1";
     const dayanimRegistryStorageKey = "my-dayanim-registry-v1";
@@ -3398,7 +2850,7 @@
     async function storeContactDocument(contactId, file, { ownerType = "contact", language = "" } = {}) {
       const database = await openAttachmentDatabase();
       const id = makeId();
-      await new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) => {
         const transaction = database.transaction(attachmentStoreName, "readwrite");
         transaction.objectStore(attachmentStoreName).add({
           id,
@@ -3419,8 +2871,6 @@
         transaction.onerror = () => { database.close(); reject(transaction.error || new Error("The document could not be saved.")); };
         transaction.onabort = () => { database.close(); reject(transaction.error || new Error("The document could not be saved.")); };
       });
-      await queueCloudDocumentSync();
-      return id;
     }
     async function getContactDocuments(contactId, ownerType = "contact") {
       const database = await openAttachmentDatabase();
@@ -3448,7 +2898,7 @@
     }
     async function updateRecommendationPurposes(documentId, purposes) {
       const database = await openAttachmentDatabase();
-      await new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) => {
         const transaction = database.transaction(attachmentStoreName, "readwrite");
         const store = transaction.objectStore(attachmentStoreName);
         const request = store.get(documentId);
@@ -3467,12 +2917,11 @@
         transaction.onerror = () => { database.close(); reject(transaction.error || new Error("The recommendation purposes could not be saved.")); };
         transaction.onabort = () => { database.close(); reject(transaction.error || new Error("The recommendation purposes could not be saved.")); };
       });
-      await queueCloudDocumentSync();
     }
     async function removeContactDocumentsBatch(contactIds) {
       if (!contactIds.length) return;
       const database = await openAttachmentDatabase();
-      await new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) => {
         const transaction = database.transaction(attachmentStoreName, "readwrite");
         const store = transaction.objectStore(attachmentStoreName);
         const index = store.index("contactId");
@@ -3488,7 +2937,6 @@
         transaction.onerror = () => { database.close(); reject(transaction.error || new Error("Contact documents could not be deleted.")); };
         transaction.onabort = () => { database.close(); reject(transaction.error || new Error("Contact documents could not be deleted.")); };
       });
-      await queueCloudDocumentSync();
     }
     async function removeContactDocuments(contactId) {
       return removeContactDocumentsBatch([contactId]);
@@ -3496,7 +2944,7 @@
     async function removeDayanimDocumentsBatch(recordIds) {
       if (!recordIds.length) return;
       const database = await openAttachmentDatabase();
-      await new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) => {
         const transaction = database.transaction(attachmentStoreName, "readwrite");
         const store = transaction.objectStore(attachmentStoreName);
         const index = store.index("contactId");
@@ -3517,11 +2965,10 @@
         transaction.onerror = () => { database.close(); reject(transaction.error || new Error("Dayanim documents could not be deleted.")); };
         transaction.onabort = () => { database.close(); reject(transaction.error || new Error("Dayanim documents could not be deleted.")); };
       });
-      await queueCloudDocumentSync();
     }
     async function removeSingleDocument(documentId) {
       const database = await openAttachmentDatabase();
-      await new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) => {
         const transaction = database.transaction(attachmentStoreName, "readwrite");
         const store = transaction.objectStore(attachmentStoreName);
         const request = store.get(documentId);
@@ -3534,7 +2981,6 @@
         transaction.onerror = () => { database.close(); reject(transaction.error); };
         transaction.onabort = () => { database.close(); reject(transaction.error); };
       });
-      await queueCloudDocumentSync();
     }
     function makeId() { return `${Date.now()}-${Math.random().toString(16).slice(2)}`; }
     function splitFullName(value) {
@@ -4790,7 +4236,6 @@
         if (currentRun !== dayanimImageSearchRun) return;
         const headerHeight = Math.max(1, Math.round(pageCanvas.height * 0.42));
         const headerCanvas = enlargeCanvas(cropCanvas(pageCanvas, 0, 0, pageCanvas.width, headerHeight), 2);
-        const headerContrastCanvas = createContrastEnhancedCanvas(headerCanvas);
         const headerRegions = createLetterheadHeaderRegions(pageCanvas);
         const addressStart = Math.round(pageCanvas.height * 0.1);
         const addressHeight = Math.max(1, Math.round(pageCanvas.height * 0.72));
@@ -4824,7 +4269,7 @@
           const greetingStart = Math.round(pageCanvas.height * 0.19);
           const greetingCanvas = enlargeCanvas(cropCanvas(pageCanvas, 0, greetingStart, pageCanvas.width, Math.max(1, Math.round(pageCanvas.height * 0.2))), 3);
           try {
-            const [hebrewHeaderText, hebrewLogoText, hebrewGreetingText, hebrewDetailsText, hebrewHeaderSparseText, hebrewHeaderLeftText, hebrewHeaderRightText, hebrewHeaderLeftSparseText, hebrewHeaderRightSparseText, hebrewHeaderContrastText] = await recognizeDocumentRegions([
+            const [hebrewHeaderText, hebrewLogoText, hebrewGreetingText, hebrewDetailsText, hebrewHeaderSparseText, hebrewHeaderLeftText, hebrewHeaderRightText, hebrewHeaderLeftSparseText, hebrewHeaderRightSparseText] = await recognizeDocumentRegions([
               { canvas: headerCanvas, mode: "6" },
               { canvas: logoCanvas, mode: "11" },
               { canvas: greetingCanvas, mode: "6" },
@@ -4833,29 +4278,26 @@
               { canvas: headerRegions[0], mode: "6" },
               { canvas: headerRegions[1], mode: "6" },
               { canvas: headerRegions[0], mode: "12" },
-              { canvas: headerRegions[1], mode: "12" },
-              { canvas: headerContrastCanvas, mode: "6" }
+              { canvas: headerRegions[1], mode: "12" }
             ], "heb", status, progress);
-            const explicitName = extractExplicitHebrewName([hebrewHeaderText, hebrewLogoText, hebrewGreetingText, hebrewDetailsText, hebrewHeaderLeftText, hebrewHeaderRightText, hebrewHeaderLeftSparseText, hebrewHeaderRightSparseText, hebrewHeaderContrastText].join("\n"));
+            const explicitName = extractExplicitHebrewName([hebrewHeaderText, hebrewLogoText, hebrewGreetingText, hebrewDetailsText, hebrewHeaderLeftText, hebrewHeaderRightText, hebrewHeaderLeftSparseText, hebrewHeaderRightSparseText].join("\n"));
             if (explicitName) fieldValues.names.push(explicitName);
-            const hebrewLetterheadText = [hebrewHeaderText, hebrewLogoText, hebrewGreetingText, hebrewDetailsText, hebrewHeaderSparseText, hebrewHeaderLeftText, hebrewHeaderRightText, hebrewHeaderLeftSparseText, hebrewHeaderRightSparseText, hebrewHeaderContrastText].join("\n");
+            const hebrewLetterheadText = [hebrewHeaderText, hebrewLogoText, hebrewGreetingText, hebrewDetailsText, hebrewHeaderSparseText, hebrewHeaderLeftText, hebrewHeaderRightText, hebrewHeaderLeftSparseText, hebrewHeaderRightSparseText].join("\n");
             const letterheadDetails = extractYiddishLetterheadDetails(hebrewLetterheadText);
-            const organizationRegions = [
-              { role: "header", text: hebrewHeaderText },
-              { role: "logo", text: hebrewLogoText },
-              { role: "details", text: hebrewDetailsText },
-              { role: "header-sparse", text: hebrewHeaderSparseText },
-              { role: "header-left", text: hebrewHeaderLeftText },
-              { role: "header-right", text: hebrewHeaderRightText },
-              { role: "header-left-sparse", text: hebrewHeaderLeftSparseText },
-              { role: "header-right-sparse", text: hebrewHeaderRightSparseText },
-              { role: "header-contrast", text: hebrewHeaderContrastText }
-            ];
             addRecognizedFields({
               ...letterheadDetails,
-              organization: extractRepeatedYiddishOrganization(organizationRegions) || letterheadDetails.organization
+              organization: letterheadDetails.organization || extractRepeatedYiddishOrganization([
+                { role: "header", text: hebrewHeaderText },
+                { role: "logo", text: hebrewLogoText },
+                { role: "details", text: hebrewDetailsText },
+                { role: "header-sparse", text: hebrewHeaderSparseText },
+                { role: "header-left", text: hebrewHeaderLeftText },
+                { role: "header-right", text: hebrewHeaderRightText },
+                { role: "header-left-sparse", text: hebrewHeaderLeftSparseText },
+                { role: "header-right-sparse", text: hebrewHeaderRightSparseText }
+              ])
             }, false);
-            for (const text of [hebrewHeaderText, hebrewLogoText, hebrewGreetingText, hebrewDetailsText, hebrewHeaderSparseText, hebrewHeaderLeftText, hebrewHeaderRightText, hebrewHeaderLeftSparseText, hebrewHeaderRightSparseText, hebrewHeaderContrastText]) {
+            for (const text of [hebrewHeaderText, hebrewLogoText, hebrewGreetingText, hebrewDetailsText, hebrewHeaderSparseText, hebrewHeaderLeftText, hebrewHeaderRightText, hebrewHeaderLeftSparseText, hebrewHeaderRightSparseText]) {
               const parsed = extractLetterhead(text);
               addRecognizedFields({
                 titleSuffix: keepYiddishText(parsed.titleSuffix),
@@ -4951,11 +4393,7 @@
             return uniqueValues.length ? [`${label}: ${uniqueValues.slice(0, 2).join(" / ")}`] : [];
           });
           const errorNote = ocrErrors.length ? ` OCR note: ${ocrErrors[0]}` : "";
-          const nameNote = curvedName
-            ? " The Yiddish spelling is a phonetic transliteration of the printed Latin name; verify it before saving."
-            : fieldValues.names.length
-              ? ""
-              : " The handwritten personal name could not be read with confidence; the curved logo is not used as a person's name.";
+          const nameNote = fieldValues.names.length ? "" : " The handwritten personal name could not be read with confidence; the curved logo is not used as a person's name.";
           const noMatchMessage = recognizedLabels.length
             ? `No saved record matched. The document reader detected: ${recognizedLabels.join(", ")}. ${recognizedSummary.join("; ")}. Check that the saved record has the same details.${nameNote}${errorNote}`
             : `No saved record matched. The document reader could not confidently read a name, title, organization, address, city, or phone number.${errorNote}`;
@@ -5702,9 +5140,6 @@
       });
     }
     function showView(viewName, updateHash = true) {
-      if (authProfile.role === "staff" && !["dayanim", "letters", "recommendation-search"].includes(viewName)) {
-        viewName = "dayanim";
-      }
       const isDashboard = viewName === "dashboard";
       const isDataTools = viewName === "data-tools";
       const isDonors = viewName === "donors";
@@ -6840,7 +6275,7 @@
     }
     async function replaceAllDocuments(records) {
       const database = await openAttachmentDatabase();
-      await new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) => {
         const transaction = database.transaction(attachmentStoreName, "readwrite");
         const store = transaction.objectStore(attachmentStoreName);
         store.clear();
@@ -6849,7 +6284,6 @@
         transaction.onerror = () => { database.close(); reject(transaction.error || new Error("Attached documents could not be restored.")); };
         transaction.onabort = () => { database.close(); reject(transaction.error || new Error("Attached documents could not be restored.")); };
       });
-      await queueCloudDocumentSync();
     }
     function applyBackupStorage(data) {
       appStorageKeys.forEach(key => {
@@ -6872,12 +6306,10 @@
         try {
           await replaceAllDocuments(documents);
           applyBackupStorage(backup.data);
-          await flushCloudStorageSaves();
         } catch (error) {
           try {
             await replaceAllDocuments(previousDocuments);
             applyBackupStorage(previous.data);
-            await flushCloudStorageSaves();
           } catch (rollbackError) {
             console.error("Backup restore rollback failed.", rollbackError);
             throw new AggregateError([error, rollbackError], "Restore failed and the previous data could not be fully restored.");
@@ -7478,36 +6910,6 @@
         return enlargeCanvas(cropCanvas(source, x, 0, Math.min(width, source.width - x), height), 3);
       });
     }
-    function createContrastEnhancedCanvas(source) {
-      const canvas = document.createElement("canvas");
-      canvas.width = source.width;
-      canvas.height = source.height;
-      const context = canvas.getContext("2d", { willReadFrequently: true });
-      const image = source.getContext("2d", { willReadFrequently: true }).getImageData(0, 0, source.width, source.height);
-      const histogram = new Uint32Array(256);
-      for (let index = 0; index < image.data.length; index += 4) {
-        const brightness = Math.round(image.data[index] * 0.299 + image.data[index + 1] * 0.587 + image.data[index + 2] * 0.114);
-        histogram[brightness]++;
-      }
-      const pixelCount = source.width * source.height;
-      let lower = 0;
-      let upper = 255;
-      let accumulated = 0;
-      while (lower < 255 && accumulated < pixelCount * 0.03) accumulated += histogram[lower++];
-      accumulated = 0;
-      while (upper > 0 && accumulated < pixelCount * 0.03) accumulated += histogram[upper--];
-      const range = Math.max(1, upper - lower);
-      for (let index = 0; index < image.data.length; index += 4) {
-        const brightness = image.data[index] * 0.299 + image.data[index + 1] * 0.587 + image.data[index + 2] * 0.114;
-        const contrast = Math.max(0, Math.min(255, (brightness - lower) * 255 / range));
-        image.data[index] = contrast;
-        image.data[index + 1] = contrast;
-        image.data[index + 2] = contrast;
-        image.data[index + 3] = 255;
-      }
-      context.putImageData(image, 0, 0);
-      return canvas;
-    }
     function createLetterheadDetailsCanvas(source) {
       const x = Math.round(source.width * 0.62);
       const y = Math.round(source.height * 0.085);
@@ -7578,7 +6980,6 @@
         const canvas = cropLetterheadCanvas(ocrPageCanvas);
         const headerHeight = Math.max(1, Math.round(pageCanvas.height * 0.42));
         const headerCanvas = enlargeCanvas(cropCanvas(ocrPageCanvas, 0, 0, pageCanvas.width, headerHeight), 2);
-        const headerContrastCanvas = createContrastEnhancedCanvas(headerCanvas);
         const headerRegions = createLetterheadHeaderRegions(ocrPageCanvas);
         const logoCanvas = createLetterheadLogoCanvas(ocrPageCanvas);
         const addressStart = Math.round(pageCanvas.height * 0.1);
@@ -7655,7 +7056,6 @@
               }
             };
             await readOcrRegion(headerCanvas, "heb", "letterhead-header", "6", "Reading Yiddish details in the letterhead…");
-            await readOcrRegion(headerContrastCanvas, "heb", "letterhead-header-contrast", "6", "Enhancing and checking Hebrew letterhead text…");
             await readOcrRegion(headerCanvas, "heb", "letterhead-details-sparse", "11", "Checking alternate Hebrew text layouts…");
             await readOcrRegion(headerRegions[0], "heb", "letterhead-header-left", "6", "Reading the left side of the letterhead…");
             await readOcrRegion(headerRegions[1], "heb", "letterhead-header-right", "6", "Reading the right side of the letterhead…");
@@ -7679,11 +7079,11 @@
         const headerTextResult = results.find(result => result.role === "letterhead-header") || null;
         const logoTextResult = results.find(result => result.role === "letterhead-logo") || null;
         const greetingTextResult = results.find(result => result.role === "letterhead-greeting") || null;
-        const letterheadDetailsResults = results.filter(result => ["letterhead-header", "letterhead-header-contrast", "letterhead-header-left", "letterhead-header-right", "letterhead-header-left-sparse", "letterhead-header-right-sparse", "letterhead-details", "letterhead-details-sparse", "letterhead-logo", "letterhead-greeting", "hebrew", "heb"].includes(result.role));
+        const letterheadDetailsResults = results.filter(result => ["letterhead-header", "letterhead-header-left", "letterhead-header-right", "letterhead-header-left-sparse", "letterhead-header-right-sparse", "letterhead-details", "letterhead-details-sparse", "letterhead-logo", "letterhead-greeting", "hebrew", "heb"].includes(result.role));
         const letterheadDetails = extractYiddishLetterheadDetails(letterheadDetailsResults.map(result => result.text).join("\n"));
         const lowerAddressResult = results.find(result => result.role === "lower-address") || null;
         const printedName = curvedNameText || englishAddressResults.find(result => result.role === "letterhead-header-address" && result.name)?.name || "";
-        const recognizedOrganization = extractRepeatedYiddishOrganization(letterheadDetailsResults) || letterheadDetails.organization;
+        const recognizedOrganization = letterheadDetails.organization || extractRepeatedYiddishOrganization(letterheadDetailsResults);
         const bestCity = selectBestOcrCity(results);
         const phoneCandidates = [
           ...englishAddressResults.map(result => result.phone),
@@ -8244,25 +7644,12 @@
     });
     const initialView = location.hash === "#data-tools" ? "data-tools" : location.hash === "#recommendations" ? "letters" : location.hash === "#recommendation-search" ? "recommendation-search" : location.hash === "#dayanim" ? "dayanim" : location.hash === "#payroll" ? "payroll" : location.hash === "#bookkeeping" ? "bookkeeping" : location.hash === "#donors" ? "donors" : "dashboard";
     window.addEventListener("hashchange", () => showView(location.hash === "#data-tools" ? "data-tools" : location.hash === "#recommendations" ? "letters" : location.hash === "#recommendation-search" ? "recommendation-search" : location.hash === "#dayanim" ? "dayanim" : location.hash === "#payroll" ? "payroll" : location.hash === "#bookkeeping" ? "bookkeeping" : location.hash === "#donors" ? "donors" : "dashboard", false));
-    let cloudDocumentsReady = false;
-    try {
-      await initializeCloudDocuments();
-      cloudDocumentsReady = true;
-    } catch (error) {
-      console.error("Shared documents could not be synchronized.", error);
-      authStatus.textContent = "The shared documents could not be loaded or synchronized. Check the database/storage setup and reload.";
-    }
-    if (cloudDocumentsReady) {
-      document.body.classList.add("auth-ready");
-      applyStaffReadOnlyMode();
-    }
     installAddressAutocomplete(document.querySelector("#address"), document.querySelector("#city"), document.querySelector("#country"));
     installAddressAutocomplete(document.querySelector("#edit-address"), document.querySelector("#edit-city"), document.querySelector("#edit-country"));
     installAddressAutocomplete(document.querySelector("#donor-address"), document.querySelector("#donor-city"));
     installAddressAutocomplete(document.querySelector("#dayanim-edit-address"));
     renderContacts();
     showView(initialView, false);
-    }
   </script>
 </body>
 </html>
