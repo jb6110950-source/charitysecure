@@ -1,0 +1,835 @@
+﻿<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f4ec">
+  <meta name="description" content="Community services and contact listings from Chasdei Chaim.">
+  <title>Community Directory | Chasdei Chaim</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #29251f;
+      --muted: #756c5e;
+      --brown: #51351f;
+      --brown-dark: #382619;
+      --gold: #c0924a;
+      --gold-light: #f3e8d4;
+      --paper: #fffdf9;
+      --canvas: #f8f4ec;
+      --line: #e8dfd1;
+      --green: #42694f;
+      font-family: "Heebo", Arial, sans-serif;
+      scroll-behavior: smooth;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 7% 8%, rgba(192, 146, 74, .11), transparent 30rem),
+        var(--canvas);
+      line-height: 1.7;
+    }
+    a { color: inherit; }
+    .container { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
+    .site-header {
+      position: sticky;
+      z-index: 10;
+      top: 0;
+      border-bottom: 1px solid rgba(232, 223, 209, .9);
+      background: rgba(255, 253, 249, .95);
+      backdrop-filter: blur(12px);
+    }
+    .header-inner {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--brown-dark);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .brand-mark {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border-radius: 9px;
+    }
+    .brand-mark img { display: block; width: 100%; height: 100%; border-radius: inherit; object-fit: contain; }
+    .brand-name { display: grid; line-height: 1.25; }
+    .brand-name strong { font-size: 19px; font-weight: 800; }
+    .brand-name span { color: var(--muted); font-size: 11px; }
+    .main-nav { display: flex; align-items: center; gap: 7px; }
+    .main-nav a {
+      padding: 9px 12px;
+      border-radius: 9px;
+      color: #5e5549;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background .18s ease, color .18s ease;
+    }
+    .main-nav a:hover, .main-nav a:focus-visible { color: var(--brown); background: var(--gold-light); }
+    .header-contact {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 15px;
+      border-radius: 10px;
+      color: white;
+      background: var(--brown);
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .header-contact:hover { background: var(--brown-dark); }
+    .hero { padding: 74px 0 60px; }
+    .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; align-items: center; gap: 62px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      color: #8a6733;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+    .eyebrow::before { width: 22px; height: 2px; content: ""; background: var(--gold); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 640px;
+      margin-bottom: 18px;
+      color: var(--brown-dark);
+      font-size: clamp(38px, 5.2vw, 64px);
+      font-weight: 800;
+      line-height: 1.18;
+      letter-spacing: -.035em;
+    }
+    .hero-copy { max-width: 590px; margin-bottom: 25px; color: var(--muted); font-size: 18px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .button {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 11px 18px;
+      border: 1px solid var(--brown);
+      border-radius: 10px;
+      color: white;
+      background: var(--brown);
+      font: inherit;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .button:hover { transform: translateY(-2px); background: var(--brown-dark); }
+    .button.secondary { color: var(--brown); background: transparent; }
+    .button.secondary:hover { background: var(--gold-light); }
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+      padding: 30px;
+      border: 1px solid #dfcda9;
+      border-radius: 20px;
+      background: linear-gradient(145deg, #fffaf0, #f0e4ce);
+      box-shadow: 0 22px 60px rgba(67, 47, 24, .1);
+    }
+    .hero-card::before {
+      position: absolute;
+      top: -80px;
+      left: -62px;
+      width: 210px;
+      height: 210px;
+      border: 1px solid rgba(192, 146, 74, .28);
+      border-radius: 50%;
+      content: "";
+      box-shadow: 0 0 0 18px rgba(192, 146, 74, .06), 0 0 0 38px rgba(192, 146, 74, .04);
+    }
+    .hero-card-label { margin-bottom: 7px; color: #826138; font-size: 13px; font-weight: 700; }
+    .hero-card h2 { margin-bottom: 20px; color: var(--brown-dark); font-size: 25px; line-height: 1.35; }
+    .contact-line {
+      display: flex;
+      align-items: flex-start;
+      gap: 13px;
+      padding: 13px 0;
+      border-top: 1px solid rgba(119, 91, 53, .17);
+    }
+    .contact-icon {
+      width: 37px;
+      height: 37px;
+      flex: 0 0 37px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      color: var(--brown);
+      background: rgba(255, 255, 255, .7);
+      font-size: 17px;
+    }
+    .contact-line div { min-width: 0; display: grid; }
+    .contact-line small { color: var(--muted); font-size: 12px; }
+    .contact-line a { color: var(--brown-dark); font-size: 15px; font-weight: 700; text-decoration: none; }
+    .contact-line a:hover { text-decoration: underline; }
+    .quick-strip { padding: 0 0 26px; }
+    .quick-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; }
+    .quick-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 15px 18px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--paper);
+    }
+    .quick-item strong { display: block; color: var(--brown-dark); font-size: 14px; }
+    .quick-item span { display: block; color: var(--muted); font-size: 12px; }
+    section { scroll-margin-top: 96px; }
+    .section { padding: 64px 0; }
+    .section.soft { background: rgba(255, 253, 249, .66); border-block: 1px solid var(--line); }
+    .section-heading { max-width: 690px; margin: 0 auto 30px; text-align: center; }
+    .section-heading .eyebrow { margin-bottom: 8px; }
+    .section-heading h2 { margin-bottom: 8px; color: var(--brown-dark); font-size: clamp(27px, 3vw, 37px); line-height: 1.3; }
+    .section-heading p { margin-bottom: 0; color: var(--muted); }
+    .office-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; }
+    .office-card, .info-card {
+      min-width: 0;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: var(--paper);
+      box-shadow: 0 6px 22px rgba(59, 43, 24, .035);
+    }
+    .office-card { display: flex; flex-direction: column; }
+    .office-top { display: flex; align-items: center; gap: 11px; margin-bottom: 14px; }
+    .office-pin {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      color: var(--brown);
+      background: var(--gold-light);
+      font-size: 18px;
+    }
+    .office-top h3 { margin: 0; color: var(--brown-dark); font-size: 19px; }
+    .office-address { min-height: 50px; margin-bottom: 14px; color: var(--muted); font-size: 14px; }
+    .office-hours { margin-top: auto; padding-top: 13px; border-top: 1px solid var(--line); }
+    .office-hours strong { display: block; margin-bottom: 4px; color: #79623e; font-size: 12px; }
+    .office-hours span { color: var(--ink); font-size: 13px; }
+    .office-map { display: inline-flex; align-self: flex-start; margin-top: 13px; color: var(--green); font-size: 13px; font-weight: 700; text-decoration: none; }
+    .office-map:hover { text-decoration: underline; }
+    .info-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .info-card { padding: 24px; }
+    .info-card .office-pin { margin-bottom: 13px; }
+    .info-card h3 { margin-bottom: 8px; color: var(--brown-dark); font-size: 19px; }
+    .info-card p, .info-card li { color: var(--muted); font-size: 14px; }
+    .info-card p:last-child { margin-bottom: 0; }
+    .info-card ul { margin: 10px 0 0; padding-inline-start: 20px; }
+    .info-card li + li { margin-top: 5px; }
+    .directory-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; }
+    .directory-card {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      padding: 21px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: var(--paper);
+      text-decoration: none;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+    .directory-card:hover, .directory-card:focus-visible {
+      transform: translateY(-2px);
+      border-color: #d8c29e;
+      box-shadow: 0 8px 24px rgba(59, 43, 24, .08);
+    }
+    .directory-card h3 { margin: 0 0 6px; color: var(--brown-dark); font-size: 17px; line-height: 1.35; }
+    .directory-card p { margin: 0 0 14px; color: var(--muted); font-size: 13px; }
+    .directory-card span { margin-top: auto; color: var(--green); font-size: 12px; font-weight: 700; }
+    .fee-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-top: 17px;
+      padding: 15px 17px;
+      border: 1px solid #e6d3ae;
+      border-radius: 12px;
+      color: #67533a;
+      background: #fbf3e4;
+      font-size: 13px;
+    }
+    .fee-note strong { color: var(--brown-dark); }
+    .donation-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .donation-card { padding: 23px; border: 1px solid var(--line); border-radius: 15px; background: var(--paper); }
+    .donation-card h3 { margin-bottom: 8px; color: var(--brown-dark); font-size: 19px; }
+    .donation-card p { margin-bottom: 0; color: var(--muted); font-size: 14px; }
+    .donation-card .button { margin-top: 17px; min-height: 42px; padding: 8px 14px; font-size: 13px; }
+    .method-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .method-list span {
+      padding: 5px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #5e5549;
+      background: #fffdfa;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .withdraw-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; }
+    .withdraw-card { padding: 21px; border: 1px solid var(--line); border-radius: 15px; background: var(--paper); }
+    .withdraw-card h3 { margin-bottom: 8px; color: var(--brown-dark); font-size: 18px; }
+    .withdraw-card p { margin-bottom: 0; color: var(--muted); font-size: 14px; }
+    .start-panel {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 24px;
+      padding: 30px;
+      border-radius: 18px;
+      color: #fffaf0;
+      background: var(--brown-dark);
+    }
+    .start-panel h2 { margin-bottom: 7px; font-size: 25px; }
+    .start-panel p { max-width: 700px; margin-bottom: 0; color: #e4d7c3; font-size: 14px; }
+    .start-panel .button { border-color: #e2c38e; color: var(--brown-dark); background: #e2c38e; white-space: nowrap; }
+    .start-panel .button:hover { background: #f0d8ac; }
+    .guide-intro { max-width: 760px; margin: 0 auto 26px; color: var(--muted); text-align: center; }
+    .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    .guide-search { width: min(100%, 560px); display: block; margin: 0 auto 34px; padding: 14px 17px; border: 1px solid var(--line); border-radius: 12px; color: var(--ink); background: var(--paper); font: inherit; }
+    .directory-filters { display: flex; justify-content: center; gap: 12px; margin: -18px auto 28px; }
+    .directory-city-filter { min-height: 46px; padding: 9px 13px; border: 1px solid var(--line); border-radius: 10px; color: var(--ink); background: var(--paper); font: inherit; }
+    .guide-category { padding: 34px 0; border-top: 1px solid var(--line); scroll-margin-top: 96px; }
+    .guide-category h3 { margin-bottom: 8px; color: var(--brown-dark); font-size: 22px; }
+    .guide-category > p { margin-bottom: 17px; color: var(--muted); font-size: 14px; }
+    .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 12px; }
+    .city-group { margin-top: 22px; }
+    .service-grid > .city-group { grid-column: 1 / -1; }
+    .city-group h4 { margin: 0 0 10px; color: var(--brown); font-size: 17px; }
+    .city-group[hidden] { display: none; }
+    .service-card { min-width: 0; padding: 17px; border: 1px solid var(--line); border-radius: 13px; background: var(--paper); }
+    .service-card strong { display: block; margin-bottom: 4px; color: var(--brown-dark); font-size: 15px; }
+    .service-card p { margin: 0; color: var(--muted); font-size: 13px; }
+    .service-card .card-city { margin-top: 4px; color: #79623e; font-size: 12px; font-weight: 600; }
+    .service-card a { display: inline-block; margin-top: 9px; color: var(--green); font-weight: 700; text-decoration: none; }
+    .service-card a:hover { text-decoration: underline; }
+    .service-card[hidden], .guide-category[hidden] { display: none; }
+    .site-footer { padding: 28px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .footer-inner a { color: var(--brown); font-weight: 700; text-decoration: none; }
+    .ltr { direction: ltr; unicode-bidi: isolate; display: inline-block; text-align: left; }
+    @media (max-width: 900px) {
+      .header-inner { flex-wrap: wrap; justify-content: space-between; padding-block: 12px; }
+      .main-nav { order: 3; width: 100%; overflow-x: auto; justify-content: flex-start; }
+      .main-nav a { flex: 0 0 auto; }
+      .hero { padding-top: 52px; }
+      .hero-grid { gap: 32px; }
+      .office-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .info-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .directory-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 620px) {
+      .container { width: min(100% - 28px, 460px); }
+      .header-inner { gap: 8px; }
+      .header-contact { padding: 9px 11px; font-size: 12px; }
+      .brand-mark { width: 48px; height: 48px; }
+      .brand-name strong { font-size: 17px; }
+      .hero { padding: 42px 0 38px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 29px; }
+      h1 { font-size: 42px; }
+      .hero-copy { font-size: 16px; }
+      .hero-card { padding: 23px; }
+      .quick-grid { grid-template-columns: 1fr; gap: 9px; }
+      .section { padding: 48px 0; }
+      .office-grid, .info-grid, .donation-grid, .withdraw-grid, .directory-grid { grid-template-columns: 1fr; }
+      .office-address { min-height: auto; }
+      .start-panel { grid-template-columns: 1fr; padding: 23px; }
+      .start-panel .button { justify-self: start; }
+      .footer-inner { align-items: flex-start; flex-direction: column; gap: 8px; }
+      .directory-filters { flex-direction: column; }
+      .directory-city-filter { width: min(100%, 560px); align-self: center; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Chasdei Chaim — Home">
+        <span class="brand-mark"><img src="chasdei-chaim-logo.png" alt="Chasdei Chaim logo"></span>
+        <span class="brand-name"><strong>Chasdei Chaim</strong><span>Community Directory</span></span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a><a href="index.html#offices">Our Offices</a>
+      </nav>
+      <a class="header-contact" href="tel:+17184758884">Call the Office <span aria-hidden="true">→</span></a>
+    </div>
+  </header>
+<main id="top">
+<section class="section soft" id="community-directory">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Community resources</span>
+          <h2>Community Directory</h2>
+        </div>
+        <p class="guide-intro">Find a service by name, neighborhood, city, or phone number. Listings without a reliable location in the source are grouped under “Location not stated.”</p>
+        <label class="visually-hidden" for="guide-search">Search the community directory</label>
+        <input class="guide-search" id="guide-search" type="search" placeholder="Search services, neighborhoods, or phone numbers">
+        <div class="directory-filters">
+          <label class="visually-hidden" for="directory-city-filter">Filter by city or area</label>
+          <select class="directory-city-filter" id="directory-city-filter">
+            <option value="">All cities and areas</option>
+          </select>
+        </div>
+        <div class="guide-category" id="guide-cover">
+          <h3>Using This Directory</h3>
+          <p>This directory reorganizes the community guide by service and location. Listings keep the business names printed in the source where available; otherwise, the service type is shown rather than an invented company name. Call ahead to confirm current information.</p>
+        </div>
+        <div class="guide-category" id="transportation">
+          <h3>Transportation &amp; Car Services</h3>
+          <p>Car services, public-transit information, and transportation listings from the guide.</p>
+          <div class="service-grid">
+            <article class="service-card" data-directory-entry>
+              <strong>Williamsburg Car Service</strong>
+              <a href="tel:+17183844444"><span class="ltr">718-384-4444</span></a>
+            </article>
+            <article class="service-card" data-directory-entry>
+              <strong>Williamsburg Car Service</strong>
+              <a href="tel:+17183882828"><span class="ltr">718-388-2828</span></a>
+            </article>
+            <article class="service-card" data-directory-entry>
+              <strong>Williamsburg Car Service</strong>
+              <a href="tel:+17185995555"><span class="ltr">718-599-5555</span></a>
+            </article>
+            <article class="service-card" data-directory-entry>
+              <strong>Williamsburg Car Service</strong>
+              <a href="tel:+17182304499"><span class="ltr">718-230-4499</span></a>
+            </article>
+            <article class="service-card" data-directory-entry>
+              <strong>Williamsburg Car Service</strong>
+              <a href="tel:+19293240026"><span class="ltr">929-324-0026</span></a>
+            </article>
+            <article class="service-card" data-directory-entry>
+              <strong>Williamsburg Car Service</strong>
+              <a href="tel:+16467896252"><span class="ltr">646-789-6252</span></a>
+            </article>
+            <article class="service-card" data-directory-entry>
+              <strong>Williamsburg Car Service</strong>
+              <a href="tel:+13475386317"><span class="ltr">347-538-6317</span></a>
+            </article>
+            <article class="service-card" data-directory-entry>
+              <strong>Williamsburg Car Service</strong>
+              <a href="tel:+19295857777"><span class="ltr">929-585-7777</span></a>
+            </article>
+            <article class="service-card" data-directory-entry>
+              <strong>Boro Park Car Service</strong>
+              <a href="tel:+17188885555"><span class="ltr">718-888-5555</span></a>
+            </article>
+            <article class="service-card" data-directory-entry>
+              <strong>Boro Park Car Service</strong>
+              <a href="tel:+17186006666"><span class="ltr">718-600-6666</span></a>
+            </article>
+            <article class="service-card" data-directory-entry>
+              <strong>Boro Park Car Service</strong>
+              <a href="tel:+19293240026"><span class="ltr">929-324-0026</span></a>
+            </article>
+            <article class="service-card" data-directory-entry>
+              <strong>Boro Park Car Service</strong>
+              <a href="tel:+16467896252"><span class="ltr">646-789-6252</span></a>
+            </article>
+            <article class="service-card" data-directory-entry>
+              <strong>Boro Park Car Service</strong>
+              <a href="tel:+13475386317"><span class="ltr">347-538-6317</span></a>
+            </article>
+            <article class="service-card" data-directory-entry>
+              <strong>Boro Park Car Service</strong>
+              <a href="tel:+19295857777"><span class="ltr">929-585-7777</span></a>
+            </article>
+            <article class="service-card" data-directory-entry>
+              <strong>Monsey Car Service</strong>
+              <a href="tel:+18453544111"><span class="ltr">845-354-4111</span></a>
+            </article>
+            <article class="service-card" data-directory-entry>
+              <strong>Monsey Car Service</strong>
+              <a href="tel:+18454251111"><span class="ltr">845-425-1111</span></a>
+            </article>
+            <article class="service-card" data-directory-entry>
+              <strong>Monsey Car Service</strong>
+              <a href="tel:+18458485555"><span class="ltr">845-848-5555</span></a>
+            </article>
+            <article class="service-card" data-directory-entry>
+              <strong>Monsey Car Service</strong>
+              <a href="tel:+18456221111"><span class="ltr">845-622-1111</span></a>
+            </article>
+            <article class="service-card" data-directory-entry>
+              <strong>Monsey Car Service</strong>
+              <a href="tel:+18452726666"><span class="ltr">845-272-6666</span></a>
+            </article>
+            <article class="service-card" data-directory-entry>
+              <strong>Monsey Car Service</strong>
+              <a href="tel:+18455994444"><span class="ltr">845-599-4444</span></a>
+            </article>
+          </div>
+        </div>
+        <div class="guide-category" id="food">
+          <h3>Food, Restaurants &amp; Grocery Stores</h3>
+          <p>The guide groups these restaurant, grocery, prepared-meal, and Shabbat-food contacts by community. Business names are retained where they can be read reliably; where the printed name could not be confirmed, the contact is shown by service and location rather than guessed.</p>
+          <div class="service-grid">
+            <article class="service-card" data-directory-entry data-city="Monsey"><strong>Food business contact</strong><p>Monsey area</p><a href="tel:+18454259617"><span class="ltr">845-425-9617</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Williamsburg"><strong>Food business contact</strong><p>Williamsburg</p><a href="tel:+17183875411"><span class="ltr">718-387-5411</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Williamsburg"><strong>Food business contact</strong><p>Williamsburg</p><a href="tel:+17189632112"><span class="ltr">718-963-2112</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Williamsburg"><strong>Food business contact</strong><p>Williamsburg</p><a href="tel:+17183843935"><span class="ltr">718-384-3935</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Boro Park"><strong>Food business contact</strong><p>Boro Park</p><a href="tel:+17188585421"><span class="ltr">718-858-5421</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Boro Park"><strong>Food business contact</strong><p>Boro Park</p><a href="tel:+17188341682"><span class="ltr">718-834-1682</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Boro Park"><strong>Food business contact</strong><p>Boro Park</p><a href="tel:+17186248200"><span class="ltr">718-624-8200</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Brooklyn, NY"><strong>Food business contact</strong><p>Brooklyn</p><a href="tel:+17185225154"><span class="ltr">718-522-5154</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Williamsburg"><strong>Food business contact</strong><p>Williamsburg</p><a href="tel:+17185003322"><span class="ltr">718-500-3322</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Williamsburg"><strong>Food business contact</strong><p>Williamsburg</p><a href="tel:+17183881200"><span class="ltr">718-388-1200</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Williamsburg"><strong>Food business contact</strong><p>Williamsburg</p><a href="tel:+17188745566"><span class="ltr">718-874-5566</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Williamsburg"><strong>Food business contact</strong><p>Williamsburg</p><a href="tel:+17188528595"><span class="ltr">718-852-8595</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Williamsburg"><strong>Food business contact</strong><p>Williamsburg</p><a href="tel:+17183842000"><span class="ltr">718-384-2000</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Monsey"><strong>Food business contact</strong><p>Monsey</p><a href="tel:+18453524400"><span class="ltr">845-352-4400</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Monsey"><strong>Food business contact</strong><p>Monsey</p><a href="tel:+18453565310"><span class="ltr">845-356-5310</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Monsey"><strong>Food business contact</strong><p>Monsey</p><a href="tel:+18454252266"><span class="ltr">845-425-2266</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Monsey"><strong>Food business contact</strong><p>Monsey</p><a href="tel:+18454256328"><span class="ltr">845-425-6328</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Monsey"><strong>Food business contact</strong><p>Monsey</p><a href="tel:+18453522021"><span class="ltr">845-352-2021</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Monsey"><strong>Food business contact</strong><p>Monsey</p><a href="tel:+18454259220"><span class="ltr">845-425-9220</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Monsey"><strong>Food business contact</strong><p>Monsey</p><a href="tel:+18453717365"><span class="ltr">845-371-7365</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Monsey"><strong>Food business contact</strong><p>Monsey</p><a href="tel:+18455781700"><span class="ltr">845-578-1700</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Boro Park"><strong>Food business contact</strong><p>Boro Park</p><a href="tel:+17184751331"><span class="ltr">718-475-1331</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Monsey"><strong>Food business contact</strong><p>Monsey</p><a href="tel:+18454143000"><span class="ltr">845-414-3000</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Monsey"><strong>Food business contact</strong><p>Monsey</p><a href="tel:+18453647217"><span class="ltr">845-364-7217</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Monsey"><strong>Food business contact</strong><p>Monsey</p><a href="tel:+18453579500"><span class="ltr">845-357-9500</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Monsey"><strong>Food business contact</strong><p>Monsey</p><a href="tel:+18453714727"><span class="ltr">845-371-4727</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Monsey"><strong>Food business contact</strong><p>Monsey</p><a href="tel:+18453540300"><span class="ltr">845-354-0300</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Kiryas Joel &amp; nearby"><strong>Food business contact</strong><p>Kiryas Joel and nearby</p><a href="tel:+18457838465"><span class="ltr">845-783-8465</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Kiryas Joel &amp; nearby"><strong>Food business contact</strong><p>Kiryas Joel and nearby</p><a href="tel:+18457838553"><span class="ltr">845-783-8553</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Kiryas Joel &amp; nearby"><strong>Food business contact</strong><p>Kiryas Joel and nearby</p><a href="tel:+18457741464"><span class="ltr">845-774-1464</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Kiryas Joel &amp; nearby"><strong>Food business contact</strong><p>Kiryas Joel and nearby</p><a href="tel:+18457826166"><span class="ltr">845-782-6166</span></a></article>
+          </div>
+          <div class="fee-note"><span aria-hidden="true">ℹ</span><div><strong>Meal and Shabbat information:</strong> The guide also describes prepared meals and meal times. Hours can vary by season and Shabbat; please confirm with the provider.</div></div>
+        </div>
+        <div class="guide-category" id="lodging">
+          <h3>Lodging</h3>
+          <p>Guest accommodation contacts listed in the guide. Names could not be reliably read; call to identify the listing and confirm availability.</p>
+          <div class="service-grid">
+            <article class="service-card" data-directory-entry><strong>Guest accommodation listing</strong><a href="tel:+17184751331"><span class="ltr">718-475-1331</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Guest accommodation listing</strong><a href="tel:+17188517669"><span class="ltr">718-851-7669</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Guest accommodation listing</strong><a href="tel:+17184374997"><span class="ltr">718-437-4997</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Guest accommodation listing</strong><a href="tel:+17188544005"><span class="ltr">718-854-4005</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Guest accommodation listing</strong><a href="tel:+17184382721"><span class="ltr">718-438-2721</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Guest accommodation listing</strong><a href="tel:+17182596666"><span class="ltr">718-259-6666</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Guest accommodation listing</strong><a href="tel:+17184367701"><span class="ltr">718-436-7701</span></a></article>
+          </div>
+        </div>
+        <div class="guide-category" id="urgent-care">
+          <h3>Urgent Care &amp; Medical Services</h3>
+          <p>Medical and urgent-care contacts from the guide. For a life-threatening emergency, call 911.</p>
+          <div class="service-grid">
+            <article class="service-card" data-directory-entry><strong>Medical / urgent-care listing</strong><a href="tel:+17183332424"><span class="ltr">718-333-2424</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Medical / urgent-care listing</strong><a href="tel:+17182604600"><span class="ltr">718-260-4600</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Medical / urgent-care listing</strong><a href="tel:+17186211000"><span class="ltr">718-621-1000</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Medical / urgent-care listing</strong><a href="tel:+17184991000"><span class="ltr">718-499-1000</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Medical / urgent-care listing</strong><a href="tel:+17188513000"><span class="ltr">718-851-3000</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Medical / urgent-care listing</strong><a href="tel:+17184361000"><span class="ltr">718-436-1000</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Medical / urgent-care listing</strong><a href="tel:+17186867600"><span class="ltr">718-686-7600</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Medical / urgent-care listing</strong><a href="tel:+18453549300"><span class="ltr">845-354-9300</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Medical / urgent-care listing</strong><a href="tel:+18453717200"><span class="ltr">845-371-7200</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Medical / urgent-care listing</strong><a href="tel:+18453562273"><span class="ltr">845-356-2273</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Medical / urgent-care listing</strong><a href="tel:+18453526800"><span class="ltr">845-352-6800</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Medical / urgent-care listing</strong><a href="tel:+18453543900"><span class="ltr">845-354-3900</span></a></article>
+          </div>
+        </div>
+        <div class="guide-category" id="legal-laundry">
+          <h3>Legal Aid &amp; Free Laundry</h3>
+          <p>The guide includes community legal-aid organizations and free-laundry information. The provider details on these pages could not be reliably extracted; contact the office for help with these listings.</p>
+          <a href="tel:+17184758884">Call the office: <span class="ltr">718-475-8884</span> ext. 222</a>
+        </div>
+        <div class="guide-category" id="rabbinical">
+          <h3>Rabbinical Guidance &amp; Community Services</h3>
+          <p>The guide lists rabbinical guidance, messenger services, and chesed referrals. Contact the office for help finding the correct service.</p>
+          <a href="tel:+17184758884">Call the office: <span class="ltr">718-475-8884</span> ext. 222</a>
+        </div>
+        <div class="guide-category" id="check-cashing">
+          <h3>Check Cashing &amp; Currency Exchange</h3>
+          <p>Check-cashing contacts transcribed from the guide. Confirm current fees, hours, and identification requirements directly with the provider.</p>
+          <div class="service-grid">
+            <article class="service-card" data-directory-entry><strong>Check-cashing listing</strong><a href="tel:+17184868101"><span class="ltr">718-486-8101</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Check-cashing listing</strong><a href="tel:+18454261414"><span class="ltr">845-426-1414</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Check-cashing listing</strong><a href="tel:+18453562274"><span class="ltr">845-356-2274</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Check-cashing listing</strong><a href="tel:+18457742205"><span class="ltr">845-774-2205</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Check-cashing listing</strong><a href="tel:+17184361623"><span class="ltr">718-436-1623</span></a></article>
+          </div>
+        </div>
+        <div class="guide-category" id="pharmacies-travel">
+          <h3>Pharmacies &amp; Travel Agents</h3>
+          <p>Pharmacy and travel-agent contacts from the guide. Confirm hours and availability by phone.</p>
+          <div class="service-grid">
+            <article class="service-card" data-directory-entry><strong>Pharmacy listing</strong><p>Corner of Rutledge</p><a href="tel:+17188553070"><span class="ltr">718-855-3070</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Pharmacy listing</strong><p>Between Hooper and Keap</p><a href="tel:+17183840234"><span class="ltr">718-384-0234</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Pharmacy listing</strong><p>Corner of Wallabout</p><a href="tel:+17188550214"><span class="ltr">718-855-0214</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Pharmacy listing</strong><p>Corner of Roebling</p><a href="tel:+17185992771"><span class="ltr">718-599-2771</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Pharmacy listing</strong><a href="tel:+18453563045"><span class="ltr">845-356-3045</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Pharmacy listing</strong><a href="tel:+18453569300"><span class="ltr">845-356-9300</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Travel agent</strong><p>Shopping Center</p><a href="tel:+18457833399"><span class="ltr">845-783-3399</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Health-food / vitamin store</strong><p>Corner of Ross and Wilson</p><a href="tel:+17183877387"><span class="ltr">718-387-7387</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Health-food / vitamin store</strong><p>Between Wallabout and Flushing</p><a href="tel:+17186401650"><span class="ltr">718-640-1650</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Health-food / vitamin store</strong><p>Between Flushing and Park</p><a href="tel:+17182462800"><span class="ltr">718-246-2800</span></a></article>
+          </div>
+        </div>
+        <div class="guide-category" id="computer-centers">
+          <h3>Computer Centers</h3>
+          <p>Computer-center listings with nearby cross streets, transcribed and translated from the guide.</p>
+          <div class="service-grid">
+            <article class="service-card" data-directory-entry><strong>Computer center</strong><p>Between Bedford and Driggs</p></article>
+            <article class="service-card" data-directory-entry><strong>Computer center</strong><p>Between Clymer and Division</p></article>
+            <article class="service-card" data-directory-entry><strong>Computer center</strong><p>Corner of Hewes</p><a href="tel:+17184227685"><span class="ltr">718-422-7685</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Computer center</strong><p>Corner of Penn</p><a href="tel:+9295003000"><span class="ltr">929-500-3000</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Computer center</strong><p>Corner of White</p><a href="tel:+17182198913"><span class="ltr">718-219-8913</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Computer center</strong><p>Corner of Hewes</p></article>
+            <article class="service-card" data-directory-entry><strong>Computer center</strong><p>Between Lee and Bedford</p></article>
+            <article class="service-card" data-directory-entry><strong>Computer center</strong><p>Corner of Heyward</p></article>
+            <article class="service-card" data-directory-entry><strong>Computer center</strong><p>Between Penn and Rutledge</p><a href="tel:+17184227685"><span class="ltr">718-422-7685</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Computer center</strong><p>By Wallabout</p></article>
+            <article class="service-card" data-directory-entry><strong>Computer center</strong><p>Between Franklin and Kent</p></article>
+            <article class="service-card" data-directory-entry><strong>Computer center</strong><p>Between Wallabout and Flushing</p><a href="tel:+17184868323"><span class="ltr">718-486-8323</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Computer center</strong><p>Between Flushing and Park</p></article>
+            <article class="service-card" data-directory-entry><strong>Computer center</strong><p>Between Bedford and Spencer</p></article>
+            <article class="service-card" data-directory-entry><strong>Computer center</strong><a href="tel:+17189724648"><span class="ltr">718-972-4648</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Computer center</strong><a href="tel:+17184868232"><span class="ltr">718-486-8232</span></a></article>
+          </div>
+        </div>
+        <div class="guide-category" id="charity-lines">
+          <h3>Charity Phone Lines</h3>
+          <p>Community charity phone lines listed in the guide. The adjacent notes describe locations in the community; the names were not reliably readable.</p>
+          <div class="service-grid">
+            <article class="service-card" data-directory-entry><strong>Community charity line</strong><p>Upstairs, right side</p><a href="tel:+18455877777"><span class="ltr">845-587-7777</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Community charity line</strong><p>Upstairs, left side</p><a href="tel:+18453791044"><span class="ltr">845-379-1044</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Community charity line</strong><p>Ground floor</p><a href="tel:+18452031188"><span class="ltr">845-203-1188</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Community charity line</strong><p>Between White and Kent</p><a href="tel:+18453718324"><span class="ltr">845-371-8324</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Community charity line</strong><a href="tel:+18459773100"><span class="ltr">845-977-3100</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Community charity line</strong><a href="tel:+18455706100"><span class="ltr">845-570-6100</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Community charity line</strong><a href="tel:+18456001225"><span class="ltr">845-600-1225</span></a></article>
+          </div>
+        </div>
+        <div class="guide-category" id="cell-phone-stores">
+          <h3>Cell Phone Stores</h3>
+          <p>Named Boro Park phone shops are listed with the business names and addresses printed in the guide. Other locations remain identified by the service and cross streets provided by the source.</p>
+          <div class="service-grid">
+            <article class="service-card" data-directory-entry data-city="Boro Park"><strong>World of Communications</strong><p>4904 13th Avenue · Boro Park</p><a href="tel:+17188317007"><span class="ltr">718-831-7007</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Boro Park"><strong>Cellular 4 Less</strong><p>5308 13th Avenue · Boro Park</p><a href="tel:+17188517600"><span class="ltr">718-851-7600</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Boro Park"><strong>Planet Cell of New York</strong><p>3922 16th Avenue · Boro Park</p><a href="tel:+17186337555"><span class="ltr">718-633-7555</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Boro Park"><strong>The Computer Store</strong><p>4812 13th Avenue · Boro Park</p><a href="tel:+16468288159"><span class="ltr">646-828-8159</span></a></article>
+            <article class="service-card" data-directory-entry>
+              <strong>Cell-phone store</strong><p>Between Lee and Bedford</p>
+              <a href="tel:+17184002355"><span class="ltr">718-400-2355</span></a>
+            </article>
+            <article class="service-card" data-directory-entry>
+              <strong>Cell-phone store</strong><p>Between Lee and Bedford</p>
+              <a href="tel:+17183882355"><span class="ltr">718-388-2355</span></a>
+            </article>
+            <article class="service-card" data-directory-entry>
+              <strong>Cell-phone store</strong><p>Between Flushing and Park</p>
+              <a href="tel:+17182139922"><span class="ltr">718-213-9922</span></a>
+            </article>
+            <article class="service-card" data-directory-entry>
+              <strong>Cell-phone store</strong><p>Corner of Skillman</p>
+              <a href="tel:+17182890102"><span class="ltr">718-289-0102</span></a>
+            </article>
+            <article class="service-card" data-directory-entry><strong>Cell-phone store</strong><p>Between Lee and Bedford</p><a href="tel:+17184865587"><span class="ltr">718-486-5587</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Cell-phone store</strong><p>Between Wallabout and Flushing</p><a href="tel:+17184868323"><span class="ltr">718-486-8323</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Cell-phone store</strong><p>Monsey area</p><a href="tel:+18453719400"><span class="ltr">845-371-9400</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Cell-phone store</strong><p>Monsey area</p><a href="tel:+18455998255"><span class="ltr">845-599-8255</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Cell-phone store</strong><p>Monsey area</p><a href="tel:+18455480481"><span class="ltr">845-548-0481</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Cell-phone store</strong><p>Monsey area</p><a href="tel:+18459998255"><span class="ltr">845-999-8255</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Cell-phone store</strong><p>Monsey area</p><a href="tel:+18452933444"><span class="ltr">845-293-3444</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Cell-phone store</strong><p>Monsey area</p><a href="tel:+18453842255"><span class="ltr">845-384-2255</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Cell-phone store</strong><p>Monsey area</p><a href="tel:+18453952211"><span class="ltr">845-395-2211</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Cell-phone store</strong><p>Monsey area</p><a href="tel:+18457817777"><span class="ltr">845-781-7777</span></a></article>
+            <article class="service-card" data-directory-entry><strong>Cell-phone store</strong><p>Monsey area</p><a href="tel:+18453882355"><span class="ltr">845-388-2355</span></a></article>
+          </div>
+        </div>
+        <div class="guide-category" id="credit-card-machines">
+          <h3>Currency Exchange &amp; Credit Card Machines</h3>
+          <p>Currency-exchange and credit-card machine contacts from the guide. Confirm service details and fees with the provider.</p>
+          <div class="service-grid">
+            <article class="service-card" data-directory-entry data-city="Williamsburg"><strong>Currency exchange</strong><p>263 Skillman Street · Williamsburg</p><a href="tel:+17188745566"><span class="ltr">718-874-5566</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Williamsburg"><strong>Currency exchange</strong><p>569 Marcy Avenue · Williamsburg</p><a href="tel:+17188528595"><span class="ltr">718-852-8595</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Williamsburg"><strong>Currency exchange</strong><p>249 Wallabout Street · Williamsburg</p><a href="tel:+17183842000"><span class="ltr">718-384-2000</span></a></article>
+          </div>
+        </div>
+        <div class="guide-category" id="hospitals">
+          <h3>Hospitals &amp; Medical Centers</h3>
+          <p>Hospital names and addresses below are transcribed from the guide. The guide prints patient-room phone contacts separately, so those numbers are listed in a separate section rather than being guessed or attached to a hospital.</p>
+          <div class="directory-subsection">
+          <div class="service-grid">
+            <article class="service-card" data-directory-entry data-city="New York City"><strong>Memorial Sloan Kettering</strong><p>1275 York Avenue · New York, NY</p></article>
+            <article class="service-card" data-directory-entry data-city="New York City"><strong>Hospital for Special Surgery</strong><p>535 East 70th Street · New York, NY</p></article>
+            <article class="service-card" data-directory-entry data-city="New York City"><strong>NY Cornell</strong><p>525 East 68th Street · New York, NY</p></article>
+            <article class="service-card" data-directory-entry data-city="New York City"><strong>Mount Sinai Guggenheim</strong><p>1190 Fifth Avenue · New York, NY</p></article>
+            <article class="service-card" data-directory-entry data-city="New York City"><strong>Lenox Hill</strong><p>100 East 77th Street · New York, NY</p></article>
+            <article class="service-card" data-directory-entry data-city="New York City"><strong>Columbia Milstein</strong><p>177 Fort Washington Avenue · New York, NY</p></article>
+            <article class="service-card" data-directory-entry data-city="New York City"><strong>Columbia Children's</strong><p>3959 Broadway · New York, NY</p></article>
+            <article class="service-card" data-directory-entry data-city="New York City"><strong>Mount Sinai Morningside</strong><p>111 Amsterdam Avenue · New York, NY</p></article>
+            <article class="service-card" data-directory-entry data-city="New York City"><strong>Columbia Allen</strong><p>5141 Broadway · New York, NY</p></article>
+            <article class="service-card" data-directory-entry data-city="Englewood, NJ"><strong>Englewood</strong><p>350 Engle Street · Englewood, NJ</p></article>
+            <article class="service-card" data-directory-entry data-city="Hackensack, NJ"><strong>Hackensack Main</strong><p>30 Prospect Avenue · Hackensack, NJ</p></article>
+            <article class="service-card" data-directory-entry data-city="Hackensack, NJ"><strong>Hackensack Women's and Children's</strong><p>30 Prospect Avenue · Hackensack, NJ</p></article>
+            <article class="service-card" data-directory-entry data-city="Hackensack, NJ"><strong>Hackensack — Helena Theurer Pavilion</strong><p>59 Second Street · Hackensack, NJ</p></article>
+            <article class="service-card" data-directory-entry data-city="Paramus, NJ"><strong>Valley 5th Floor</strong><p>650 Winters Avenue · Paramus, NJ 07652</p></article>
+            <article class="service-card" data-directory-entry data-city="Paramus, NJ"><strong>Valley 7th Floor</strong><p>650 Winters Avenue · Paramus, NJ 07652</p></article>
+            <article class="service-card" data-directory-entry data-city="Paramus, NJ"><strong>Valley ER</strong><p>651 Winters Avenue · Paramus, NJ 07652</p></article>
+            <article class="service-card" data-directory-entry data-city="New Jersey"><strong>Alaris Health Select Home</strong><p>96 Parkway · New Jersey</p></article>
+            <article class="service-card" data-directory-entry data-city="New Jersey"><strong>Trinitas</strong><p>225 Williamson Street · New Jersey</p></article>
+            <article class="service-card" data-directory-entry data-city="New Jersey"><strong>Overlook</strong><p>99 Beauvoir Avenue · New Jersey</p></article>
+            <article class="service-card" data-directory-entry data-city="Suffern, NY"><strong>Good Sam / Suffern</strong><p>255 Lafayette Avenue · Suffern, NY</p></article>
+            <article class="service-card" data-directory-entry data-city="Suffern, NY"><strong>Suffern ER</strong><p>255 Lafayette Avenue · Suffern, NY</p></article>
+            <article class="service-card" data-directory-entry data-city="Harris, NY"><strong>Catskill Regional</strong><p>68 Harris-Bushville Road · Harris, NY</p></article>
+            <article class="service-card" data-directory-entry data-city="Northern Westchester, NY"><strong>Northern Westchester</strong><p>100 East Main Street · Northern Westchester, NY</p></article>
+            <article class="service-card" data-directory-entry data-city="Ellenville, NY"><strong>Ellenville</strong><p>10 Healthy Way · Ellenville, NY</p></article>
+            <article class="service-card" data-directory-entry data-city="Bronx, NY"><strong>Calvary Hospital</strong><p>1740 Eastchester Road · Bronx, NY</p></article>
+            <article class="service-card" data-directory-entry data-city="Queens, NY"><strong>Long Island Jewish Forest Hills Hospital</strong><p>102-01 68th Road · Queens, NY</p></article>
+            <article class="service-card" data-directory-entry data-city="Queens, NY"><strong>St. Mary's Hospital for Children</strong><p>29-01 216th Street · Queens, NY</p></article>
+            <article class="service-card" data-directory-entry data-city="Nyack, NY"><strong>Nyack ER</strong><p>11 North Highland Avenue · Nyack, NY</p></article>
+            <article class="service-card" data-directory-entry data-city="Brooklyn, NY"><strong>NYP Methodist</strong><p>506 6th Street · Brooklyn, NY</p></article>
+          </div>
+          </div>
+          <div class="directory-subsection">
+          <h3>Hospital Patient-Room Contacts</h3>
+          <p>The guide lists these city, ZIP code, phone, and room details separately from hospital names. Facility names are not inferred.</p>
+          <div class="service-grid">
+            <article class="service-card" data-directory-entry data-city="New York City"><strong>Patient-room contact · New York, NY 10065</strong><p>1st Floor, Room C-172</p><a href="tel:+12126392000"><span class="ltr">212-639-2000</span></a></article>
+            <article class="service-card" data-directory-entry data-city="New York City"><strong>Patient-room contact · New York, NY 10021</strong><p>2nd Floor, West Room 167</p><a href="tel:+12126061000"><span class="ltr">212-606-1000</span></a></article>
+            <article class="service-card" data-directory-entry data-city="New York City"><strong>Patient-room contact · New York, NY 10021</strong><p>2nd Floor, Room 107 North</p><a href="tel:+12127465454"><span class="ltr">212-746-5454</span></a></article>
+            <article class="service-card" data-directory-entry data-city="New York City"><strong>Patient-room contact · New York, NY 10029</strong><p>2nd Floor West, next to the shul</p><a href="tel:+12122416500"><span class="ltr">212-241-6500</span></a></article>
+            <article class="service-card" data-directory-entry data-city="New York City"><strong>Patient-room contact · New York, NY 10075</strong><p>4th Floor, off the lounge</p><a href="tel:+12124342000"><span class="ltr">212-434-2000</span></a></article>
+            <article class="service-card" data-directory-entry data-city="New York City"><strong>Patient-room contact · New York, NY 10032</strong><p>6th Floor, Hudson South, Room 6-112</p><a href="tel:+12123052500"><span class="ltr">212-305-2500</span></a></article>
+            <article class="service-card" data-directory-entry data-city="New York City"><strong>Patient-room contact · New York, NY 10032</strong><p>6th Floor Lobby, Room 662</p><a href="tel:+12123052500"><span class="ltr">212-305-2500</span></a></article>
+            <article class="service-card" data-directory-entry data-city="New York City"><strong>Patient-room contact · New York, NY 10032</strong><p>6th Floor, Room 6A-144, near Unit 6 West</p><a href="tel:+12123052500"><span class="ltr">212-305-2500</span></a></article>
+            <article class="service-card" data-directory-entry data-city="New York City"><strong>Patient-room contact · New York, NY 10025</strong><p>1st Floor, Room 1019, near Labor &amp; Delivery</p><a href="tel:+12125234000"><span class="ltr">212-523-4000</span></a></article>
+            <article class="service-card" data-directory-entry data-city="New York City"><strong>Patient-room contact · New York, NY 10034</strong><p>1st Floor, Room 1019, near Labor &amp; Delivery</p><a href="tel:+12129324000"><span class="ltr">212-932-4000</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Englewood, NJ"><strong>Patient-room contact · Englewood, NJ 07631</strong><p>3rd Floor, Room 3-225</p><a href="tel:+12018943000"><span class="ltr">201-894-3000</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Hackensack, NJ"><strong>Patient-room contact · Hackensack, NJ 07601</strong><p>4th Floor, Room 4054</p><a href="tel:+12019962000"><span class="ltr">201-996-2000</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Hackensack, NJ"><strong>Patient-room contact · Hackensack, NJ 07601</strong><p>5th Floor West, Room 121</p><a href="tel:+12019962000"><span class="ltr">201-996-2000</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Hackensack, NJ"><strong>Patient-room contact · Hackensack, NJ 07601</strong><p>7th Floor, Room 7018A</p><a href="tel:+12019962000"><span class="ltr">201-996-2000</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Paramus, NJ"><strong>Patient-room contact · Paramus, NJ 07652</strong><p>5th Floor, Room 5S-505, South Tower Family Pavilion</p><a href="tel:+12014478000"><span class="ltr">201-447-8000</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Paramus, NJ"><strong>Patient-room contact · Paramus, NJ 07652</strong><p>7th Floor, Room S7-620, North Elevators</p><a href="tel:+12014478000"><span class="ltr">201-447-8000</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Rochelle Park, NJ"><strong>Patient-room contact · Rochelle Park, NJ 07662</strong><p>1st Floor, past the elevators on the left</p><a href="tel:+12012269600"><span class="ltr">201-226-9600</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Elizabeth, NJ"><strong>Patient-room contact · Elizabeth, NJ 07202</strong><p>6th Floor North</p><a href="tel:+19089947000"><span class="ltr">908-994-7000</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Summit, NJ"><strong>Patient-room contact · Summit, NJ 07901</strong><p>4th Floor pantry, next to cafeteria vending machine</p><a href="tel:+19085222000"><span class="ltr">908-522-2000</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Suffern, NY"><strong>Patient-room contact · Suffern, NY 10901</strong><p>Main corridor, behind the information desk</p><a href="tel:+18453685000"><span class="ltr">845-368-5000</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Suffern, NY"><strong>Patient-room contact · Suffern, NY 10901</strong><a href="tel:+18453685000"><span class="ltr">845-368-5000</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Harris, NY"><strong>Patient-room contact · Harris, NY 12742</strong><p>5th Floor, Room 501</p><a href="tel:+18457943300"><span class="ltr">845-794-3300</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Mount Kisco, NY"><strong>Patient-room contact · Mount Kisco, NY 10549</strong><p>First floor lobby, Room W156</p><a href="tel:+19146661200"><span class="ltr">914-666-1200</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Ellenville, NY"><strong>Patient-room contact · Ellenville, NY 12428</strong><p>Off the main lobby</p><a href="tel:+18456476400"><span class="ltr">845-647-6400</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Bronx, NY"><strong>Patient-room contact · Bronx, NY 10461</strong><p>3rd Floor, across from the family lounge</p><a href="tel:+17185182000"><span class="ltr">718-518-2000</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Queens, NY"><strong>Patient-room contact · Forest Hills, NY 11375</strong><p>Pantry, 1st Floor, next to the cafeteria pantry</p><a href="tel:+17188304093"><span class="ltr">718-830-4093</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Queens, NY"><strong>Patient-room contact · Bayside, NY 11360</strong><p>1st Floor, turn right at the information desk; room is down the hallway on the left</p><a href="tel:+17182818800"><span class="ltr">718-281-8800</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Nyack, NY"><strong>Patient-room contact · Nyack, NY 10960</strong><p>Next to the nurse's station, Pediatrics</p><a href="tel:+18453482000"><span class="ltr">845-348-2000</span></a></article>
+            <article class="service-card" data-directory-entry data-city="Brooklyn, NY"><strong>Patient-room contact · Brooklyn, NY 11215</strong><p>1st Floor lobby, behind Security</p><a href="tel:+17187803000"><span class="ltr">718-780-3000</span></a></article>
+          </div>
+          </div>
+          <p>For emergencies, call <a href="tel:911">911</a>. For help with the guide's listings, call the office: <a href="tel:+17184758884"><span class="ltr">718-475-8884</span></a>, ext. 222.</p>
+        </div>
+      </div>
+    </section>
+</main>
+
+  <script>
+    const guideSearch = document.getElementById("guide-search");
+    const cityFilter = document.getElementById("directory-city-filter");
+    const guideCategories = Array.from(document.querySelectorAll(".guide-category"));
+    const cityNames = new Set();
+
+    function getEntryCity(entry) {
+      if (entry.dataset.city) return entry.dataset.city;
+      const text = entry.textContent.toLowerCase();
+      if (text.includes("boro park")) return "Boro Park";
+      if (text.includes("williamsburg")) return "Williamsburg";
+      if (text.includes("monsey")) return "Monsey";
+      if (text.includes("kiryas joel")) return "Kiryas Joel";
+      if (/(lee and bedford|marcy and lee|bedford and white|white and kent|penn and rutledge|corner of rodney|wallabout|ross and wilson|hooper and keap|corner of roebling|corner of skillman|flushing and park|corner of hewes|corner of penn|corner of white|corner of heyward|corner of dekalb|bedford and driggs|clymer and division|hewes and keap|hewes|corner of penn|corner of white|heyward|franklin and kent|bedford and spencer)/.test(text)) return "Williamsburg";
+      return "Location not stated";
+    }
+
+    guideCategories.forEach((category) => {
+      category.querySelectorAll(".service-grid").forEach((grid) => {
+        const entries = Array.from(grid.querySelectorAll(":scope > [data-directory-entry]"));
+        const cityGroups = new Map();
+
+        entries.forEach((entry) => {
+          const city = getEntryCity(entry);
+          entry.dataset.city = city;
+          cityNames.add(city);
+          if (!cityGroups.has(city)) cityGroups.set(city, []);
+          cityGroups.get(city).push(entry);
+        });
+
+        Array.from(cityGroups).sort(([first], [second]) => first.localeCompare(second)).forEach(([city, cityEntries]) => {
+          const group = document.createElement("div");
+          const heading = document.createElement("h4");
+          const cards = document.createElement("div");
+          group.className = "city-group";
+          heading.textContent = city;
+          cards.className = "service-grid";
+          cityEntries.forEach((entry) => cards.append(entry));
+          group.append(heading, cards);
+          grid.append(group);
+        });
+      });
+    });
+
+    Array.from(cityNames).sort((first, second) => first.localeCompare(second)).forEach((city) => {
+      const option = document.createElement("option");
+      option.value = city;
+      option.textContent = city;
+      cityFilter.append(option);
+    });
+
+    function filterDirectory() {
+      const query = guideSearch.value.trim().toLowerCase();
+      const selectedCity = cityFilter.value;
+
+      guideCategories.forEach((category) => {
+        const entries = Array.from(category.querySelectorAll("[data-directory-entry]"));
+        if (entries.length === 0) {
+          category.hidden = selectedCity !== "" || (query !== "" && !category.textContent.toLowerCase().includes(query));
+          return;
+        }
+
+        let visibleEntries = 0;
+        entries.forEach((entry) => {
+          const matches = entry.textContent.toLowerCase().includes(query)
+            && (!selectedCity || entry.dataset.city === selectedCity);
+          entry.hidden = !matches;
+          if (matches) visibleEntries += 1;
+        });
+        category.querySelectorAll(".city-group").forEach((group) => {
+          group.hidden = !Array.from(group.querySelectorAll("[data-directory-entry]")).some((entry) => !entry.hidden);
+        });
+        category.querySelectorAll(".directory-subsection").forEach((subsection) => {
+          subsection.hidden = !Array.from(subsection.querySelectorAll("[data-directory-entry]")).some((entry) => !entry.hidden);
+        });
+        category.hidden = visibleEntries === 0;
+      });
+    }
+
+    guideSearch.addEventListener("input", filterDirectory);
+    cityFilter.addEventListener("change", filterDirectory);
+  </script>
+</body>
+</html>

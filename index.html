@@ -1,236 +1,357 @@
-<!doctype html>
-<html lang="yi" dir="rtl">
+﻿<!doctype html>
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Charity Secure</title>
+  <meta name="theme-color" content="#f8f4ec">
+  <meta name="description" content="Chasdei Chaim — office details, payment information, and a community resource directory.">
+  <title>Chasdei Chaim | Practical Information</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       color-scheme: light;
-      --ink: #172337;
-      --muted: #58687d;
-      --green: #243653;
-      --orange: #8298b6;
-      --line: #ccd5e1;
-      --paper: #111827;
-      --canvas: #f2f5f9;
-      --green-light: #263b57;
-      --panel-ink: #f4f7fb;
-      --panel-muted: #aab7ca;
-      font-family: "Heebo", "Arial", sans-serif;
+      --ink: #29251f;
+      --muted: #756c5e;
+      --brown: #51351f;
+      --brown-dark: #382619;
+      --gold: #c0924a;
+      --gold-light: #f3e8d4;
+      --paper: #fffdf9;
+      --canvas: #f8f4ec;
+      --line: #e8dfd1;
+      --green: #42694f;
+      font-family: "Heebo", Arial, sans-serif;
+      scroll-behavior: smooth;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      min-height: 100vh;
       color: var(--ink);
-      background-color: var(--canvas);
-      background-image: radial-gradient(#dce4ee .7px, transparent .7px);
-      background-size: 18px 18px;
+      background:
+        radial-gradient(ellipse at 7% 8%, rgba(192, 146, 74, .11), transparent 30rem),
+        var(--canvas);
+      line-height: 1.7;
     }
-    .app-shell { min-height: 100vh; display: grid; grid-template-columns: 250px minmax(0, 1fr); direction: ltr; }
-    .sidebar { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; gap: 34px; padding: 24px 18px; border-right: 1px solid #29364a; color: var(--panel-ink); background: #111827; direction: ltr; }
-    .sidebar .brand { width: 100%; padding: 12px !important; border: 1px solid #273142; border-radius: 12px; color: #f8fafc; background: #111827; direction: ltr; text-align: left; }
-    .sidebar-nav { display: grid; gap: 6px; }
-    .nav-button { min-height: 48px; padding: 10px 12px; border: 0; border-radius: 6px; text-align: left; direction: ltr; color: #c3cede; background: transparent; font-size: 20px; font-weight: 700; }
-    .nav-button:hover { background: #202d43; color: var(--ink); }
-    .nav-button[aria-current="page"] { border-left: 3px solid var(--orange); color: var(--ink); background: var(--green-light); }
-    .sidebar-foot { margin-top: auto; padding: 14px 8px 0; border-top: 1px solid #29364a; color: var(--panel-muted); font-size: 12px; direction: rtl; text-align: right; }
-    .app-content { min-width: 0; direction: ltr; }
-    .app-main { width: min(1200px, calc(100% - 48px)); margin: 0 auto; padding-bottom: 48px; direction: ltr; }
-    .page-view[hidden] { display: none; }
-    .dashboard-view { padding-top: 38px; }
-    .dashboard-heading { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 30px; }
-    .dashboard-heading .intro-copy { max-width: 560px; }
-    .stats-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0 0 34px; border: 2px solid #48658c; color: var(--ink); background: #f2f5f9; }
-    .stat-item { padding: 18px 22px; }
-    .stat-item + .stat-item { border-left: 1px solid #c7d2e1; }
-    .stat-label { color: var(--muted); font-size: 13px; }
-    .stat-value { display: block; margin-top: 3px; color: var(--ink); font-size: 28px; font-weight: 800; line-height: 1.2; }
-    .dashboard-charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
-    .chart-panel { min-width: 0; padding: 18px 0; border: 2px solid #48658c; color: var(--ink); background: #f2f5f9; }
-    .chart-panel h2 { margin: 0 18px 5px; }
-    .chart-caption { margin: 0 18px 18px; color: var(--muted); font-size: 12px; }
-    .metric-chart { display: grid; gap: 14px; padding: 0 18px; }
-    .metric-row { display: grid; grid-template-columns: minmax(90px, 1fr) minmax(80px, 2fr) 42px; align-items: center; gap: 10px; font-size: 13px; }
-    .metric-track { height: 9px; overflow: hidden; background: #d7e1ef; }
-    .metric-fill { height: 100%; width: 0; background: #344b70; transition: width .35s ease; }
-    .metric-value { color: var(--muted); text-align: left; font-variant-numeric: tabular-nums; }
-    .chart-empty { padding: 20px 18px; color: var(--muted); font-size: 13px; }
-    .topbar { min-height: 60px; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; color: var(--panel-ink); background: #111827; border-bottom: 1px solid #29364a; }
-    button, input { font: inherit; }
-    button { cursor: pointer; }
-    .topbar {
+    a { color: inherit; }
+    .container { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
+    .site-header {
+      position: sticky;
+      z-index: 10;
+      top: 0;
+      border-bottom: 1px solid rgba(232, 223, 209, .9);
+      background: rgba(255, 253, 249, .95);
+      backdrop-filter: blur(12px);
+    }
+    .header-inner {
       min-height: 76px;
-      padding: 0 max(24px, calc((100vw - 1120px) / 2));
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
-      color: var(--panel-ink);
-      background: #111827;
-      border-bottom: 3px solid #29364a;
-      direction: ltr;
+      gap: 28px;
     }
-    .topbar-note { font-size: 16px; }
-    .brand { display: flex; align-items: center; gap: 11px; }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--brown-dark);
+      text-decoration: none;
+      white-space: nowrap;
+    }
     .brand-mark {
-      position: relative; width: 40px; height: 40px; flex: 0 0 40px; display: grid; place-items: center;
-      border: 1px solid #344257; border-radius: 50%;
-      color: #f8fafc; background: #101827;
-      box-shadow: inset 0 0 0 3px #ffffff08;
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border-radius: 9px;
     }
-    .brand-mark svg { display: block; width: 34px; height: 34px; }
-    .brand-mark path { fill: #f8fafc; stroke: none; }
-    .brand-name { color: #f8fafc; font: 700 15px/1.3 "Heebo", sans-serif; white-space: nowrap; }
-    .brand-caption { margin-top: 2px; color: #b5c1d1; font: 400 11px/1.4 "Heebo", sans-serif; white-space: nowrap; }
-    .topbar-note { color: #d5deeb; font-size: 13px; }
-    .page { width: min(1120px, 100%); margin: 36px auto 64px; }
-    .intro { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 28px; }
-    .eyebrow { margin: 0 0 8px; color: #536984; font-size: 13px; font-weight: 700; }
-      .eyebrow { margin: 0 0 8px; color: #a7b7cf; font-size: 13px; font-weight: 700; }
-    h1 { margin: 0; font-size: clamp(27px, 4vw, 38px); line-height: 1.2; font-weight: 800; }
-    .intro-copy { max-width: 460px; margin: 10px 0 0; color: var(--muted); font-size: 15px; }
-    .count { min-width: 132px; padding: 12px 16px; border-right: 3px solid var(--orange); color: var(--panel-muted); background: #111827; font-size: 13px; }
-    .count strong { display: block; color: var(--panel-ink); font-size: 23px; line-height: 1.2; }
-    .workspace { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(270px, .8fr); gap: 30px; align-items: start; }
-    .section-heading { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin: 0 0 14px; }
-    h2 { margin: 0; font-size: 19px; font-weight: 700; }
-    .list-tools { display: flex; gap: 8px; }
-    .search-wrap { position: relative; display: block; margin-bottom: 14px; }
-    .search-wrap span { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--panel-muted); }
-    .search { width: 100%; padding: 12px 42px 12px 14px; border: 1px solid #344257; border-radius: 8px; outline: none; color: var(--panel-ink); background: #0c1321; }
-    .search:focus, .field input:focus, .field textarea:focus, .field select:focus, .dialog-field input:focus, .dialog-field textarea:focus, .dialog-field select:focus { border-color: #8299b9; box-shadow: 0 0 0 3px #9aadc81c; }
-    .contact-list { overflow: hidden; border-top: 1px solid #c7d2e1; color: var(--ink); background: #fff; }
-    .directory-panel { padding: 20px; border: 2px solid #48658c; color: var(--ink); background: #f2f5f9; }
-    .directory-panel .section-heading h2 { color: var(--ink); }
-    .directory-panel .search-wrap span { color: var(--muted); }
-    .directory-panel .search { border-color: #c7d2e1; color: var(--ink); background: #fff; direction: rtl; text-align: right; }
-    .directory-panel .contact-list { border-color: #d5deea; background: #fff; }
-    .recommendations-heading { display: flex; justify-content: space-between; align-items: end; gap: 20px; }
-    .recommendations-heading .intro { flex: 1; margin-bottom: 0; }
-    .recommendations-actions { display: flex; align-items: center; gap: 10px; }
-    .add-contact-button { width: auto; min-width: 160px; padding: 0 16px; }
-    .contact-row { min-height: 76px; display: flex; align-items: center; gap: 14px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
-    .avatar { flex: 0 0 42px; width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; color: var(--avatar-ink); background: var(--avatar-bg); font-size: 18px; font-weight: 700; }
-    .person { min-width: 0; flex: 1; }
-    .person-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 18px; line-height: 1.4; font-weight: 800; }
-    .person-secondary-name { margin-top: 2px; color: var(--panel-muted); font-size: 13px; }
-    .person-title { margin-top: 3px; padding-right: 8px; border-right: 2px solid var(--orange); color: #d5deeb; font-size: 12px; line-height: 1.5; }
-    .person-organization { margin-top: 3px; color: var(--panel-muted); font-size: 12px; font-weight: 600; }
-    .person-phone { display: inline-block; margin-top: 5px; direction: ltr; color: var(--panel-muted); font-size: 12px; text-decoration: none; }
-    .person-phone:hover { color: #e1eaf6; text-decoration: underline; }
-    .person-address { margin-top: 3px; color: var(--panel-muted); font-size: 12px; line-height: 1.4; }
-    .person-name, .person-title, .person-organization, .person-address { direction: rtl; text-align: right; }
-    .directory-panel .contact-row { border-bottom-color: #d5deea; }
-    .directory-panel .person-secondary-name, .directory-panel .person-organization,
-    .directory-panel .person-phone, .directory-panel .person-address { color: #58687d; }
-    .directory-panel .person-title { color: #344b70; }
-    .directory-panel .person-phone:hover, .directory-panel .attachment-link:hover { color: #172337; }
-    .attachment-list { display: flex; flex-wrap: wrap; gap: 6px 12px; margin-top: 7px; }
-    .attachment-link { color: #c8d5e6; font-size: 12px; text-decoration: underline; text-underline-offset: 2px; }
-    .attachment-link:hover { color: #fff; }
-    .directory-panel .attachment-link { color: #344b70; }
-    .row-actions { display: flex; gap: 6px; }
-    .text-button, .quiet-button { min-height: 36px; padding: 7px 10px; border: 1px solid transparent; border-radius: 6px; color: #c8d5e6; background: transparent; font-size: 13px; font-weight: 600; }
-    .text-button:hover, .quiet-button:hover { border-color: var(--line); background: #202d43; }
-    .delete-button { color: #ef9a9a; }
-    .directory-panel .text-button, .directory-panel .quiet-button { border-color: #c7d2e1; color: #344b70; }
-    .directory-panel .text-button:hover, .directory-panel .quiet-button:hover { border-color: #9aadc8; background: #e3eaf3; }
-    .directory-panel .delete-button { color: #a44636; }
-    .empty-state { padding: 40px 20px; text-align: center; color: var(--panel-muted); background: #151f31; }
-    .empty-state strong { display: block; margin-bottom: 5px; color: var(--panel-ink); font-size: 16px; }
-    .directory-panel .empty-state { color: #58687d; background: #fff; }
-    .directory-panel .empty-state strong { color: #172337; }
-    .add-panel { padding: 21px; border: 1px solid #29364a; border-top: 3px solid var(--orange); color: var(--panel-ink); background: #111827; }
-    .add-panel h2 { margin-bottom: 5px; }
-    .panel-copy { margin: 0 0 20px; color: var(--panel-muted); font-size: 13px; }
-    .field { display: block; margin-bottom: 15px; }
-    .field span, .dialog-field span { display: block; margin-bottom: 6px; color: var(--panel-ink); font-size: 13px; font-weight: 600; }
-    .field input, .field textarea, .field select, .dialog-field input, .dialog-field textarea, .dialog-field select { width: 100%; min-height: 43px; padding: 9px 11px; border: 1px solid var(--line); border-radius: 6px; outline: none; color: var(--ink); background: #101827; }
-    .field textarea, .dialog-field textarea { min-height: 68px; resize: vertical; }
-    .field input::placeholder { color: #8493a9; }
-    .form-actions { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
-    .primary-button { width: 100%; min-height: 44px; border: 0; border-radius: 6px; color: white; background: var(--green); font-weight: 700; transition: background .16s ease, transform .16s ease; }
-    .primary-button:hover { background: #344b70; transform: translateY(-1px); }
-    .secondary-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 18px; padding-top: 15px; border-top: 1px solid var(--line); }
-    .quiet-button { border-color: var(--line); }
-    .file-input { display: none; }
-    .document-tools { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); }
-    .document-tools h3 { margin: 0 0 10px; font-size: 15px; }
-    .ocr-options { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
-    .ocr-language { min-width: 0; padding: 8px; border: 1px solid var(--line); border-radius: 6px; color: var(--ink); background: #101827; }
-    .header-crop-control { display: block; margin-top: 12px; color: var(--muted); font-size: 12px; }
-    .header-crop-control span { display: flex; justify-content: space-between; margin-bottom: 5px; }
-    .header-crop-control input { width: 100%; accent-color: var(--green); }
-    .ocr-status { min-height: 20px; margin: 10px 0 0; color: var(--panel-muted); font-size: 12px; }
-    .ocr-progress { width: 100%; height: 5px; accent-color: var(--orange); }
-    .ocr-preview { margin-top: 10px; border-top: 1px solid var(--line); color: var(--panel-muted); font-size: 12px; }
-    .ocr-preview summary { padding-top: 9px; cursor: pointer; font-weight: 600; }
-    .ocr-preview pre { max-height: 220px; overflow: auto; padding: 10px; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--ink); background: #101827; font: inherit; }
-    .privacy-note { margin: 14px 0 0; color: var(--panel-muted); font-size: 12px; line-height: 1.6; }
-    dialog { width: min(420px, calc(100% - 32px)); padding: 24px; border: 1px solid #29364a; border-radius: 10px; color: var(--panel-ink); background: #111827; box-shadow: 0 20px 70px #020611aa; }
-    dialog.add-contact-dialog { width: min(620px, calc(100% - 32px)); max-height: min(90vh, 880px); overflow-y: auto; padding: 0; border: 0; background: transparent; }
-    dialog.add-contact-dialog { color: var(--ink); }
-    dialog.add-contact-dialog .add-panel { padding: 24px; border-color: #ccd5e1; border-top-color: var(--green); color: var(--ink); background: #f2f5f9; }
-    .add-contact-dialog .panel-copy, .add-contact-dialog .field span, .add-contact-dialog .document-tools h3,
-    .add-contact-dialog .header-crop-control, .add-contact-dialog .ocr-status, .add-contact-dialog .ocr-preview { color: #58687d; }
-    .add-contact-dialog .field input, .add-contact-dialog .field textarea, .add-contact-dialog .field select,
-    .add-contact-dialog .ocr-language { border-color: #ccd5e1; color: #172337; background: #fff; }
-    .add-contact-dialog .field input::placeholder { color: #748197; }
-    .add-contact-dialog .ocr-preview pre { color: #172337; background: #fff; }
-    .add-contact-dialog .secondary-actions { border-top-color: #ccd5e1; }
-    .add-contact-dialog .quiet-button, .add-contact-dialog .cancel-button { border-color: #ccd5e1; color: #29364a; background: #fff; }
-    .add-contact-dialog .quiet-button:hover, .add-contact-dialog .cancel-button:hover { background: #e4eaf2; }
-    dialog::backdrop { background: #020611bb; }
-    dialog h2 { margin-bottom: 18px; }
-    .dialog-field { display: block; margin-bottom: 14px; }
-    .dialog-actions { display: flex; gap: 8px; margin-top: 20px; }
-    .dialog-actions button { flex: 1; }
-    .cancel-button { min-height: 44px; border: 1px solid var(--line); border-radius: 6px; color: var(--panel-ink); background: #202d43; }
-    @media (max-width: 760px) {
-      .app-shell { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
-      .sidebar { position: sticky; z-index: 5; top: 0; height: auto; flex-direction: row; align-items: center; justify-content: space-between; gap: 16px; padding: 10px 14px; border-right: 0; border-bottom: 1px solid var(--line); }
-      .sidebar .brand-mark { width: 34px; height: 34px; }
-      .sidebar .brand-caption, .sidebar-foot { display: none; }
-      .sidebar-nav { display: flex; gap: 4px; }
-      .nav-button { min-height: 44px; padding: 8px 10px; font-size: 19px; white-space: nowrap; }
-      .topbar { min-height: 48px; padding: 0 18px; }
-      .app-main { width: min(calc(100% - 28px), 640px); }
-      .page { margin-top: 26px; }
-      .recommendations-heading { align-items: start; }
-      .directory-panel { padding: 15px; }
-      .intro { align-items: start; }
-      .count { min-width: 96px; padding: 9px 11px; }
-      .workspace { grid-template-columns: 1fr; gap: 28px; }
-      .directory { grid-row: 1; }
-      .add-panel { grid-row: 2; }
-      .dashboard-view { padding-top: 26px; }
-      .dashboard-heading { align-items: start; }
+    .brand-mark img { display: block; width: 100%; height: 100%; border-radius: inherit; object-fit: contain; }
+    .brand-name { display: grid; line-height: 1.25; }
+    .brand-name strong { font-size: 19px; font-weight: 800; }
+    .brand-name span { color: var(--muted); font-size: 11px; }
+    .main-nav { display: flex; align-items: center; gap: 7px; }
+    .main-nav a {
+      padding: 9px 12px;
+      border-radius: 9px;
+      color: #5e5549;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background .18s ease, color .18s ease;
     }
-    @media (max-width: 460px) {
-      .sidebar { align-items: flex-start; flex-direction: column; gap: 8px; }
-      .sidebar-nav { width: 100%; }
-      .nav-button { flex: 1; }
-      .intro { flex-direction: column; gap: 14px; }
-      .dashboard-heading { flex-direction: column; gap: 16px; }
-      .recommendations-heading { flex-direction: column; gap: 16px; }
-      .recommendations-actions { width: 100%; justify-content: space-between; }
-      .add-contact-button { min-width: 0; }
-      .stats-strip { grid-template-columns: 1fr; }
-      .dashboard-charts { grid-template-columns: 1fr; gap: 16px; }
-      .stat-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; }
-      .stat-item + .stat-item { border-left: 0; border-top: 1px solid var(--line); }
-      .stat-value { margin-top: 0; font-size: 22px; }
-      .count { display: flex; align-items: center; gap: 10px; }
-      .count strong { font-size: 19px; }
-      .contact-row { gap: 10px; padding-inline: 11px; }
-      .avatar { flex-basis: 36px; width: 36px; height: 36px; }
-      .text-button { padding: 6px; font-size: 12px; }
-      .list-tools { gap: 2px; }
+    .main-nav a:hover, .main-nav a:focus-visible { color: var(--brown); background: var(--gold-light); }
+    .header-contact {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 15px;
+      border-radius: 10px;
+      color: white;
+      background: var(--brown);
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .header-contact:hover { background: var(--brown-dark); }
+    .hero { padding: 74px 0 60px; }
+    .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; align-items: center; gap: 62px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      color: #8a6733;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+    .eyebrow::before { width: 22px; height: 2px; content: ""; background: var(--gold); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 640px;
+      margin-bottom: 18px;
+      color: var(--brown-dark);
+      font-size: clamp(38px, 5.2vw, 64px);
+      font-weight: 800;
+      line-height: 1.18;
+      letter-spacing: -.035em;
+    }
+    .hero-copy { max-width: 590px; margin-bottom: 25px; color: var(--muted); font-size: 18px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .button {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 11px 18px;
+      border: 1px solid var(--brown);
+      border-radius: 10px;
+      color: white;
+      background: var(--brown);
+      font: inherit;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .button:hover { transform: translateY(-2px); background: var(--brown-dark); }
+    .button.secondary { color: var(--brown); background: transparent; }
+    .button.secondary:hover { background: var(--gold-light); }
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+      padding: 30px;
+      border: 1px solid #dfcda9;
+      border-radius: 20px;
+      background: linear-gradient(145deg, #fffaf0, #f0e4ce);
+      box-shadow: 0 22px 60px rgba(67, 47, 24, .1);
+    }
+    .hero-card::before {
+      position: absolute;
+      top: -80px;
+      left: -62px;
+      width: 210px;
+      height: 210px;
+      border: 1px solid rgba(192, 146, 74, .28);
+      border-radius: 50%;
+      content: "";
+      box-shadow: 0 0 0 18px rgba(192, 146, 74, .06), 0 0 0 38px rgba(192, 146, 74, .04);
+    }
+    .hero-card-label { margin-bottom: 7px; color: #826138; font-size: 13px; font-weight: 700; }
+    .hero-card h2 { margin-bottom: 20px; color: var(--brown-dark); font-size: 25px; line-height: 1.35; }
+    .contact-line {
+      display: flex;
+      align-items: flex-start;
+      gap: 13px;
+      padding: 13px 0;
+      border-top: 1px solid rgba(119, 91, 53, .17);
+    }
+    .contact-icon {
+      width: 37px;
+      height: 37px;
+      flex: 0 0 37px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      color: var(--brown);
+      background: rgba(255, 255, 255, .7);
+      font-size: 17px;
+    }
+    .contact-line div { min-width: 0; display: grid; }
+    .contact-line small { color: var(--muted); font-size: 12px; }
+    .contact-line a { color: var(--brown-dark); font-size: 15px; font-weight: 700; text-decoration: none; }
+    .contact-line a:hover { text-decoration: underline; }
+    .quick-strip { padding: 0 0 26px; }
+    .quick-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; }
+    .quick-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 15px 18px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--paper);
+    }
+    .quick-item strong { display: block; color: var(--brown-dark); font-size: 14px; }
+    .quick-item span { display: block; color: var(--muted); font-size: 12px; }
+    section { scroll-margin-top: 96px; }
+    .section { padding: 64px 0; }
+    .section.soft { background: rgba(255, 253, 249, .66); border-block: 1px solid var(--line); }
+    .section-heading { max-width: 690px; margin: 0 auto 30px; text-align: center; }
+    .section-heading .eyebrow { margin-bottom: 8px; }
+    .section-heading h2 { margin-bottom: 8px; color: var(--brown-dark); font-size: clamp(27px, 3vw, 37px); line-height: 1.3; }
+    .section-heading p { margin-bottom: 0; color: var(--muted); }
+    .office-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; }
+    .office-card, .info-card {
+      min-width: 0;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: var(--paper);
+      box-shadow: 0 6px 22px rgba(59, 43, 24, .035);
+    }
+    .office-card { display: flex; flex-direction: column; }
+    .office-top { display: flex; align-items: center; gap: 11px; margin-bottom: 14px; }
+    .office-pin {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      color: var(--brown);
+      background: var(--gold-light);
+      font-size: 18px;
+    }
+    .office-top h3 { margin: 0; color: var(--brown-dark); font-size: 19px; }
+    .office-address { min-height: 50px; margin-bottom: 14px; color: var(--muted); font-size: 14px; }
+    .office-hours { margin-top: auto; padding-top: 13px; border-top: 1px solid var(--line); }
+    .office-hours strong { display: block; margin-bottom: 4px; color: #79623e; font-size: 12px; }
+    .office-hours span { color: var(--ink); font-size: 13px; }
+    .office-map { display: inline-flex; align-self: flex-start; margin-top: 13px; color: var(--green); font-size: 13px; font-weight: 700; text-decoration: none; }
+    .office-map:hover { text-decoration: underline; }
+    .info-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .info-card { padding: 24px; }
+    .info-card .office-pin { margin-bottom: 13px; }
+    .info-card h3 { margin-bottom: 8px; color: var(--brown-dark); font-size: 19px; }
+    .info-card p, .info-card li { color: var(--muted); font-size: 14px; }
+    .info-card p:last-child { margin-bottom: 0; }
+    .info-card ul { margin: 10px 0 0; padding-inline-start: 20px; }
+    .info-card li + li { margin-top: 5px; }
+    .directory-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; }
+    .directory-card {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      padding: 21px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: var(--paper);
+      text-decoration: none;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+    .directory-card:hover, .directory-card:focus-visible {
+      transform: translateY(-2px);
+      border-color: #d8c29e;
+      box-shadow: 0 8px 24px rgba(59, 43, 24, .08);
+    }
+    .directory-card h3 { margin: 0 0 6px; color: var(--brown-dark); font-size: 17px; line-height: 1.35; }
+    .directory-card p { margin: 0 0 14px; color: var(--muted); font-size: 13px; }
+    .directory-card span { margin-top: auto; color: var(--green); font-size: 12px; font-weight: 700; }
+    .fee-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-top: 17px;
+      padding: 15px 17px;
+      border: 1px solid #e6d3ae;
+      border-radius: 12px;
+      color: #67533a;
+      background: #fbf3e4;
+      font-size: 13px;
+    }
+    .fee-note strong { color: var(--brown-dark); }
+    .payment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .payment-card { padding: 23px; border: 1px solid var(--line); border-radius: 15px; background: var(--paper); }
+    .payment-card h3 { margin-bottom: 8px; color: var(--brown-dark); font-size: 19px; }
+    .payment-card p { margin-bottom: 0; color: var(--muted); font-size: 14px; }
+    .payment-card .button { margin-top: 17px; min-height: 42px; padding: 8px 14px; font-size: 13px; }
+    .method-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .method-list span {
+      padding: 5px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #5e5549;
+      background: #fffdfa;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .withdraw-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; }
+    .withdraw-card { padding: 21px; border: 1px solid var(--line); border-radius: 15px; background: var(--paper); }
+    .withdraw-card h3 { margin-bottom: 8px; color: var(--brown-dark); font-size: 18px; }
+    .withdraw-card p { margin-bottom: 0; color: var(--muted); font-size: 14px; }
+    .start-panel {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 24px;
+      padding: 30px;
+      border-radius: 18px;
+      color: #fffaf0;
+      background: var(--brown-dark);
+    }
+    .start-panel h2 { margin-bottom: 7px; font-size: 25px; }
+    .start-panel p { max-width: 700px; margin-bottom: 0; color: #e4d7c3; font-size: 14px; }
+    .start-panel .button { border-color: #e2c38e; color: var(--brown-dark); background: #e2c38e; white-space: nowrap; }
+    .start-panel .button:hover { background: #f0d8ac; }
+    .guide-intro { max-width: 760px; margin: 0 auto 26px; color: var(--muted); text-align: center; }
+    .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    .guide-search { width: min(100%, 560px); display: block; margin: 0 auto 34px; padding: 14px 17px; border: 1px solid var(--line); border-radius: 12px; color: var(--ink); background: var(--paper); font: inherit; }
+    .guide-category { padding: 34px 0; border-top: 1px solid var(--line); scroll-margin-top: 96px; }
+    .guide-category h3 { margin-bottom: 8px; color: var(--brown-dark); font-size: 22px; }
+    .guide-category > p { margin-bottom: 17px; color: var(--muted); font-size: 14px; }
+    .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 12px; }
+    .service-card { min-width: 0; padding: 17px; border: 1px solid var(--line); border-radius: 13px; background: var(--paper); }
+    .service-card strong { display: block; margin-bottom: 4px; color: var(--brown-dark); font-size: 15px; }
+    .service-card p { margin: 0; color: var(--muted); font-size: 13px; }
+    .service-card a { display: inline-block; margin-top: 9px; color: var(--green); font-weight: 700; text-decoration: none; }
+    .service-card a:hover { text-decoration: underline; }
+    .service-card[hidden], .guide-category[hidden] { display: none; }
+    .site-footer { padding: 28px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .footer-inner a { color: var(--brown); font-weight: 700; text-decoration: none; }
+    .ltr { direction: ltr; unicode-bidi: isolate; display: inline-block; text-align: left; }
+    @media (max-width: 900px) {
+      .header-inner { flex-wrap: wrap; justify-content: space-between; padding-block: 12px; }
+      .main-nav { order: 3; width: 100%; overflow-x: auto; justify-content: flex-start; }
+      .main-nav a { flex: 0 0 auto; }
+      .hero { padding-top: 52px; }
+      .hero-grid { gap: 32px; }
+      .office-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .info-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .directory-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 620px) {
+      .container { width: min(100% - 28px, 460px); }
+      .header-inner { gap: 8px; }
+      .header-contact { padding: 9px 11px; font-size: 12px; }
+      .brand-mark { width: 48px; height: 48px; }
+      .brand-name strong { font-size: 17px; }
+      .hero { padding: 42px 0 38px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 29px; }
+      h1 { font-size: 42px; }
+      .hero-copy { font-size: 16px; }
+      .hero-card { padding: 23px; }
+      .quick-grid { grid-template-columns: 1fr; gap: 9px; }
+      .section { padding: 48px 0; }
+      .office-grid, .info-grid, .payment-grid, .withdraw-grid, .directory-grid { grid-template-columns: 1fr; }
+      .office-address { min-height: auto; }
+      .start-panel { grid-template-columns: 1fr; padding: 23px; }
+      .start-panel .button { justify-self: start; }
+      .footer-inner { align-items: flex-start; flex-direction: column; gap: 8px; }
+      .hospital-table { min-width: 650px; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
@@ -238,824 +359,190 @@
   </style>
 </head>
 <body>
-  <div class="app-shell">
-    <aside class="sidebar">
-    <div class="brand">
-      <div class="brand-mark" role="img" aria-label="CS">
-        <svg viewBox="0 0 40 40" aria-hidden="true" focusable="false">
-          <path d="M20 7H11L6 12V28L11 33H20V27H12L11 26V14L12 13H20Z" />
-          <path d="M34 7H25L20 12V17L24 21H29V26H20V33H29L34 28V22L30 18H26V14H34Z" />
-        </svg>
-      </div>
-      <div>
-        <div class="brand-name">Charity Secure
-        </div>
-        <div class="brand-caption">Your assured charity</div>
-      </div>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="Chasdei Chaim — Home">
+        <span class="brand-mark"><img src="chasdei-chaim-logo.png" alt="Chasdei Chaim logo"></span>
+        <span class="brand-name">
+          <strong>Chasdei Chaim</strong>
+          <span>Practical Information</span>
+        </span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="#offices">Our Offices</a>
+        <a href="#payments">Payment Options</a>
+        <a href="#withdrawals">Withdrawals</a>
+        <a href="directory.html">Community Directory</a>
+        <a href="#account">Open an Account</a>
+      </nav>
+      <a class="header-contact" href="#contact">Contact Us <span aria-hidden="true">→</span></a>
     </div>
-    <nav class="sidebar-nav" aria-label="הויפּט־מעניו">
-      <button class="nav-button" type="button" data-view="dashboard">Dashboard</button>
-      <button class="nav-button" type="button" data-view="recommendations">Hamlutzes</button>
-    </nav>
-    <div class="sidebar-foot">דײַנע רעקאָמענדאַציעס און קאָנטאַקטן</div>
-    </aside>
-    <div class="app-content">
-    <header class="topbar"><span class="topbar-note" id="page-context">Dashboard</span><span></span></header>
-    <main class="app-main">
-      <section class="dashboard-view page-view" id="dashboard-view">
-        <div class="dashboard-heading">
-          <div>
-            <p class="eyebrow">איבערבליק</p>
-            <h1>Dashboard</h1>
-            <p class="intro-copy">דײַנע קאָנטאַקטן, Hamlutzes און דאָקומענטן אויף איין אָרט.</p>
-          </div>
-        </div>
-        <section class="stats-strip" aria-label="איבערבליק פֿון דײַנע דאַטן">
-          <div class="stat-item"><span class="stat-label">קאָנטאַקטן</span><strong class="stat-value" id="dashboard-contact-count">0</strong></div>
-          <div class="stat-item"><span class="stat-label">מוסדות</span><strong class="stat-value" id="dashboard-organization-count">0</strong></div>
-          <div class="stat-item"><span class="stat-label">מיט אַדרעס אָדער שטאָט</span><strong class="stat-value" id="dashboard-location-count">0</strong></div>
-        </section>
-        <section class="dashboard-charts" aria-label="טשאַרטן און סטאַטיסטיק">
-          <section class="chart-panel" aria-labelledby="data-chart-title">
-            <h2 id="data-chart-title">קאָנטאַקט־דאַטן</h2>
-            <p class="chart-caption">וויפֿל קאָנטאַקטן האָבן יעדן סאָרט אינפֿאָרמאַציע</p>
-            <div class="metric-chart" id="dashboard-data-chart"></div>
-          </section>
-          <section class="chart-panel" aria-labelledby="city-chart-title">
-            <h2 id="city-chart-title">קאָנטאַקטן לויט שטאָט</h2>
-            <p class="chart-caption">די שטעט וואָס קומען אָפֿט פֿאָר</p>
-            <div class="metric-chart" id="dashboard-city-chart"></div>
-          </section>
-        </section>
-      </section>
-      <section class="page-view" id="recommendations-view" hidden>
-  <div class="page">
-    <div class="recommendations-heading">
-      <section class="intro" aria-labelledby="page-title">
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
         <div>
-        <p class="eyebrow">דײַן אַדרעס־בוך</p>
-        <h1 id="page-title">Hamlutzes
-        </h1>
+          <span class="eyebrow">Welcome to Chasdei Chaim</span>
+          <h1>Everything you need,<br>all in one place.</h1>
+          <p class="hero-copy">A clear guide to our offices, payment options, and other helpful information.</p>
+          <div class="hero-actions">
+            <a class="button" href="#offices">Find an Office <span aria-hidden="true">→</span></a>
+            <a class="button secondary" href="#payments">View Payment Options</a>
+          </div>
         </div>
-      </section>
-      <div class="recommendations-actions">
-        <div class="count" aria-live="polite"><strong id="contact-count">0</strong><span>קאָנטאַקטן</span></div>
-        <button class="primary-button add-contact-button" id="open-add-contact" type="button">צולייגן קאָנטאַקט</button>
+        <aside class="hero-card" id="contact" aria-labelledby="contact-heading">
+          <p class="hero-card-label">We're here to help</p>
+          <h2 id="contact-heading">Get in touch with us</h2>
+          <div class="contact-line">
+            <span class="contact-icon" aria-hidden="true">☎</span>
+            <div><small>Main office</small><a href="tel:+17184758884"><span class="ltr">718-475-8884</span> <span class="ltr">#222</span></a></div>
+          </div>
+          <div class="contact-line">
+            <span class="contact-icon" aria-hidden="true">✉</span>
+            <div><small>Email</small><a href="mailto:Office@chasdaychaim.org"><span class="ltr">Office@chasdaychaim.org</span></a></div>
+          </div>
+          <div class="contact-line">
+            <span class="contact-icon" aria-hidden="true">▣</span>
+            <div><small>Text message</small><a href="sms:+19293453676"><span class="ltr">929-345-3676</span></a></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <div class="quick-strip">
+      <div class="container quick-grid">
+        <div class="quick-item"><span class="contact-icon" aria-hidden="true">✉</span><div><strong>Quick response</strong><span>Email our main office</span></div></div>
+        <div class="quick-item"><span class="contact-icon" aria-hidden="true">▣</span><div><strong>Text us</strong><span>A convenient way to reach us</span></div></div>
+        <div class="quick-item"><span class="contact-icon" aria-hidden="true">⌖</span><div><strong>5 office locations</strong><span>In New York and Israel</span></div></div>
       </div>
     </div>
-      <section class="directory directory-panel" aria-labelledby="list-title">
+
+    <section class="section soft" id="offices">
+      <div class="container">
         <div class="section-heading">
-          <h2 id="list-title">דײַן רשימה</h2>
-          <div class="list-tools">
-            <button class="quiet-button" id="import-button" type="button">אַרײַנלאָדן</button>
-            <button class="quiet-button" id="export-button" type="button">אַרויסלאָדן</button>
-            <input class="file-input" id="import-file" type="file" accept="application/json,.json">
-          </div>
+          <span class="eyebrow">Find us</span>
+          <h2>Our Offices</h2>
+          <p>View our addresses and visit the office that is most convenient for you.</p>
         </div>
-        <label class="search-wrap">
-          <span aria-hidden="true">⌕</span>
-          <input class="search" id="search" type="search" placeholder="זוכן לויט נאָמען אָדער נומער…" autocomplete="off">
-        </label>
-        <div class="contact-list" id="contact-list" aria-live="polite"></div>
-      </section>
-    </div>
-      </section>
-    </main>
-    </div>
-  </div>
-  <dialog class="add-contact-dialog" id="add-contact-dialog" aria-labelledby="add-title">
-      <aside class="add-panel" aria-labelledby="add-title">
-        <h2 id="add-title">צולייגן אַ קאָנטאַקט</h2>
-        <p class="panel-copy">הייב אָן מיט אַ נאָמען; דער נומער איז אָפּציאָנעל.</p>
-        <form id="add-form">
-          <label class="field"><span>נאָמען אויף ייִדיש (נייטיק)</span><input id="hebrew-name" name="hebrewName" type="text" dir="rtl" placeholder="למשל: דוב הכהן רבינוביץ" required maxlength="80"></label>
-          <label class="field"><span>נאָמען אויף ענגליש (אָפּציאָנעל)</span><input id="name" name="name" type="text" placeholder="למשל: Dov Hakohen Rabinowitz" maxlength="80" autocomplete="name"></label>
-          <label class="field"><span>מוסד / לעדערהעדער (אָפּציאָנעל)</span><input id="organization" name="organization" type="text" placeholder="נאָמען פֿון דער ישיבה אָדער אָרגאַניזאַציע" maxlength="120"></label>
-          <label class="field"><span>צוגאָב נאָך נאָמען (אָפּציאָנעל)</span><input id="title-suffix" name="title" type="text" placeholder="למשל: דומ״ץ סאטמאר" maxlength="80"></label>
-          <label class="field"><span>טעלעפֿאָן־נומער (אָפּציאָנעל)</span><input id="phone" name="phone" type="tel" placeholder="למשל: 555-123-4567" maxlength="40" autocomplete="tel"></label>
-          <label class="field"><span>אַדרעס (אָפּציאָנעל)</span><textarea id="address" name="address" placeholder="גאַס און נומער"></textarea></label>
-          <label class="field"><span>שטאָט (אָפּציאָנעל)</span><input id="city" name="city" type="text" placeholder="למשל: ירושלים" maxlength="80"></label>
-          <div class="form-actions">
-            <button class="primary-button" type="submit">צולייגן צו דער רשימה</button>
-            <button class="cancel-button" id="cancel-add" type="button">באָטל מאַכן</button>
-          </div>
-        </form>
-        <section class="document-tools" aria-labelledby="document-title">
-          <h3 id="document-title">לייענען פֿון דאָקומענט</h3>
-          <div class="ocr-options">
-            <select class="ocr-language" id="ocr-language" aria-label="דאָקומענט־שפּראַך">
-              <option value="eng+heb">ענגליש און ייִדיש</option>
-              <option value="eng">ענגליש</option>
-              <option value="heb">ייִדיש</option>
-            </select>
-            <button class="quiet-button" id="ocr-button" type="button">אויפֿלאָדן</button>
-            <input class="file-input" id="document-file" type="file" accept="image/*,application/pdf,.pdf">
-          </div>
-          <label class="header-crop-control"><span>לעדערהעדער פֿון אויבן <output id="letterhead-height-value">30%</output></span><input id="letterhead-height" type="range" min="10" max="60" step="5" value="30"></label>
-          <progress class="ocr-progress" id="ocr-progress" max="1" value="0" hidden></progress>
-          <p class="ocr-status" id="ocr-status" aria-live="polite"></p>
-          <p class="ocr-status" id="pending-document" aria-live="polite"></p>
-          <details class="ocr-preview" id="ocr-preview" hidden>
-            <summary>זען וואָס דער OCR האָט געלייענט</summary>
-            <pre id="ocr-text" dir="auto"></pre>
-          </details>
-        </section>
-        <div class="secondary-actions">
-          <button class="quiet-button" id="import-button-secondary" type="button">אַרײַנלאָדן JSON</button>
-          <button class="quiet-button" id="export-button-secondary" type="button">היטן אַ קאָפּיע</button>
+        <div class="office-grid">
+          <article class="office-card">
+            <div class="office-top"><span class="office-pin" aria-hidden="true">⌖</span><h3>Williamsburg</h3></div>
+            <p class="office-address"><span class="ltr">519 Flushing Ave<br>Brooklyn, NY 11205</span></p>
+            <div class="office-hours"><strong>Office hours</strong><span class="ltr">8:30–9:30 · 1:30–3:30</span></div>
+            <a class="office-map" href="https://maps.google.com/?q=519+Flushing+Ave+Brooklyn+NY+11205" target="_blank" rel="noopener noreferrer">View on map ↗</a>
+          </article>
+          <article class="office-card">
+            <div class="office-top"><span class="office-pin" aria-hidden="true">⌖</span><h3>Boro Park</h3></div>
+            <p class="office-address"><span class="ltr">5319 16th Ave<br>Brooklyn, NY 11204</span></p>
+            <div class="office-hours"><strong>Office hours</strong><span class="ltr">2:00–5:30</span></div>
+            <a class="office-map" href="https://maps.google.com/?q=5319+16th+Ave+Brooklyn+NY+11204" target="_blank" rel="noopener noreferrer">View on map ↗</a>
+          </article>
+          <article class="office-card">
+            <div class="office-top"><span class="office-pin" aria-hidden="true">⌖</span><h3>Monsey</h3></div>
+            <p class="office-address"><span class="ltr">3 Sunrise Dr<br>Monsey, NY 10952</span></p>
+            <div class="office-hours"><strong>Office hours</strong><span class="ltr">1:30–3:30</span></div>
+            <a class="office-map" href="https://maps.google.com/?q=3+Sunrise+Dr+Monsey+NY+10952" target="_blank" rel="noopener noreferrer">View on map ↗</a>
+          </article>
+          <article class="office-card">
+            <div class="office-top"><span class="office-pin" aria-hidden="true">⌖</span><h3>Monroe</h3></div>
+            <p class="office-address"><span class="ltr">8 Garfield Dr<br>Monroe, NY 10950</span></p>
+            <div class="office-hours"><strong>Office hours</strong><span class="ltr">1:30–3:30 · 5:00–6:00</span></div>
+            <a class="office-map" href="https://maps.google.com/?q=8+Garfield+Dr+Monroe+NY+10950" target="_blank" rel="noopener noreferrer">View on map ↗</a>
+          </article>
+          <article class="office-card">
+            <div class="office-top"><span class="office-pin" aria-hidden="true">⌖</span><h3>Beit Shemesh</h3></div>
+            <p class="office-address"><span class="ltr">53 Sderot HaAmoraim<br>Beit Shemesh, Israel</span></p>
+            <div class="office-hours"><strong>Office hours</strong><span class="ltr">11:30–13:30 · 19:00–21:00</span></div>
+            <a class="office-map" href="https://maps.google.com/?q=53+Sderot+HaAmoraim+Beit+Shemesh+Israel" target="_blank" rel="noopener noreferrer">View on map ↗</a>
+          </article>
         </div>
-        <p class="privacy-note">דײַנע קאָנטאַקטן און אָריגינעלע דאָקומענטן בלײַבן אינעם בלעטערער אויפֿן קאָמפּיוטער. דאָקומענטן ווערן נישט אַרײַנגערעכנט אין דער JSON־באַקאַפּ.</p>
-      </aside>
-  </dialog>
-  <dialog id="edit-dialog" aria-labelledby="edit-title">
-    <form id="edit-form">
-      <h2 id="edit-title">ענדערן קאָנטאַקט</h2>
-      <label class="dialog-field"><span>נאָמען אויף ייִדיש (נייטיק)</span><input id="edit-hebrew-name" type="text" dir="rtl" required maxlength="80"></label>
-      <label class="dialog-field"><span>נאָמען אויף ענגליש (אָפּציאָנעל)</span><input id="edit-name" type="text" maxlength="80"></label>
-      <label class="dialog-field"><span>מוסד / לעדערהעדער (אָפּציאָנעל)</span><input id="edit-organization" type="text" maxlength="120"></label>
-      <label class="dialog-field"><span>צוגאָב נאָך נאָמען (אָפּציאָנעל)</span><input id="edit-title-suffix" type="text" placeholder="למשל: דומ״ץ סאטמאר" maxlength="80"></label>
-      <label class="dialog-field"><span>טעלעפֿאָן־נומער (אָפּציאָנעל)</span><input id="edit-phone" type="tel" maxlength="40"></label>
-      <label class="dialog-field"><span>אַדרעס</span><textarea id="edit-address"></textarea></label>
-      <label class="dialog-field"><span>שטאָט (אָפּציאָנעל)</span><input id="edit-city" type="text" maxlength="80"></label>
-      <div class="dialog-actions"><button class="primary-button" type="submit">אָפּהיטן</button><button class="cancel-button" id="cancel-edit" type="button">אָפּשטעלן</button></div>
-    </form>
-  </dialog>
-  <script>
-    const storageKey = "my-contact-book-v1";
-    const attachmentDbName = "contact-book-documents-v1";
-    const attachmentStoreName = "documents";
-    const colors = [["#dcece2", "#245541"], ["#f8e5d6", "#914c32"], ["#e0e8f3", "#405b82"], ["#f3e8c9", "#785e18"], ["#e9e0ed", "#684d70"]];
-    const listElement = document.querySelector("#contact-list");
-    const countElement = document.querySelector("#contact-count");
-    const searchInput = document.querySelector("#search");
-    const addForm = document.querySelector("#add-form");
-    const addContactDialog = document.querySelector("#add-contact-dialog");
-    const editDialog = document.querySelector("#edit-dialog");
-    let contacts = loadContacts();
-    let editingId = null;
-    let matchedContactId = null;
-    let pendingDocument = null;
-    const attachmentUrls = new Set();
+      </div>
+    </section>
 
-    function isContact(value) {
-      return value && (value.name === undefined || typeof value.name === "string") && (value.hebrewName === undefined || typeof value.hebrewName === "string") && (value.name || value.hebrewName) && (value.phone === undefined || typeof value.phone === "string");
-    }
-    function cleanAddress(value) {
-      if (typeof value !== "string") return "";
-      const address = value.trim().replace(/\s+/g, " ");
-      const digitCount = (address.match(/\d/g) || []).length;
-      const letterCount = (address.match(/[\p{L}]/gu) || []).length;
-      const hasStreetName = /\b(?:street|st\.?|road|rd\.?|avenue|ave\.?|drive|dr\.?)\b|רחוב|רח׳|שדרות|דרך/iu.test(address);
-      const isPostalCode = /^(?:\d{5}(?:-\d{4})?|\d{7})$/.test(address);
-      if (address.length > 100 || letterCount < 3 && !isPostalCode || digitCount > 3 && !hasStreetName && !isPostalCode) return "";
-      return address;
-    }
-    function toYiddishCity(value) {
-      if (typeof value !== "string") return "";
-      const key = value.normalize("NFKD").toLocaleLowerCase().replace(/[^\p{L}\p{N}]/gu, "");
-      const cityNames = {
-        jerusalem: "ירושלים",
-        yerushalayim: "ירושלים",
-        betshemesh: "בית שמש",
-        beitshemesh: "בית שמש",
-        bethshemesh: "בית שמש",
-        bneibrak: "בני ברק",
-        monsey: "מאנסי",
-        newyork: "ניו־יאָרק",
-        brooklyn: "ברוקלין",
-        boroughpark: "באָראָ פּאַרק",
-        lakewood: "לעיקוואוד",
-        passaic: "פאסעיק",
-        statenisland: "סטעטן איילענד",
-        queenz: "קווינס",
-        queens: "קווינס",
-        kiryasjoel: "קרית יואל",
-        monroe: "מאנרא",
-        springvalley: "ספרינג וואלי",
-        newsquare: "ניי סקווער",
-        montreal: "מאנטרעאל",
-        toronto: "טאראנטא",
-        london: "לאנדאן",
-        manchester: "מאנטשעסטער",
-        antwerp: "אנטווערפן",
-        paris: "פאריז",
-        miami: "מיאמי",
-        losangeles: "לאס אנדזשעלעס",
-        chicago: "שיקאגא",
-        baltimore: "באלטימאר",
-        cleveland: "קליוולאנד"
-      };
-      return cityNames[key] || value.trim();
-    }
-    function openAttachmentDatabase() {
-      return new Promise((resolve, reject) => {
-        const request = indexedDB.open(attachmentDbName, 2);
-        request.onupgradeneeded = () => {
-          const database = request.result;
-          const store = database.objectStoreNames.contains(attachmentStoreName)
-            ? request.transaction.objectStore(attachmentStoreName)
-            : database.createObjectStore(attachmentStoreName, { keyPath: "id" });
-          if (!store.indexNames.contains("contactId")) {
-            store.createIndex("contactId", "contactId", { unique: false });
-          }
-        };
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error || new Error("דער דאָקומענט־זכּרון איז נישט בנימצא."));
-      });
-    }
-    async function storeContactDocument(contactId, file) {
-      const database = await openAttachmentDatabase();
-      return new Promise((resolve, reject) => {
-        const transaction = database.transaction(attachmentStoreName, "readwrite");
-        transaction.objectStore(attachmentStoreName).add({
-          id: makeId(),
-          contactId,
-          name: file.name,
-          type: file.type || "application/octet-stream",
-          blob: file,
-          addedAt: new Date().toISOString()
-        });
-        transaction.oncomplete = () => { database.close(); resolve(); };
-        transaction.onerror = () => { database.close(); reject(transaction.error || new Error("דער דאָקומענט האָט זיך נישט אָפּגעהיט.")); };
-        transaction.onabort = () => { database.close(); reject(transaction.error || new Error("דער דאָקומענט האָט זיך נישט אָפּגעהיט.")); };
-      });
-    }
-    async function getContactDocuments(contactId) {
-      const database = await openAttachmentDatabase();
-      return new Promise((resolve, reject) => {
-        const transaction = database.transaction(attachmentStoreName, "readonly");
-        const request = transaction.objectStore(attachmentStoreName).index("contactId").getAll(contactId);
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error || new Error("די דאָקומענטן האָבן זיך נישט געלאָזט לייענען."));
-        transaction.oncomplete = () => database.close();
-        transaction.onerror = () => { database.close(); reject(transaction.error); };
-      });
-    }
-    async function removeContactDocuments(contactId) {
-      const database = await openAttachmentDatabase();
-      return new Promise((resolve, reject) => {
-        const transaction = database.transaction(attachmentStoreName, "readwrite");
-        const store = transaction.objectStore(attachmentStoreName);
-        const request = store.index("contactId").getAllKeys(contactId);
-        request.onsuccess = () => request.result.forEach(key => store.delete(key));
-        transaction.oncomplete = () => { database.close(); resolve(); };
-        transaction.onerror = () => { database.close(); reject(transaction.error); };
-      });
-    }
-    function makeId() { return `${Date.now()}-${Math.random().toString(16).slice(2)}`; }
-    function normalizeName(value) {
-      return value.normalize("NFKD").toLocaleLowerCase().replace(/[^\p{L}\p{N}]/gu, "");
-    }
-    function nameSimilarity(firstName, secondName) {
-      const first = normalizeName(firstName);
-      const second = normalizeName(secondName);
-      if (!first || !second) return 0;
-      let previousRow = Array.from({ length: second.length + 1 }, (_, index) => index);
-      for (let rowIndex = 1; rowIndex <= first.length; rowIndex++) {
-        const currentRow = [rowIndex];
-        for (let columnIndex = 1; columnIndex <= second.length; columnIndex++) {
-          const replacementCost = first[rowIndex - 1] === second[columnIndex - 1] ? 0 : 1;
-          currentRow[columnIndex] = Math.min(currentRow[columnIndex - 1] + 1, previousRow[columnIndex] + 1, previousRow[columnIndex - 1] + replacementCost);
-        }
-        previousRow = currentRow;
-      }
-      return 1 - previousRow[second.length] / Math.max(first.length, second.length);
-    }
-    function findKnownContact(name, hebrewName) {
-      if (Math.max(normalizeName(name).length, normalizeName(hebrewName || "").length) < 5) return null;
-      let bestContact = null;
-      let bestScore = 0;
-      for (const contact of contacts) {
-        const score = Math.max(nameSimilarity(name, contact.name), nameSimilarity(hebrewName || "", contact.hebrewName || ""));
-        if (score > bestScore) {
-          bestContact = contact;
-          bestScore = score;
-        }
-      }
-      return bestScore >= .8 ? bestContact : null;
-    }
-    function loadContacts() {
-      try {
-        const saved = JSON.parse(localStorage.getItem(storageKey) || "[]");
-          return Array.isArray(saved) ? saved.filter(isContact).map(contact => ({ id: contact.id || makeId(), verified: contact.verified === true, title: typeof contact.title === "string" ? contact.title : "", name: typeof contact.name === "string" ? contact.name.trim() : "", hebrewName: typeof contact.hebrewName === "string" ? contact.hebrewName.trim() : "", organization: typeof contact.organization === "string" ? contact.organization.trim() : "", phone: typeof contact.phone === "string" ? contact.phone.trim() : "", address: cleanAddress(contact.address), city: typeof contact.city === "string" ? toYiddishCity(cleanAddress(contact.city)) : "" })) : [];
-      } catch { return []; }
-    }
-    function saveContacts() {
-      try {
-        localStorage.setItem(storageKey, JSON.stringify(contacts));
-        renderContacts();
-      } catch { alert("די קאָנטאַקטן האָבן זיך נישט געקענט אָפּהיטן אינעם בלעטערער."); }
-    }
-    function makeButton(label, className, action) {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = className;
-      button.textContent = label;
-      button.addEventListener("click", action);
-      return button;
-    }
-    function renderDashboard() {
-      document.querySelector("#dashboard-contact-count").textContent = String(contacts.length);
-      document.querySelector("#dashboard-organization-count").textContent = String(new Set(contacts.map(contact => (contact.organization || "").trim().toLocaleLowerCase()).filter(Boolean)).size);
-      document.querySelector("#dashboard-location-count").textContent = String(contacts.filter(contact => contact.address || contact.city).length);
-      const total = contacts.length;
-      renderMetricChart(document.querySelector("#dashboard-data-chart"), [
-        { label: "טעלעפֿאָן", value: contacts.filter(contact => contact.phone).length },
-        { label: "מוסד", value: contacts.filter(contact => contact.organization).length },
-        { label: "אַדרעס אָדער שטאָט", value: contacts.filter(contact => contact.address || contact.city).length }
-      ], total, "לייג צו קאָנטאַקטן כּדי צו זען די איבערבליק.");
-      const cityCounts = new Map();
-      contacts.filter(contact => contact.city).forEach(contact => {
-        const city = contact.city.trim();
-        cityCounts.set(city, (cityCounts.get(city) || 0) + 1);
-      });
-      const cityEntries = [...cityCounts].map(([label, value]) => ({ label, value })).sort((first, second) => second.value - first.value || first.label.localeCompare(second.label)).slice(0, 6);
-      renderMetricChart(document.querySelector("#dashboard-city-chart"), cityEntries, total, "נאָך נישטאָ קיין שטאָט־דאַטן.");
-    }
-    function renderMetricChart(container, entries, total, emptyMessage) {
-      container.replaceChildren();
-      if (!entries.length || total === 0) {
-        const empty = document.createElement("div");
-        empty.className = "chart-empty";
-        empty.textContent = emptyMessage;
-        container.append(empty);
-        return;
-      }
-      entries.forEach(entry => {
-        const row = document.createElement("div");
-        row.className = "metric-row";
-        const label = document.createElement("span");
-        label.textContent = entry.label;
-        const track = document.createElement("div");
-        track.className = "metric-track";
-        track.setAttribute("role", "progressbar");
-        track.setAttribute("aria-label", entry.label);
-        track.setAttribute("aria-valuemin", "0");
-        track.setAttribute("aria-valuemax", String(total));
-        track.setAttribute("aria-valuenow", String(entry.value));
-        const fill = document.createElement("div");
-        fill.className = "metric-fill";
-        fill.style.width = `${Math.min(100, entry.value / total * 100)}%`;
-        track.append(fill);
-        const value = document.createElement("span");
-        value.className = "metric-value";
-        value.textContent = String(entry.value);
-        row.append(label, track, value);
-        container.append(row);
-      });
-    }
-    function showView(viewName, updateHash = true) {
-      const isRecommendations = viewName === "recommendations";
-      document.querySelector("#dashboard-view").hidden = isRecommendations;
-      document.querySelector("#recommendations-view").hidden = !isRecommendations;
-      document.querySelectorAll(".nav-button").forEach(button => {
-        if (button.dataset.view === viewName) button.setAttribute("aria-current", "page");
-        else button.removeAttribute("aria-current");
-      });
-      document.querySelector("#page-context").textContent = isRecommendations ? "Hamlutzes" : "Dashboard";
-      if (updateHash) history.replaceState(null, "", isRecommendations ? "#recommendations" : "#dashboard");
-      if (!isRecommendations) renderDashboard();
-    }
-    function revokeAttachmentUrls() {
-      attachmentUrls.forEach(url => URL.revokeObjectURL(url));
-      attachmentUrls.clear();
-    }
-    async function renderContactDocuments(contactId, person) {
-      try {
-        const documents = await getContactDocuments(contactId);
-        if (!documents.length || !person.isConnected) return;
-        const list = document.createElement("div");
-        list.className = "attachment-list";
-        documents.forEach(documentRecord => {
-          const link = document.createElement("a");
-          const url = URL.createObjectURL(documentRecord.blob);
-          attachmentUrls.add(url);
-          link.className = "attachment-link";
-          link.href = url;
-          link.download = documentRecord.name;
-          link.textContent = documentRecord.name;
-          link.dir = "auto";
-          list.append(link);
-        });
-        person.append(list);
-      } catch {
-        return;
-      }
-    }
-    function renderContacts() {
-      const query = searchInput.value.trim().toLocaleLowerCase();
-      const visible = contacts.filter(contact => `${contact.title || ""} ${contact.name} ${contact.hebrewName || ""} ${contact.organization || ""} ${contact.phone} ${contact.address || ""} ${contact.city || ""}`.toLocaleLowerCase().includes(query)).sort((a, b) => (a.hebrewName || a.name).localeCompare(b.hebrewName || b.name));
-      countElement.textContent = String(contacts.length);
-      renderDashboard();
-      revokeAttachmentUrls();
-      listElement.replaceChildren();
-      if (!visible.length) {
-        const empty = document.createElement("div");
-        empty.className = "empty-state";
-        const heading = document.createElement("strong");
-        heading.textContent = query ? "קיין פּאַסיקע קאָנטאַקטן" : "דײַן רשימה איז נאָך ליידיק";
-        const message = document.createElement("span");
-        message.textContent = query ? "פּרוּוו אַן אַנדערן זוך־וואָרט." : "לייג צו דעם ערשטן קאָנטאַקט אינעם פֿאָרעם.";
-        empty.append(heading, message);
-        listElement.append(empty);
-        return;
-      }
-      visible.forEach((contact, index) => {
-        const [background, foreground] = colors[index % colors.length];
-        const row = document.createElement("article");
-        row.className = "contact-row";
-        const avatar = document.createElement("div");
-        avatar.className = "avatar";
-        avatar.style.setProperty("--avatar-bg", background);
-        avatar.style.setProperty("--avatar-ink", foreground);
-        avatar.textContent = (contact.hebrewName || contact.name).trim().charAt(0).toLocaleUpperCase();
-        avatar.setAttribute("aria-hidden", "true");
-        const person = document.createElement("div");
-        person.className = "person";
-        const name = document.createElement("div");
-        name.className = "person-name";
-        name.textContent = contact.hebrewName || contact.name;
-        person.append(name);
-        if (contact.name) {
-          const secondaryName = document.createElement("div");
-          secondaryName.className = "person-secondary-name";
-          secondaryName.textContent = contact.name;
-          secondaryName.dir = "auto";
-          person.append(secondaryName);
-        }
-        if (contact.title) {
-          const title = document.createElement("div");
-          title.className = "person-title";
-          title.textContent = contact.title;
-          person.append(title);
-        }
-        if (contact.organization) {
-          const organization = document.createElement("div");
-          organization.className = "person-organization";
-          organization.textContent = contact.organization;
-          organization.dir = "auto";
-          person.append(organization);
-        }
-        if (contact.phone) {
-          const phone = document.createElement("a");
-          phone.className = "person-phone";
-          phone.textContent = contact.phone;
-          phone.href = `tel:${contact.phone.replace(/[^+\d]/g, "")}`;
-          person.append(phone);
-        }
-        if (contact.address || contact.city) {
-          const address = document.createElement("div");
-          address.className = "person-address";
-          address.textContent = [contact.address, contact.city].filter(Boolean).join(", ");
-          person.append(address);
-        }
-        renderContactDocuments(contact.id, person);
-        const actions = document.createElement("div");
-        actions.className = "row-actions";
-        actions.append(makeButton("ענדערן", "text-button", () => openEdit(contact)), makeButton("אויסמעקן", "text-button delete-button", () => deleteContact(contact)));
-        row.append(avatar, person, actions);
-        listElement.append(row);
-      });
-    }
-    function openEdit(contact) {
-      editingId = contact.id;
-      document.querySelector("#edit-name").value = contact.name;
-      document.querySelector("#edit-hebrew-name").value = contact.hebrewName || "";
-      document.querySelector("#edit-organization").value = contact.organization || "";
-      document.querySelector("#edit-title-suffix").value = contact.title || "";
-      document.querySelector("#edit-phone").value = contact.phone;
-      document.querySelector("#edit-address").value = contact.address || "";
-      document.querySelector("#edit-city").value = contact.city || "";
-      editDialog.showModal();
-      document.querySelector("#edit-hebrew-name").focus();
-    }
-    async function deleteContact(contact) {
-      if (!confirm(`מעקן ${contact.hebrewName || contact.name} פֿון דער רשימה?`)) return;
-      try {
-        await removeContactDocuments(contact.id);
-      } catch {
-        return;
-      }
-      contacts = contacts.filter(item => item.id !== contact.id);
-      saveContacts();
-    }
-    addForm.addEventListener("submit", async event => {
-      event.preventDefault();
-      const name = document.querySelector("#name").value.trim();
-      const hebrewName = document.querySelector("#hebrew-name").value.trim();
-      const title = document.querySelector("#title-suffix").value.trim();
-      const organization = document.querySelector("#organization").value.trim();
-      const phone = document.querySelector("#phone").value.trim();
-      const address = document.querySelector("#address").value.trim();
-      const city = toYiddishCity(document.querySelector("#city").value.trim());
-      if (!hebrewName) return;
-      const matchedContact = contacts.find(contact => contact.id === matchedContactId);
-      const contactId = matchedContact?.id || makeId();
-      if (pendingDocument) {
-        try {
-          await storeContactDocument(contactId, pendingDocument);
-        } catch {
-          document.querySelector("#ocr-status").textContent = "דער דאָקומענט האָט זיך נישט געקענט אָפּהיטן. עפֿען די פּלאַטפאָרמע דורך localhost און פּרוּוו ווידער.";
-          return;
-        }
-      }
-      if (matchedContact) Object.assign(matchedContact, { verified: true, title, name, hebrewName, organization, phone, address, city });
-      else contacts.push({ id: contactId, verified: true, title, name, hebrewName, organization, phone, address, city });
-      matchedContactId = null;
-      pendingDocument = null;
-      saveContacts();
-      addForm.reset();
-      document.querySelector("#pending-document").textContent = "";
-      addContactDialog.close();
-    });
-    document.querySelector("#open-add-contact").addEventListener("click", () => {
-      addContactDialog.showModal();
-      document.querySelector("#hebrew-name").focus();
-    });
-    document.querySelector("#cancel-add").addEventListener("click", () => {
-      addForm.reset();
-      pendingDocument = null;
-      matchedContactId = null;
-      document.querySelector("#document-file").value = "";
-      document.querySelector("#pending-document").textContent = "";
-      document.querySelector("#ocr-status").textContent = "";
-      document.querySelector("#ocr-preview").hidden = true;
-      document.querySelector("#ocr-text").textContent = "";
-      addContactDialog.close();
-    });
-    document.querySelectorAll("#name, #hebrew-name").forEach(input => input.addEventListener("input", () => {
-      const matchedContact = contacts.find(contact => contact.id === matchedContactId);
-      if (!matchedContact) return;
-      const enteredNames = [normalizeName(document.querySelector("#name").value), normalizeName(document.querySelector("#hebrew-name").value)];
-      const savedNames = [normalizeName(matchedContact.name), normalizeName(matchedContact.hebrewName || "")];
-      if (!enteredNames.some(nameValue => savedNames.includes(nameValue))) matchedContactId = null;
-    }));
-    document.querySelector("#edit-form").addEventListener("submit", event => {
-      event.preventDefault();
-      const contact = contacts.find(item => item.id === editingId);
-      if (!contact) return;
-      contact.name = document.querySelector("#edit-name").value.trim();
-      contact.hebrewName = document.querySelector("#edit-hebrew-name").value.trim();
-      if (!contact.hebrewName) return;
-      contact.verified = true;
-      contact.organization = document.querySelector("#edit-organization").value.trim();
-      contact.title = document.querySelector("#edit-title-suffix").value.trim();
-      contact.phone = document.querySelector("#edit-phone").value.trim();
-      contact.address = document.querySelector("#edit-address").value.trim();
-      contact.city = toYiddishCity(document.querySelector("#edit-city").value.trim());
-      saveContacts();
-      editDialog.close();
-    });
-    document.querySelector("#cancel-edit").addEventListener("click", () => editDialog.close());
-    searchInput.addEventListener("input", renderContacts);
-    function exportContacts() {
-      const blob = new Blob([JSON.stringify(contacts, null, 2)], { type: "application/json" });
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = "contacts.json";
-      link.click();
-      URL.revokeObjectURL(link.href);
-    }
-    async function importContacts(file) {
-      try {
-        const parsed = JSON.parse(await file.text());
-        if (!Array.isArray(parsed)) throw new Error("Expected contact list");
-          const imported = parsed.filter(isContact).map(contact => ({ id: makeId(), verified: contact.verified === true, title: typeof contact.title === "string" ? contact.title : "", name: typeof contact.name === "string" ? contact.name.trim() : "", hebrewName: typeof contact.hebrewName === "string" ? contact.hebrewName.trim() : "", organization: typeof contact.organization === "string" ? contact.organization.trim() : "", phone: typeof contact.phone === "string" ? contact.phone.trim() : "", address: cleanAddress(contact.address), city: typeof contact.city === "string" ? toYiddishCity(cleanAddress(contact.city)) : "" }));
-        if (imported.length === 0 && parsed.length > 0) throw new Error("No valid contacts");
-        if (contacts.length && !confirm("דער אַרײַנלאָד וועט פֿאַרבײַטן די איצטיקע רשימה. ממשיך זײַן?")) return;
-        contacts = imported;
-        saveContacts();
-      } catch { alert("די טעקע האָט נישט דעם ריכטיקן פֿאָרמאַט. קלײַב דעם contacts.json פֿון דער Python־פּראָגראַם."); }
-    }
+    <section class="section" id="payments">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Giving</span>
+          <h2>Payment Options</h2>
+          <p>There are several ways to make a donation. For specific instructions, please call or email the office.</p>
+        </div>
+        <div class="payment-grid">
+          <article class="payment-card">
+            <h3>Credit Card</h3>
+            <p>Pay by phone, text message, or credit card link.</p>
+            <div class="method-list"><span>By phone · <bdi class="ltr">#3</bdi></span><span>By text</span><span>Online link</span></div>
+            <a class="button" href="tel:+17184758884">Call and press <bdi class="ltr">#3</bdi></a>
+          </article>
+          <article class="payment-card">
+            <h3>Other Methods</h3>
+            <p>Other donation methods listed in our community information:</p>
+            <div class="method-list"><span>Zelle / Tax ID: <bdi class="ltr">58-4242098</bdi></span><span>QuickPay</span><span>PayPal</span><span>Check</span><span>Text ID</span></div>
+            <a class="button secondary" href="mailto:Office@chasdaychaim.org">Ask the office</a>
+          </article>
+        </div>
+        <div class="fee-note">
+          <span aria-hidden="true">ℹ</span>
+          <div><strong>Credit card machines:</strong> Machines are available to rent for <bdi class="ltr">$5 per week</bdi>. Special campaign pricing is also available. Contact the office for details and current fees.</div>
+        </div>
+      </div>
+    </section>
 
-    function loadScript(url) {
-      return new Promise((resolve, reject) => {
-        const script = document.createElement("script");
-        script.src = url;
-        script.onload = resolve;
-        script.onerror = () => reject(new Error("די OCR־ביבליאָטעק האָט זיך נישט געקענט אַראָפּלאָדן."));
-        document.head.append(script);
-      });
-    }
-    async function prepareDocument(file) {
-      const isPdf = file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf");
-      if (isPdf) {
-        if (!window.pdfjsLib) {
-          await loadScript("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js");
-          pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-        }
-        const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
-        const page = await pdf.getPage(1);
-        const canvas = document.createElement("canvas");
-        const viewport = page.getViewport({ scale: 2 });
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
-        await page.render({ canvasContext: canvas.getContext("2d"), viewport }).promise;
-        return canvas;
-      }
-      if (!file.type.startsWith("image/")) throw new Error("קלײַב אַ בילד אָדער אַ PDF־טעקע.");
-      const bitmap = await createImageBitmap(file);
-      const scale = Math.min(4, 2400 / bitmap.width, 1600 / bitmap.height);
-      const canvas = document.createElement("canvas");
-      canvas.width = Math.round(bitmap.width * scale);
-      canvas.height = Math.round(bitmap.height * scale);
-      const context = canvas.getContext("2d");
-      context.imageSmoothingEnabled = true;
-      context.imageSmoothingQuality = "high";
-      context.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-      bitmap.close();
-      return canvas;
-    }
-    function extractLetterhead(text) {
-      const lines = text.split(/\r?\n/).map(line => line.replace(/[|_]{2,}/g, " ").replace(/\s+/g, " ").trim()).filter(Boolean);
-      const streetPattern = /(?:\b(?:street|st\.?|road|rd\.?|avenue|ave\.?|boulevard|blvd\.?|lane|ln\.?|drive|dr\.?|suite|ste\.?|unit|apt\.?)\b|(?:רחוב|רח׳|שדרות|דרך))/iu;
-      const hasPhoneNumber = line => {
-        const digits = line.replace(/\D/g, "").length;
-        return digits >= 7 && digits <= 15 && !streetPattern.test(line) && !/@|https?:|www\.|\bfax\b/i.test(line);
-      };
-      const labeledPhoneLine = lines.findIndex(line => /\b(?:tel|phone|mobile)\b|טל(?:פון)?|פלאפון|טעלעפֿאָן/i.test(line) && hasPhoneNumber(line));
-      const phoneLine = labeledPhoneLine >= 0 ? labeledPhoneLine : lines.findIndex(hasPhoneNumber);
-      const phoneMatch = phoneLine >= 0 ? lines[phoneLine].match(/\+?\d[\d\s()./-]{5,}\d/) : null;
-      const phone = phoneMatch ? phoneMatch[0].replace(/\s+/g, " ").trim() : "";
-      const streetStart = lines.findIndex((line, index) => index !== phoneLine && (streetPattern.test(line) || /^\d{1,6}\s+[\p{L}]/u.test(line)));
-      const cityLabelPattern = /^(?:city|location|office|עיר|שטאָט)\s*[:\-]\s*(.+)$/iu;
-      const cityLabel = lines.findIndex(line => cityLabelPattern.test(line));
-      const postalLine = lines.findIndex((line, index) => index !== phoneLine && /^\s*(?:\d{5}(?:-\d{4})?|\d{7})\s*$/.test(line));
-      const addressStart = streetStart >= 0 ? streetStart : postalLine;
-      const addressLines = [];
-      if (addressStart >= 0) {
-        for (const line of lines.slice(addressStart, addressStart + 3)) {
-          if (lines.indexOf(line) === phoneLine || cityLabelPattern.test(line) || hasPhoneNumber(line) || /@|https?:|www\.|\b(?:tel|phone|fax)\b/i.test(line)) break;
-          const cleanLine = cleanAddress(line);
-          if (!cleanLine) break;
-          addressLines.push(cleanLine);
-        }
-      }
-      const labeledCity = cityLabel >= 0 ? cityLabelPattern.exec(lines[cityLabel])?.[1] || "" : "";
-      const titleLine = lines.find(line => /(?:\b(?:rabbi|rebbe|rav)\b|הרב|רבי|רבנית|ר׳)/iu.test(line) && !/\brav\s*(?:&|and)\s*moreh\b/i.test(line));
-      const hebrewTitlePattern = /^(?:(?:הרה״ג|הרה"ג|הרב|רבנית|רבי|רב|ר׳|ר')\s*)+/u;
-      const suffixPattern = /(?:דומ["״׳']?ץ|מו["״׳']?ץ|דיין|אב["״׳']?ד|מרא\s+דאתרא|ראש\s+ישיבה|ראש\s+הכולל|רב\s+(?:שכונת|העיר|דקהל|דהקהילה))(?:\s+[\u0590-\u05ff\w"״׳'.-]+)*/u;
-      const organizationPattern = /\b(?:academy|school|university|institute|seminary|synagogue|yeshiva|college|foundation|association|organization|centre|center)\b|ישיב[הת]|בית\s+המדרש|בית\s+כנסת|כולל|מוסדות|תלמוד\s+תורה/iu;
-      const suffixes = lines.map(line => line.match(suffixPattern)?.[0]?.trim()).filter(Boolean);
-      const titleSuffix = [...new Set(suffixes)].join(" / ");
-      const firstSuffixLine = lines.findIndex(line => suffixPattern.test(line));
-      const hebrewNameCandidate = line => /[\u0590-\u05ff]{4}/u.test(line) && line.length <= 80 && !/\d/.test(line) && !suffixPattern.test(line) && !organizationPattern.test(line) && !hasPhoneNumber(line) && !/@|https?:|www\./i.test(line);
-      const hebrewNameLine = lines.find(line => hebrewNameCandidate(line) && hebrewTitlePattern.test(line)) || lines.find((line, index) => hebrewNameCandidate(line) && (firstSuffixLine < 0 || index < firstSuffixLine) && line.trim().split(/\s+/).length >= 2 && line.trim().split(/\s+/).length <= 5);
-      const hebrewNameIndex = lines.indexOf(hebrewNameLine);
-      const hebrewName = hebrewNameLine ? hebrewNameLine.replace(hebrewTitlePattern, "").replace(suffixPattern, "").replace(/[\s,;:-]+$/, "").trim() : "";
-      const englishNamePattern = /^[A-Za-z][A-Za-z'’.-]*(?:\s+[A-Za-z][A-Za-z'’.-]*){1,4}$/;
-      const nameIndex = lines.findIndex((line, index) => index !== addressStart && line.length <= 80 && englishNamePattern.test(line) && !/\b(?:the|rov|ramah|shemesh|phone|telephone|address)\b/i.test(line) && !organizationPattern.test(line) && !streetPattern.test(line) && !cityLabelPattern.test(line));
-      const titledName = titleLine && /\b(?:rabbi|rebbe|rav)\b/i.test(titleLine) ? titleLine.replace(/^.*?\b(?:rabbi|rebbe|rav)\b\s*/i, "").trim() : "";
-      const name = titledName || (nameIndex >= 0 ? lines[nameIndex].replace(/^(?:rabbi|rebbe|rav)\s+/i, "").trim() : hebrewName);
-      const organization = lines.find(line => organizationPattern.test(line) && line.length <= 120 && !hasPhoneNumber(line) && !streetPattern.test(line)) || "";
-      const namePosition = nameIndex >= 0 ? nameIndex : hebrewNameIndex;
-      const placeLine = lines.find((line, index) => {
-        const words = line.trim().split(/\s+/);
-        const looksLikePlace = /^(?:[A-Z][\p{L}'’-]*|[\u0590-\u05ff][\u0590-\u05ff'״׳-]*)(?:[\s,-]+(?:[A-Z][\p{L}'’-]*|[A-Z]{2}|[\u0590-\u05ff][\u0590-\u05ff'״׳-]*)){0,2}$/u.test(line);
-        return index > namePosition && index !== phoneLine && index !== hebrewNameIndex && looksLikePlace && words.length <= 3 && !/\d|@|https?:|www\./i.test(line) && !streetPattern.test(line) && !suffixPattern.test(line) && !organizationPattern.test(line) && !/\b(?:the|rov|ramah|phone|telephone|address|rabbi|rav|academy|school|yeshiva|university|institute)\b/i.test(line);
-      });
-      const rawAddress = addressLines.join(", ");
-      const hebrewCityMatch = rawAddress.match(/\s+([\u0590-\u05ff]{3,}(?:\s+[\u0590-\u05ff]{2,})*)$/u);
-      const englishCityMatch = rawAddress.match(/,\s*([A-Z][A-Z .'-]{2,})(?:\s+\d{5}(?:-\d{4})?)?$/i);
-      const city = cleanAddress(labeledCity || placeLine || hebrewCityMatch?.[1] || englishCityMatch?.[1] || "");
-      let address = rawAddress;
-      if (hebrewCityMatch && city === hebrewCityMatch[1]) address = address.replace(hebrewCityMatch[0], "");
-      if (englishCityMatch && city === englishCityMatch[1]) address = address.replace(englishCityMatch[0], "");
-      return { name, hebrewName, organization, titleSuffix, phone, address: cleanAddress(address), city };
-    }
-    async function recognizeDocumentText(canvas, language, status, progress, segmentationMode = "11") {
-      let worker;
-      try {
-        worker = await Tesseract.createWorker(language, 1, {
-          logger(message) {
-            if (message.status) status.textContent = "לייענט דעם דאָקומענט…";
-            if (typeof message.progress === "number") progress.value = message.progress;
-          }
-        });
-        await worker.setParameters({ tessedit_pageseg_mode: segmentationMode });
-        const result = await worker.recognize(canvas);
-        return result.data.text;
-      } finally {
-        if (worker) await worker.terminate();
-      }
-    }
-    function cropCanvas(source, x, y, width, height) {
-      const cropped = document.createElement("canvas");
-      cropped.width = width;
-      cropped.height = height;
-      cropped.getContext("2d").drawImage(source, x, y, width, height, 0, 0, width, height);
-      return cropped;
-    }
-    async function readDocument(file) {
-      const status = document.querySelector("#ocr-status");
-      const progress = document.querySelector("#ocr-progress");
-      const button = document.querySelector("#ocr-button");
-      const preview = document.querySelector("#ocr-preview");
-      button.disabled = true;
-      progress.hidden = false;
-      progress.value = 0;
-      preview.hidden = true;
-      document.querySelector("#ocr-text").textContent = "";
-      ["#name", "#hebrew-name", "#organization", "#title-suffix", "#phone", "#address", "#city"].forEach(selector => {
-        document.querySelector(selector).value = "";
-      });
-      status.textContent = "גרייט זיך צו לייענען דעם דאָקומענט…";
-      matchedContactId = null;
-      try {
-        const pageCanvas = await prepareDocument(file);
-        const headerPercent = Number(document.querySelector("#letterhead-height").value);
-        const headerHeight = Math.max(1, Math.round(pageCanvas.height * headerPercent / 100));
-        const canvas = cropCanvas(pageCanvas, 0, 0, pageCanvas.width, headerHeight);
-        if (!window.Tesseract) await loadScript("https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js");
-        const selectedLanguage = document.querySelector("#ocr-language").value;
-        const languages = selectedLanguage === "eng+heb" ? ["eng+heb", "eng", "heb"] : [selectedLanguage];
-        const runs = languages.map(language => ({
-          language,
-          role: language === "eng+heb" ? "combined" : language === "eng" ? "english" : "hebrew",
-          canvas,
-          mode: "11"
-        }));
-        const results = [];
-        for (const run of runs) {
-          status.textContent = run.language === "eng" ? "לייענט ענגלישע שורות…" : run.language === "heb" ? "לייענט ייִדישע שורות…" : "לייענט דעם דאָקומענט…";
-          progress.value = 0;
-          const text = await recognizeDocumentText(run.canvas, run.language, status, progress, run.mode);
-          results.push({ role: run.role, text, ...extractLetterhead(text) });
-        }
-        const englishResult = results.find(result => result.role === "english" || result.role === "eng") || null;
-        const hebrewResult = results.find(result => result.role === "hebrew" || result.role === "heb") || null;
-        const combinedResult = results.find(result => result.role === "combined") || null;
-        const phoneCandidates = [englishResult?.phone, combinedResult?.phone, hebrewResult?.phone].filter(Boolean);
-        const validIsraeliPhone = phone => /^0[2-9]\d{7,8}$/.test(phone.replace(/\D/g, ""));
-        const accuratePhone = phoneCandidates.find(validIsraeliPhone) || "";
-        const rawPhone = phoneCandidates[0] || "";
-        const uncertainIsraeliMobile = !accuratePhone && /^05\d{9}$/.test(rawPhone.replace(/\D/g, ""));
-        const titles = [...new Set(results.flatMap(result => (result.titleSuffix || "").split(" / ").map(title => title.trim()).filter(Boolean)))];
-        const extracted = {
-          name: englishResult?.name || combinedResult?.name || hebrewResult?.name || "",
-          hebrewName: hebrewResult?.hebrewName || combinedResult?.hebrewName || englishResult?.hebrewName || "",
-          organization: englishResult?.organization || combinedResult?.organization || hebrewResult?.organization || "",
-          titleSuffix: titles.join(" / "),
-          phone: accuratePhone || rawPhone,
-          address: englishResult?.address || combinedResult?.address || hebrewResult?.address || "",
-          city: toYiddishCity(englishResult?.city || combinedResult?.city || hebrewResult?.city || "")
-        };
-        const roleLabels = { combined: "ענגליש און ייִדיש", english: "ענגליש", hebrew: "ייִדיש" };
-        document.querySelector("#ocr-text").textContent = results.map(result => `${roleLabels[result.role] || result.role}\n${result.text}`).join("\n\n");
-        preview.hidden = false;
-        const knownContact = findKnownContact(extracted.name, extracted.hebrewName);
-        if (knownContact) {
-          matchedContactId = knownContact.id;
-          if (knownContact.verified) {
-            extracted.name = knownContact.name;
-            extracted.hebrewName = knownContact.hebrewName || extracted.hebrewName;
-            extracted.organization = knownContact.organization || extracted.organization;
-            extracted.titleSuffix = knownContact.title || extracted.titleSuffix;
-            extracted.phone = knownContact.phone || extracted.phone;
-            extracted.address = knownContact.address || extracted.address;
-            extracted.city = knownContact.city || extracted.city;
-          }
-        }
-        if (extracted.name) document.querySelector("#name").value = extracted.name;
-        if (extracted.hebrewName) document.querySelector("#hebrew-name").value = extracted.hebrewName;
-        if (extracted.organization) document.querySelector("#organization").value = extracted.organization;
-        if (extracted.titleSuffix) document.querySelector("#title-suffix").value = extracted.titleSuffix;
-        if (extracted.phone) document.querySelector("#phone").value = extracted.phone;
-        if (extracted.address) document.querySelector("#address").value = extracted.address;
-        if (extracted.city) document.querySelector("#city").value = extracted.city;
-        status.textContent = knownContact?.verified ? "גענוצט די שוין־באַשטעטיקטע דעטאַלן פֿאַר דעם קאָנטאַקט; קאָנטראָליר זיי איידער דו היטסט." : knownContact ? "געפֿונען אַ ענלעכן קאָנטאַקט. קאָנטראָליר די רעזולטאַטן; בײַם היטן וועט די אַלטע ריי דערהײַנטיקט ווערן." : uncertainIsraeliMobile ? "דער OCR קען האָבן צוגעגעבן אַ ציפֿער צום טעלעפֿאָן. דער פֿאָרשלאָג איז אַרײַנגעשריבן געוואָרן; קאָנטראָליר אים." : extracted.name || extracted.hebrewName || extracted.organization || extracted.titleSuffix || extracted.phone || extracted.address || extracted.city ? "איבערקוק נאָמען, מוסד, טיטל, נומער און אָרט און ענדער זיי אויב נייטיק." : "נישט געפֿונען קיין נאָמען, מוסד, טיטל, נומער אָדער אָרט. פּרוּוו אַ שאַרפֿערן דאָקומענט.";
-      } catch (error) {
-        status.textContent = error.message || "דער דאָקומענט האָט זיך נישט געלאָזט לייענען.";
-      } finally {
-        progress.hidden = true;
-        button.disabled = false;
-      }
-    }
-    const documentFile = document.querySelector("#document-file");
-    document.querySelector("#letterhead-height").addEventListener("input", event => {
-      document.querySelector("#letterhead-height-value").value = `${event.target.value}%`;
-    });
-    document.querySelector("#ocr-button").addEventListener("click", () => documentFile.click());
-    documentFile.addEventListener("change", () => {
-      if (documentFile.files[0]) {
-        pendingDocument = documentFile.files[0];
-        document.querySelector("#pending-document").textContent = `דער דאָקומענט „${pendingDocument.name}“ וועט צוגעבונדן ווערן נאָכן היטן דעם קאָנטאַקט.`;
-        readDocument(pendingDocument);
-      }
-      documentFile.value = "";
-    });
+    <section class="section soft" id="withdrawals">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Helpful information</span>
+          <h2>Withdrawals</h2>
+          <p>Options vary by country. The office can help with the details for your account.</p>
+        </div>
+        <div class="withdraw-grid">
+          <article class="withdraw-card">
+            <h3>United States</h3>
+            <p>Funds may be available for withdrawal one day after they are deposited. Ask the office about a debit card and how to load funds onto it.</p>
+          </article>
+          <article class="withdraw-card">
+            <h3>Israel</h3>
+            <p>Funds may be transferred to a bank account, or you can ask about a card. To send funds to Israel, a request form must be completed each year.</p>
+          </article>
+          <article class="withdraw-card">
+            <h3>Other Countries</h3>
+            <p>For transfers to other countries, email the main office with your question.</p>
+            <a class="office-map" href="mailto:Office@chasdaychaim.org">Send an email ↗</a>
+          </article>
+        </div>
+      </div>
+    </section>
 
-    const importFile = document.querySelector("#import-file");
-    document.querySelectorAll("#import-button, #import-button-secondary").forEach(button => button.addEventListener("click", () => importFile.click()));
-    document.querySelectorAll("#export-button, #export-button-secondary").forEach(button => button.addEventListener("click", exportContacts));
-    importFile.addEventListener("change", () => {
-      if (importFile.files[0]) importContacts(importFile.files[0]);
-      importFile.value = "";
-    });
-    document.querySelectorAll(".nav-button").forEach(button => button.addEventListener("click", () => showView(button.dataset.view)));
-    window.addEventListener("hashchange", () => showView(location.hash === "#recommendations" ? "recommendations" : "dashboard", false));
-    renderContacts();
-    showView(location.hash === "#recommendations" ? "recommendations" : "dashboard", false);
-  </script>
+    <section class="section" id="directory">
+      <div class="container">
+        <div class="start-panel">
+          <div>
+            <h2>Community Information Directory</h2>
+            <p>Browse community services and local listings on a dedicated directory page.</p>
+          </div>
+          <a class="button" href="directory.html">Open the Directory <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="account">
+      <div class="container">
+        <div class="start-panel">
+          <div>
+            <h2>Want to open an account?</h2>
+            <p>Opening an account requires a valid letter of recommendation. For larger family cases or a private conversation with an account representative, please contact the office.</p>
+          </div>
+          <a class="button" href="mailto:Office@chasdaychaim.org">Contact the Office <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>Chasdei Chaim · Practical Information</span>
+      <span>For help: <a href="mailto:Office@chasdaychaim.org"><span class="ltr">Office@chasdaychaim.org</span></a> · <a href="tel:+17184758884"><span class="ltr">718-475-8884 #222</span></a></span>
+    </div>
+  </footer>
 </body>
 </html>

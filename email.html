@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="yi" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f4ec">
+  <meta name="description" content="שרייב און שיק אימעילס דורך דיין אייגענעם Outlook אקאונט.">
+  <title>Outlook אימעיל | חסדי חיים</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #29251f;
+      --muted: #756c5e;
+      --brown: #51351f;
+      --brown-dark: #382619;
+      --gold: #c0924a;
+      --gold-light: #f3e8d4;
+      --paper: #fffdf9;
+      --canvas: #f8f4ec;
+      --line: #e8dfd1;
+      font-family: "Heebo", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 7% 8%, rgba(192, 146, 74, .11), transparent 30rem),
+        var(--canvas);
+      line-height: 1.7;
+    }
+    button, input, textarea { font: inherit; }
+    a { color: inherit; }
+    .site-header { border-bottom: 1px solid var(--line); background: rgba(255, 253, 249, .95); }
+    .header-inner {
+      width: min(1000px, calc(100% - 36px));
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-inline: auto;
+    }
+    .brand { color: var(--brown-dark); font-size: 18px; font-weight: 800; text-decoration: none; }
+    .home-link { color: var(--brown); font-weight: 600; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+    main { width: min(760px, calc(100% - 32px)); margin: 44px auto 64px; }
+    .intro { margin-bottom: 24px; }
+    .eyebrow { margin: 0 0 4px; color: #8a6733; font-size: 13px; font-weight: 800; }
+    h1 { margin: 0; color: var(--brown-dark); font-size: clamp(28px, 5vw, 38px); line-height: 1.25; }
+    .intro p:last-child { margin: 8px 0 0; color: var(--muted); }
+    .card {
+      margin-top: 18px;
+      padding: clamp(18px, 4vw, 28px);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--paper);
+      box-shadow: 0 12px 34px rgba(67, 47, 24, .06);
+    }
+    .card h2 { margin: 0 0 12px; color: var(--brown-dark); font-size: 20px; }
+    .account-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+    .account-label { flex: 1 1 220px; color: var(--muted); }
+    .field { display: grid; gap: 6px; margin-top: 16px; }
+    .field label { font-weight: 700; }
+    .field input, .field textarea {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 12px;
+      border: 1px solid #d7ccbb;
+      border-radius: 8px;
+      color: var(--ink);
+      background: white;
+      text-align: right;
+    }
+    .field textarea { min-height: 190px; resize: vertical; }
+    .field input:focus, .field textarea:focus, button:focus-visible, a:focus-visible {
+      outline: 3px solid rgba(192, 146, 74, .35);
+      outline-offset: 2px;
+      border-color: var(--gold);
+    }
+    .help { margin: 0; color: var(--muted); font-size: 13px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .button {
+      min-height: 44px;
+      padding: 9px 17px;
+      border: 1px solid var(--brown);
+      border-radius: 8px;
+      color: white;
+      background: var(--brown);
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .button:hover:not(:disabled) { background: var(--brown-dark); }
+    .button.secondary { color: var(--brown); background: transparent; }
+    .button.secondary:hover:not(:disabled) { background: var(--gold-light); }
+    .button:disabled { cursor: not-allowed; opacity: .55; }
+    .notice {
+      min-height: 24px;
+      margin: 12px 0 0;
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+    .notice[data-kind="error"] { color: #a32f24; }
+    .notice[data-kind="success"] { color: #27613b; }
+    details { margin-top: 18px; color: var(--muted); font-size: 14px; }
+    details p { margin: 8px 0 0; }
+    code { direction: ltr; unicode-bidi: isolate; }
+    @media (max-width: 520px) {
+      .header-inner { min-height: 64px; }
+      main { margin-top: 28px; }
+      .account-row { align-items: stretch; }
+      .account-row .button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html">חסדי חיים | אימעיל</a>
+      <a class="home-link" href="index.html">צוריק צום היים־בלאַט</a>
+    </div>
+  </header>
+  <main>
+    <header class="intro">
+      <p class="eyebrow">Outlook</p>
+      <h1>שרייב און שיק אַן אימעיל</h1>
+      <p>קלער זיך איין אין דיין אייגענעם Outlook־אקאונט. דו קענסט איבערקוקן דעם אימעיל איידער דו שיקסט אים.</p>
+    </header>
+
+    <section class="card" aria-labelledby="account-heading">
+      <h2 id="account-heading">קאנעקט צו Outlook</h2>
+      <div class="account-row">
+        <span class="account-label" id="account-status">נישט איינגעשריבן</span>
+        <button class="button" id="connect-button" type="button">קלער זיך איין</button>
+        <button class="button secondary" id="disconnect-button" type="button" hidden>אויסקלערן זיך</button>
+      </div>
+      <form id="settings-form">
+        <div class="field">
+          <label for="client-id">Microsoft Application (client) ID</label>
+          <input id="client-id" name="clientId" type="text" dir="ltr" autocomplete="off" spellcheck="false" required>
+          <p class="help">דאס איז דער פובליקער קליענט־ID פֿון דיין Microsoft app registration — נישט קיין סוד אָדער פּאַראָל.</p>
+        </div>
+        <div class="actions">
+          <button class="button secondary" type="submit">אויפֿהיטן דעם קליענט־ID</button>
+        </div>
+      </form>
+      <p class="notice" id="account-notice" role="status" aria-live="polite"></p>
+      <details>
+        <summary>ווי אַזוי שטעלט מען עס איין?</summary>
+        <p>שאַף אַן app registration אין Microsoft Entra. ערלויב אָרגאַניזאַציע־ און פּערזענלעכע Microsoft־אַקאַונטן, לייג צו די Single-page application redirect URL פֿאַר דער בלאַט, און געב צוגעטיילטע Graph־רעכט <code>User.Read</code> און <code>Mail.Send</code>. לייג קיינמאָל נישט אַרײַן אַ client secret. די גאַנצע אינסטרוקציעס זײַנען אין <a href="README.md">README</a>.</p>
+      </details>
+    </section>
+
+    <form class="card" id="email-form">
+      <h2>נײַער אימעיל</h2>
+      <div class="field">
+        <label for="to">צו</label>
+        <input id="to" name="to" type="text" inputmode="email" autocomplete="email" placeholder="name@example.com, another@example.com" required>
+        <p class="help">איין אָדער מער אַדרעסן, צעטיילט מיט אַ קאָמע אָדער סעמיקאָלאָן.</p>
+      </div>
+      <div class="field">
+        <label for="cc">קאפיע (CC)</label>
+        <input id="cc" name="cc" type="text" inputmode="email" autocomplete="off" placeholder="אופציאָנעל">
+      </div>
+      <div class="field">
+        <label for="subject">טעמע</label>
+        <input id="subject" name="subject" type="text" maxlength="255" required>
+      </div>
+      <div class="field">
+        <label for="body">אימעיל־טעקסט</label>
+        <textarea id="body" name="body" required></textarea>
+      </div>
+      <div class="actions">
+        <button class="button" id="send-button" type="submit" disabled>שיקן אימעיל</button>
+      </div>
+      <p class="notice" id="send-notice" role="status" aria-live="polite"></p>
+    </form>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@azure/msal-browser@2.38.3/lib/msal-browser.min.js" integrity="sha384-OJTwghM0Gh3Zc+gmd6l0lz1pFw9KuHHq0mSEZgmQEKgMnuSWWDb3bU9KzuD7w2hU" crossorigin="anonymous"></script>
+  <script>
+    const clientIdField = document.querySelector("#client-id");
+    const settingsForm = document.querySelector("#settings-form");
+    const accountStatus = document.querySelector("#account-status");
+    const accountNotice = document.querySelector("#account-notice");
+    const connectButton = document.querySelector("#connect-button");
+    const disconnectButton = document.querySelector("#disconnect-button");
+    const emailForm = document.querySelector("#email-form");
+    const sendButton = document.querySelector("#send-button");
+    const sendNotice = document.querySelector("#send-notice");
+    const redirectUri = `${window.location.origin}${window.location.pathname}`;
+    const scopes = ["User.Read", "Mail.Send"];
+    let authClient;
+    let authClientId = "";
+    let authClientInitialization = Promise.resolve();
+    let activeAccount = null;
+
+    function setNotice(element, message, kind = "info") {
+      element.textContent = message;
+      element.dataset.kind = kind;
+    }
+
+    function setActiveAccount(account) {
+      activeAccount = account;
+      accountStatus.textContent = account ? `איינגעשריבן ווי ${account.username}` : "נישט איינגעשריבן";
+      connectButton.hidden = Boolean(account);
+      disconnectButton.hidden = !account;
+      sendButton.disabled = !account;
+    }
+
+    function isClientId(value) {
+      return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value);
+    }
+
+    async function getAuthClient() {
+      const clientId = clientIdField.value.trim();
+      if (!isClientId(clientId)) {
+        throw new Error("גיב ארײַן דעם גילטיקן Application (client) ID פֿון דיין Microsoft app registration.");
+      }
+      if (!window.msal || !window.msal.PublicClientApplication) {
+        throw new Error("די Microsoft sign-in־ביבליאָטעק האָט זיך נישט געלאָדן. קאָנטראָליר די אינטערנעט־קאַנעקשאַן און פּרוּוו ווידער.");
+      }
+      if (!authClient || authClientId !== clientId) {
+        const client = new window.msal.PublicClientApplication({
+          auth: {
+            clientId,
+            authority: "https://login.microsoftonline.com/common",
+            redirectUri
+          },
+          cache: { cacheLocation: "sessionStorage" }
+        });
+        authClient = client;
+        authClientId = clientId;
+        authClientInitialization = client.initialize().then(() => {
+          if (authClient === client) {
+            const accounts = client.getAllAccounts();
+            setActiveAccount(accounts[0] || null);
+          }
+        }).catch(error => {
+          if (authClient === client) {
+            authClient = null;
+            authClientId = "";
+            authClientInitialization = Promise.resolve();
+          }
+          throw error;
+        });
+      }
+      await authClientInitialization;
+      return authClient;
+    }
+
+    function parseRecipients(value, fieldName, required) {
+      const addresses = value.split(/[;,\n]/).map(address => address.trim()).filter(Boolean);
+      const valid = addresses.every(address => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(address));
+      if ((required && addresses.length === 0) || !valid) {
+        throw new Error(`קאָנטראָליר די אימעיל־אַדרעסן אינעם פֿעלד „${fieldName}“.`);
+      }
+      return addresses.map(address => ({ emailAddress: { address } }));
+    }
+
+    async function acquireMailToken(client) {
+      try {
+        const result = await client.acquireTokenSilent({ account: activeAccount, scopes: ["Mail.Send"] });
+        return result.accessToken;
+      } catch (error) {
+        if (!(error instanceof window.msal.InteractionRequiredAuthError)) throw error;
+        const result = await client.acquireTokenPopup({ account: activeAccount, scopes: ["Mail.Send"] });
+        return result.accessToken;
+      }
+    }
+
+    settingsForm.addEventListener("submit", event => {
+      event.preventDefault();
+      const clientId = clientIdField.value.trim();
+      if (!isClientId(clientId)) {
+        setNotice(accountNotice, "דער Application (client) ID זעט נישט אויס גילטיק.", "error");
+        return;
+      }
+      try {
+        localStorage.setItem("outlookEmailClientId", clientId);
+        authClient = null;
+        authClientId = "";
+        authClientInitialization = Promise.resolve();
+        setActiveAccount(null);
+        setNotice(accountNotice, "דער client ID איז אויפֿגעהיטן אויף דעם קאָמפּיוטער.");
+      } catch (error) {
+        setNotice(accountNotice, `מען האָט נישט געקענט אויפֿהיטן דעם client ID: ${error.message}`, "error");
+      }
+    });
+
+    connectButton.addEventListener("click", async () => {
+      connectButton.disabled = true;
+      setNotice(accountNotice, "מען עפֿנט די Microsoft־איינשרייבונג...");
+      try {
+        const client = await getAuthClient();
+        if (!activeAccount) {
+          const result = await client.loginPopup({ scopes });
+          setActiveAccount(result.account);
+        }
+        setNotice(accountNotice, `איינגעשריבן ווי ${activeAccount.username}.`);
+      } catch (error) {
+        setNotice(accountNotice, `מען האָט נישט געקענט זיך איינשרייבן: ${error.message}`, "error");
+      } finally {
+        connectButton.disabled = false;
+      }
+    });
+
+    disconnectButton.addEventListener("click", async () => {
+      try {
+        const client = await getAuthClient();
+        await client.logoutPopup({ account: activeAccount, postLogoutRedirectUri: redirectUri });
+        setActiveAccount(null);
+        setNotice(accountNotice, "דו ביסט אַרויסגעגאַנגען פֿון Outlook.");
+      } catch (error) {
+        setNotice(accountNotice, `מען האָט נישט געקענט אויסקלערן דעם אקאונט: ${error.message}`, "error");
+      }
+    });
+
+    emailForm.addEventListener("submit", async event => {
+      event.preventDefault();
+      if (!activeAccount) {
+        setNotice(sendNotice, "קלער זיך ערשט איין אין דיין Outlook־אקאונט.", "error");
+        return;
+      }
+      let message;
+      try {
+        message = {
+          subject: document.querySelector("#subject").value.trim(),
+          body: { contentType: "Text", content: document.querySelector("#body").value },
+          toRecipients: parseRecipients(document.querySelector("#to").value, "צו", true)
+        };
+        const ccValue = document.querySelector("#cc").value.trim();
+        if (ccValue) message.ccRecipients = parseRecipients(ccValue, "קאפיע", false);
+        if (!message.subject) throw new Error("שרייב אַרײַן אַ טעמע.");
+        if (!message.body.content.trim()) throw new Error("שרייב אַרײַן דעם אימעיל־טעקסט.");
+      } catch (error) {
+        setNotice(sendNotice, error.message, "error");
+        return;
+      }
+      const recipients = message.toRecipients.map(item => item.emailAddress.address).join(", ");
+      if (!window.confirm(`שיקן דעם אימעיל צו ${recipients}?`)) return;
+
+      sendButton.disabled = true;
+      setNotice(sendNotice, "מען שיקט דעם אימעיל...");
+      try {
+        const client = await getAuthClient();
+        const accessToken = await acquireMailToken(client);
+        const response = await fetch("https://graph.microsoft.com/v1.0/me/sendMail", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ message, saveToSentItems: true })
+        });
+        if (!response.ok) {
+          let details = `Microsoft Graph האָט צוריקגעגעבן דעם סטאַטוס ${response.status}.`;
+          try {
+            const result = await response.json();
+            if (result.error && result.error.message) details = result.error.message;
+          } catch (error) {
+            details += ` מען האָט נישט געקענט לייענען די טעות־דעטאַלן: ${error.message}`;
+          }
+          throw new Error(details);
+        }
+        setNotice(sendNotice, "דער אימעיל איז געשיקט געוואָרן. דו קענסט קאָנטראָלירן דעם Sent־פאָלדער אין Outlook.", "success");
+      } catch (error) {
+        setNotice(sendNotice, `מען האָט נישט געקענט שיקן דעם אימעיל: ${error.message}`, "error");
+      } finally {
+        sendButton.disabled = !activeAccount;
+      }
+    });
+
+    try {
+      clientIdField.value = localStorage.getItem("outlookEmailClientId") || "";
+      if (clientIdField.value) {
+        getAuthClient().then(() => {
+          if (activeAccount) setNotice(accountNotice, `איינגעשריבן ווי ${activeAccount.username}.`);
+        }).catch(error => {
+          setNotice(accountNotice, `מען האָט נישט געקענט צוגרייטן Outlook: ${error.message}`, "error");
+        });
+      }
+    } catch (error) {
+      setNotice(accountNotice, `מען האָט נישט געקענט לייענען די אויפֿגעהיטענע סעטטינגס: ${error.message}`, "error");
+    }
+  </script>
+</body>
+</html>
