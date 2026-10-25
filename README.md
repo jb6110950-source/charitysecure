@@ -1,6 +1,6 @@
 # Charity Secure
 
-Charity Secure is a browser-based records and payroll app. Its hosted version uses Supabase authentication, a shared database, and private document storage. Staff accounts are invitation-only and read-only; the administrator creates invitations from **Manage users**.
+Charity Secure is a browser-based records and payroll app. The site root opens the program at `contacts.html`. Sign-in is temporarily disabled; while local-only mode is active, changes and attached documents are saved only in the current browser, not shared through Supabase. Keep a private backup before using important records. Staff accounts and cloud synchronization require sign-in to be re-enabled.
 
 ## Set up the hosted app
 

@@ -1811,6 +1811,9 @@
     body:not(.auth-ready) .standalone-portal-nav { display: none !important; }
     body:not(.auth-ready) #auth-screen { display: grid; }
     body.auth-ready #auth-screen { display: none; }
+    body.local-only-mode #auth-screen,
+    body.local-only-mode #sign-out-button,
+    body.local-only-mode #manage-users-button { display: none !important; }
     #auth-screen {
       display: none;
       min-height: 100vh;
@@ -1879,6 +1882,7 @@
 <body>
   <script>
     if (new URLSearchParams(window.location.search).has("standalone-payroll")) document.body.classList.add("standalone-payroll");
+    document.body.classList.add("auth-ready", "local-only-mode");
   </script>
   <section id="auth-screen" aria-labelledby="auth-title">
     <div class="auth-card">
@@ -2593,6 +2597,7 @@
     <button type="button" id="close-admin-users">Close</button>
   </dialog>
   <script type="module">
+    const LOCAL_ONLY_MODE = true;
     const authScreen = document.querySelector("#auth-screen");
     const authStatus = document.querySelector("#auth-status");
     const loginForm = document.querySelector("#auth-login-form");
@@ -2608,6 +2613,19 @@
     const staffStorageKeys = new Set(["my-contact-book-v1", "my-dayanim-registry-v1"]);
 
     async function initializeSecureSession() {
+      if (LOCAL_ONLY_MODE) {
+        document.querySelector("#auth-user-label").textContent = "Local browser mode";
+        document.querySelector("#cloud-sync-status").textContent = "Changes save only in this browser";
+        document.querySelector("#cloud-sync-retry").hidden = true;
+        document.querySelector("#manage-users-button").hidden = true;
+        return {
+          client: null,
+          session: { user: { id: null } },
+          profile: { email: "Local browser", role: "admin" },
+          localOnly: true
+        };
+      }
+
       const config = window.CHARITY_SUPABASE_CONFIG;
       if (!config?.url || !config?.anonKey) {
         authStatus.textContent = "Secure sign-in is not configured yet. Add your Supabase URL and public anon key to supabase-config.js, then deploy.";
@@ -2756,10 +2774,12 @@
     if (authContext) {
     const supabaseClient = authContext.client;
     const authProfile = authContext.profile;
-    document.querySelector("#sign-out-button").addEventListener("click", async () => {
-      await supabaseClient.auth.signOut();
-      location.reload();
-    });
+    if (supabaseClient) {
+      document.querySelector("#sign-out-button").addEventListener("click", async () => {
+        await supabaseClient.auth.signOut();
+        location.reload();
+      });
+    }
     document.querySelector("#manage-users-button").addEventListener("click", () => {
       document.querySelector("#admin-users-dialog").showModal();
       loadAdminUsers();
@@ -2824,7 +2844,7 @@
     let cloudDocumentSyncPendingCount = 0;
     let cloudDocumentSyncError = null;
     function queueCloudStorageSave(key, rawValue) {
-      if (authProfile.role !== "admin" || !authStorageKeys.includes(key)) return;
+      if (LOCAL_ONLY_MODE || authProfile.role !== "admin" || !authStorageKeys.includes(key)) return;
       const previous = storageSyncQueues.get(key) || Promise.resolve();
       const next = previous.catch(() => {}).then(async () => {
         let result;
@@ -2862,6 +2882,11 @@
     function updateCloudSyncStatus() {
       const status = document.querySelector("#cloud-sync-status");
       if (!status) return;
+      if (LOCAL_ONLY_MODE) {
+        status.textContent = "Changes save only in this browser";
+        document.querySelector("#cloud-sync-retry").hidden = true;
+        return;
+      }
       const failed = storageSyncErrors.size || cloudDocumentSyncError;
       document.querySelector("#cloud-sync-retry").hidden = !failed;
       if (failed) {
@@ -2897,7 +2922,7 @@
       }
     });
     function queueCloudDocumentSync() {
-      if (authProfile.role !== "admin") return Promise.resolve();
+      if (LOCAL_ONLY_MODE || authProfile.role !== "admin") return Promise.resolve();
       cloudDocumentSyncPendingCount++;
       const next = cloudDocumentSyncQueue.catch(() => {}).then(syncCloudDocuments);
       cloudDocumentSyncQueue = next.then(() => {
@@ -3041,6 +3066,7 @@
     }
 
     async function initializeCloudDocuments() {
+      if (LOCAL_ONLY_MODE) return;
       if (authProfile.role === "staff") {
         await loadCloudDocumentsForStaff();
         return;

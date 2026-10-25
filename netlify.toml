@@ -4,3 +4,9 @@ publish = "."
 [functions]
 directory = "netlify/functions"
 node_bundler = "esbuild"
+
+[[redirects]]
+from = "/"
+to = "/contacts.html"
+status = 302
+force = true
