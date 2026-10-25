@@ -1830,6 +1830,9 @@
     .auth-card p { color: #60758c; font-size: 14px; line-height: 1.55; }
     .auth-field { display: grid; gap: 6px; margin: 16px 0; color: #344b64; font-size: 13px; font-weight: 700; }
     .auth-field input { min-height: 42px; padding: 9px 11px; border: 1px solid #d1dce8; border-radius: 6px; font: inherit; }
+    .auth-reset-button { display: block; margin: 12px auto 0; padding: 4px 8px; border: 0; color: #3478f6; background: transparent; font: inherit; font-size: 13px; cursor: pointer; }
+    .auth-reset-button:hover { text-decoration: underline; }
+    .auth-reset-button:disabled { cursor: wait; opacity: .65; }
     .auth-status { min-height: 22px; margin: 12px 0 0; color: #a44636; font-size: 13px; }
     .auth-bar { display: flex; align-items: center; gap: 10px; }
     .auth-bar button, .auth-admin-dialog button { min-height: 34px; padding: 6px 10px; border: 1px solid #d1dce8; border-radius: 6px; color: #29445f; background: #fff; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
@@ -1880,6 +1883,7 @@
         <label class="auth-field">Email address<input id="auth-email" type="email" autocomplete="username" required></label>
         <label class="auth-field">Password<input id="auth-password" type="password" autocomplete="current-password" required></label>
         <button class="primary-button" type="submit">Sign in</button>
+        <button class="auth-reset-button" id="auth-reset-password" type="button">Set or reset password</button>
       </form>
       <form id="auth-set-password-form" hidden>
         <label class="auth-field">Choose a password<input id="auth-new-password" type="password" autocomplete="new-password" minlength="10" required></label>
@@ -2640,6 +2644,30 @@
 
         if (!session) {
           authStatus.textContent = "Sign in with the email invitation from your administrator.";
+          const resetPasswordButton = document.querySelector("#auth-reset-password");
+          resetPasswordButton.addEventListener("click", async () => {
+            const email = document.querySelector("#auth-email").value.trim();
+            if (!email) {
+              authStatus.textContent = "Enter your email address first.";
+              document.querySelector("#auth-email").focus();
+              return;
+            }
+
+            resetPasswordButton.disabled = true;
+            authStatus.textContent = "Sending a password setup link…";
+            try {
+              const { error } = await client.auth.resetPasswordForEmail(email, {
+                redirectTo: `${location.origin}${location.pathname}`
+              });
+              authStatus.textContent = error
+                ? "Could not send a password setup link. Please try again."
+                : "If that account exists, a password setup link was sent. Check your inbox and spam folder.";
+            } catch {
+              authStatus.textContent = "Could not send a password setup link. Please try again.";
+            } finally {
+              resetPasswordButton.disabled = false;
+            }
+          });
           session = await new Promise(resolve => {
             loginForm.addEventListener("submit", async event => {
               event.preventDefault();
