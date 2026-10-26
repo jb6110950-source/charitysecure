@@ -1,5 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 64 64">
   <rect width="64" height="64" fill="#fff"/>
+  <defs>
+    <filter id="lighter-s" x="-10%" y="-10%" width="120%" height="120%">
+      <feMorphology operator="erode" radius="1.8"/>
+    </filter>
+  </defs>
   <path fill="#082e52" d="M29 11 8 18.4v26.4L29 53V37.6L22.1 35V43l-7.2-2.8V23.2l7.2-2.8v7.9l6.9-2.7z"/>
-  <path d="M40 14h12v12L36 32v12l4 6h12" fill="none" stroke="#082e52" stroke-width="6.8" stroke-linecap="square" stroke-linejoin="bevel"/>
+  <path fill="#082e52" filter="url(#lighter-s)" transform="translate(0 -3.04) scale(1 1.095)" d="M38.5 11H55V24.3L48.1 26.9V20H44.1V22.7L55 26.8V39.4L50.6 53H33V41.1L39.9 38.5V44H44V41.2L33 37V24.2Z"/>
 </svg>
